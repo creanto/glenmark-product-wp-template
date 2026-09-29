@@ -1,0 +1,20 @@
+// Generic scroll-reveal utility: apply on an element, toggle `.reveal-line.is-visible` via JS (IntersectionObserver) to trigger.
+@mixin reveal-fade($distance: 2rem, $axis: X) {
+    opacity: 0;
+    transform: translate#{$axis}($distance);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+@mixin reveal-fade-visible($axis: X) {
+    opacity: 1;
+    transform: translate#{$axis}(0);
+}
+
+// Staggers immediate children transition-delay, e.g. for list items revealing one by one.
+@mixin reveal-stagger($count: 12, $base-delay: 0.3s, $step: 0.15s) {
+    @for $i from 1 through $count {
+        &:nth-child(#{$i}) {
+            transition-delay: #{$base-delay + $i * $step};
+        }
+    }
+}

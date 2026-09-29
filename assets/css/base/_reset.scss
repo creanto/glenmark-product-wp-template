@@ -1,0 +1,184 @@
+:root {
+    --container-max-width: 1310px;
+    --e-con-base-width: 1310px;
+    --e-con-base-width-lg: 1310px;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    font-family: $wr-font-text;
+    color: $wr-color-text;
+    background: $wr-color-bg;
+    line-height: 1.65;
+    letter-spacing: 0;
+}
+
+.container,
+.elementor-container {
+    width: min(var(--container-max-width, 1310px), calc(100vw - 2rem));
+    max-width: var(--container-max-width, 1310px);
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.elementor-section>.elementor-container,
+.elementor-container.elementor-column-gap-default {
+    width: min(var(--container-max-width, 1310px), calc(100vw - 2rem));
+}
+
+img,
+svg {
+
+    max-width: 100%;
+    height: auto;
+}
+
+svg {
+    display: block;
+}
+
+a {
+    color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 0.75rem;
+    font-family: $wr-font-primary;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+}
+
+h1 {
+    font-weight: 700;
+}
+
+h2 {
+    font-weight: 700;
+}
+
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 600;
+}
+
+p {
+    margin: 0 0 1rem;
+}
+
+.site-main h1,
+.site-main h2,
+.site-main h3,
+.site-main h4,
+.site-main h5,
+.site-main h6,
+.elementor-heading-title,
+.elementor-widget-heading .elementor-heading-title {
+    font-family: $wr-font-primary;
+
+}
+
+.site {
+    min-height: 100vh;
+}
+
+.site-main {
+    min-height: 50vh;
+}
+
+.text-white,
+.text-yellow {
+    color: inherit;
+}
+
+.text-white {
+    color: $wr-color-white;
+
+    b,
+    strong,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .elementor-heading-title {
+        color: $wr-color-accent;
+    }
+}
+
+.text-yellow {
+    color: $wr-color-accent;
+
+    b,
+    strong,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .elementor-heading-title {
+        color: $wr-color-white;
+    }
+}
+
+#primary .elementor-widget-text-editor a {
+    text-decoration: underline !important;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.18em;
+}
+
+.text-white a,
+.text-yellow a,
+.text-white .elementor-text-editor a,
+.text-yellow .elementor-text-editor a {
+    text-decoration: underline !important;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.18em;
+}
+
+img.alignleft {
+    float: left;
+    margin-right: 10px;
+}
+
+.radiant-bg {
+    background:
+        radial-gradient(circle 36rem at 42% 8%, rgba(44, 164, 229, 0.5) 0%, rgba(44, 164, 229, 0) 72%),
+        radial-gradient(circle 32rem at 85% 58%, rgba(44, 164, 229, 0.5) 0%, rgba(44, 164, 229, 0) 72%),
+        $wr-color-primary;
+}
+
+.menu-legal {
+    a {
+        display: inline-block;
+        padding: 0 15px;
+        text-decoration: underline;
+    }
+}
+
+.text-center {
+    text-align: center;
+}
+
+#cmplz-manage-consent {
+    display: none;
+}

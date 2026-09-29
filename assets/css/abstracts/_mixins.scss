@@ -1,0 +1,39 @@
+@mixin container {
+    width: $wr-container;
+    margin: 0 auto;
+}
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin section-padding($top: 4rem, $bottom: 4rem) {
+    padding: $top 0 $bottom;
+}
+
+@mixin card-base {
+    background: $wr-color-white;
+    border: 1px solid $wr-color-border;
+    border-radius: 22px;
+    box-shadow: $wr-shadow-card;
+}
+
+@mixin button-base {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    padding: 0.9rem 1.5rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover,
+    &:focus {
+        transform: translateY(-1px);
+    }
+}

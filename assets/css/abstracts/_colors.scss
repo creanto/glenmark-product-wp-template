@@ -1,0 +1,13 @@
+:root {
+    --blue: #0e3479;
+    --blue-dark: #1a2d4d;
+    --red: #e30613;
+    --white: #ffffff;
+    --bg: #f9fafb;
+}
+
+$blue: var(--blue, #0e3479);
+$blue-dark: var(--blue-dark, #1a2d4d);
+$red: var(--red, #e30613);
+$white: var(--white, #ffffff);
+$bg: var(--bg, #f9fafb);

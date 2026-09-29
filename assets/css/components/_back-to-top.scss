@@ -1,0 +1,46 @@
+.webrev-back-to-top {
+    position: fixed;
+    bottom: max(1.5rem, env(safe-area-inset-bottom));
+    left: max(1.5rem, env(safe-area-inset-left));
+    z-index: 999;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(14, 52, 121, 0.55);
+    color: $white;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.75rem);
+    transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+        background: $blue;
+    }
+
+    &.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    svg {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+@media (max-width: 640px) {
+    .webrev-back-to-top {
+        bottom: max(1rem, env(safe-area-inset-bottom));
+        left: max(1rem, env(safe-area-inset-left));
+        width: 44px;
+        height: 44px;
+    }
+}

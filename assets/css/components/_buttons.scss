@@ -1,0 +1,47 @@
+.wr-button,
+.wr-home__button,
+.wr-home__button--secondary {
+    @include button-base;
+}
+
+.wr-button--primary,
+.wr-home__button {
+    background: $wr-color-primary;
+    color: $wr-color-white;
+    border-color: $wr-color-primary;
+}
+
+.wr-button--secondary,
+.wr-home__button--secondary {
+    background: transparent;
+    border-color: $wr-color-accent;
+    color: $wr-color-primary;
+}
+
+.wr-home__button:hover,
+.wr-button--primary:hover {
+    background: $wr-color-secondary;
+    border-color: $wr-color-secondary;
+    color: $wr-color-white;
+}
+
+.wr-home__button--secondary:hover,
+.wr-button--secondary:hover {
+    background: rgba(227, 6, 19, 0.06);
+    border-color: $wr-color-accent;
+    color: $wr-color-primary;
+}
+
+.wr-button--buy {
+    background: linear-gradient(to bottom, #f15b5d, #d71620);
+    border-color: $wr-color-accent;
+    border-radius: $wr-button-radius;
+    color: $wr-color-white;
+}
+
+.wr-button--buy:hover,
+.wr-button--buy:focus {
+    background: linear-gradient(to bottom, #e44a4d, #bd1019);
+    border-color: color-mix(in srgb, $wr-color-accent, $wr-color-primary 20%);
+    color: $wr-color-white;
+}

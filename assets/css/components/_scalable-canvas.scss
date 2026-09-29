@@ -1,0 +1,28 @@
+.wr-scalable-canvas {
+    --wr-scalable-canvas-scale: 1;
+    position: relative;
+    display: block !important;
+    width: 100%;
+    max-width: none !important;
+    min-height: 0 !important;
+    height: calc(var(--wr-scalable-canvas-design-height) * var(--wr-scalable-canvas-scale)) !important;
+    overflow: hidden;
+
+    >.e-con-inner {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        display: block !important;
+        width: var(--wr-scalable-canvas-design-width) !important;
+        height: var(--wr-scalable-canvas-design-height) !important;
+        max-width: none;
+        min-height: 0;
+        padding: 0;
+        transform: scale(var(--wr-scalable-canvas-scale)) !important;
+        transform-origin: 0 0 !important;
+    }
+
+    &[data-wr-canvas-overflow='visible'] {
+        overflow: visible;
+    }
+}
