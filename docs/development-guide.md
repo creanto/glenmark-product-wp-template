@@ -87,7 +87,7 @@ Soubor `inc/elementor-json-editor.php` přidává administrační editor Element
 
 ## 6. Pluginy a integrace
 
-Požadavky a doporučení udržujte v `inc/plugin-activation.php`. ACF PRO je potřeba pro repeater a galerii použitou produktovým modelem, přestože TGM seznam uvádí základní slug ACF. Git Updater je doporučený plugin pro aktualizace rodičovské šablony z veřejného GitHub repozitáře; jeho TGM zdroj je instalační ZIP konkrétního vydání a případně je potřeba posunout jej při změně vydávané verze. Git Updater vyžaduje PHP 8.0+. Pro správu souhlasu s cookies a blokování externích skriptů je zvolen WPConsent. Kompatibilitu vlastního Elementor video placeholderu s jeho blokováním ověřte na stagingu před nasazením; automaticky ji nepředpokládejte.
+Požadavky a doporučení udržujte v `inc/plugin-activation.php`. TGM nabízí povinné pluginy Elementor a CookieYes a volitelný Git Updater. ACF PRO je samostatná licencovaná závislost pro repeater a galerii použitou produktovým modelem; při chybějící PRO verzi se administrátorům zobrazí upozornění a ACF Free není dostačující. Plugin ani jeho ZIP/licenční klíč se do repozitáře nevkládá. Git Updater je doporučený plugin pro aktualizace rodičovské šablony z veřejného GitHub repozitáře; jeho TGM zdroj je instalační ZIP konkrétního vydání a případně je potřeba posunout jej při změně vydávané verze. Git Updater vyžaduje PHP 8.0+. Pro správu souhlasu s cookies a blokování externích skriptů je zvolen WPConsent. Kompatibilitu vlastního Elementor video placeholderu s jeho blokováním a souběh se stávající integrací CookieYes ověřte na stagingu před nasazením; automaticky ji nepředpokládejte.
 
 ### Vydání aktualizace rodičovské šablony
 

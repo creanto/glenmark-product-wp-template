@@ -24,9 +24,9 @@ Samostatný prvek Hero/Scalable Canvas vyžaduje Elementor s podporou Container.
 | Plugin | Úloha | Stav podle šablony |
 | --- | --- | --- |
 | Elementor | Tvorba a editace obsahu; šablona registruje vlastní widgety. | Povinný |
-| Advanced Custom Fields | Správa polí produktů, lékáren a článků. | Povinný v seznamu |
-| ACF PRO | Repeater a Gallery pole použité pro varianty, registrovaná balení, ikony a galerii. | Nutný pro kompletní sadu polí |
 | WPConsent | Banner souhlasu, blokování externích skriptů a vložených médií. | Povinný pro produkční web; instalovat samostatně |
+| CookieYes | Souhlas s cookies a blokování videí do udělení souhlasu. | Povinný |
+| ACF PRO | Správa produktových polí včetně repeaterů a galerie. | Nutný pro kompletní sadu polí; instaluje se samostatně z licencovaného zdroje |
 | All in One SEO | SEO nástroje a metadata. | Doporučený, volitelný |
 | Classic Editor | Klasický editor příspěvků. | Doporučený, volitelný |
 | WP Super Cache | Cachování. | Doporučený, volitelný |
@@ -37,7 +37,7 @@ Samostatný prvek Hero/Scalable Canvas vyžaduje Elementor s podporou Container.
 | User Switching | Přepnutí uživatelského účtu při podpoře. | Doporučený, volitelný |
 | Git Updater | Aktualizace rodičovské šablony z GitHubu. | Doporučený, volitelný; vyžaduje PHP 8.0+ |
 
-TGM označuje balíček `advanced-custom-fields` jako povinný, ale některá pole v šabloně používají funkce ACF PRO. Pro plnou editaci všech produktových dat musí být aktivní ACF PRO. Licence PRO se řeší samostatně; instalátor šablony ji nedodává.
+TGM nabízí povinné pluginy dostupné z WordPress.org: Elementor a CookieYes, a volitelný Git Updater z GitHubu. Pokud není aktivní ACF PRO, administrátorům se zobrazí samostatné upozornění. ACF Free není dostačující náhrada; ACF PRO je nutné nainstalovat z licencovaného zdroje. Šablona plugin ani licenci nedodává.
 
 WPConsent instalujte z [adresáře pluginů WordPressu](https://wordpress.org/plugins/wpconsent-cookies-banner-privacy-suite/) a nastavte banner, kategorie souhlasu a blokování externích skriptů i vložených médií podle schválených právních požadavků. Plugin nabízí vlastní blokování YouTube/Vimeo; ověřte jej zvlášť podle postupu níže.
 
