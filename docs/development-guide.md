@@ -69,7 +69,7 @@ Rodičovský `config/theme-config.php` také předává vybrané hodnoty do inli
 - Pro sdílenou odchylku přidejte pojmenovaný filtr nebo akci; v child hooku zachovejte priority a počet argumentů.
 - Nepřidávejte produktové výjimky do obecných helperů nebo widgetů.
 
-Rodičovská šablona má například filtry `wr-pharma-product/elementor/theme_style_scope` a `wr-pharma-product/cookieyes/*`. Ne každý modul má rozšiřovací filtr. Pokud child potřebuje upravit interní ACF mapping, schema nebo výstup feedu, nejprve posuďte, zda je změna obecná; pro sdílený use case doplňte filtr do rodiče místo kopírování celého modulu.
+Rodičovská šablona má například filtr `wr-pharma-product/elementor/theme_style_scope`. Ne každý modul má rozšiřovací filtr. Pokud child potřebuje upravit interní ACF mapping, schema nebo výstup feedu, nejprve posuďte, zda je změna obecná; pro sdílený use case doplňte filtr do rodiče místo kopírování celého modulu.
 
 ## 5. Elementor a obsahové moduly
 
@@ -87,7 +87,14 @@ Soubor `inc/elementor-json-editor.php` přidává administrační editor Element
 
 ## 6. Pluginy a integrace
 
-Požadavky a doporučení udržujte v `inc/plugin-activation.php`. ACF PRO je potřeba pro repeater a galerii použitou produktovým modelem, přestože TGM seznam uvádí základní slug ACF. CookieYes je propojen s Elementor Video widgetem: standardně čeká s YouTube/Vimeo embedem na marketingový souhlas. Chování lze upravit přes `wr-pharma-product/cookieyes/video_mode`, `video_category`, `video_notice` a `video_button`; režim necessary vyžaduje právní schválení.
+Požadavky a doporučení udržujte v `inc/plugin-activation.php`. ACF PRO je potřeba pro repeater a galerii použitou produktovým modelem, přestože TGM seznam uvádí základní slug ACF. Git Updater je doporučený plugin pro aktualizace rodičovské šablony z veřejného GitHub repozitáře; jeho TGM zdroj je instalační ZIP konkrétního vydání a případně je potřeba posunout jej při změně vydávané verze. Git Updater vyžaduje PHP 8.0+. Pro správu souhlasu s cookies a blokování externích skriptů je zvolen WPConsent. Kompatibilitu vlastního Elementor video placeholderu s jeho blokováním ověřte na stagingu před nasazením; automaticky ji nepředpokládejte.
+
+### Vydání aktualizace rodičovské šablony
+
+1. Zvyšte `Version` v hlavičce `style.css` (například z `1.0.0` na `1.0.1`).
+2. Vytvořte na GitHubu release s odpovídajícím tagem, například `v1.0.1`; nevydávejte jej jako prerelease.
+3. Na webu s aktivním Git Updaterem spusťte kontrolu aktualizací nebo vyčkejte na pravidelnou kontrolu. Git Updater porovnává verzi šablony s vydáním v propojeném GitHub repozitáři.
+4. Novou verzi nejprve ověřte na stagingu. Aktualizace přepisuje soubory rodičovské šablony, proto vlastní úpravy patří do child šablony.
 
 Při přidávání pluginu rozlišujte závislost od doporučení. Ověřte kompatibilitu a konflikty s vlastními hlavičkami/zápatími, Elementor, SEO, cache a cookie consent. Plugin nesmí být považován za součást šablony jen proto, že je nainstalovaný v místním workspace.
 

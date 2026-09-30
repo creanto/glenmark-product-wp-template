@@ -19,14 +19,14 @@ Samostatný prvek Hero/Scalable Canvas vyžaduje Elementor s podporou Container.
 
 ## 2. Požadavky a pluginy
 
-Šablona v administraci doporučuje pluginy přes TGM Plugin Activation. Seznam je definovaný v `inc/plugin-activation.php`.
+Šablona v administraci doporučuje pluginy přes TGM Plugin Activation. Seznam je definovaný v `inc/plugin-activation.php`; WPConsent se instaluje samostatně z oficiálního katalogu pluginů WordPressu.
 
 | Plugin | Úloha | Stav podle šablony |
 | --- | --- | --- |
 | Elementor | Tvorba a editace obsahu; šablona registruje vlastní widgety. | Povinný |
 | Advanced Custom Fields | Správa polí produktů, lékáren a článků. | Povinný v seznamu |
 | ACF PRO | Repeater a Gallery pole použité pro varianty, registrovaná balení, ikony a galerii. | Nutný pro kompletní sadu polí |
-| CookieYes | Souhlas s cookies a blokování videí do udělení souhlasu. | Povinný |
+| WPConsent | Banner souhlasu, blokování externích skriptů a vložených médií. | Povinný pro produkční web; instalovat samostatně |
 | All in One SEO | SEO nástroje a metadata. | Doporučený, volitelný |
 | Classic Editor | Klasický editor příspěvků. | Doporučený, volitelný |
 | WP Super Cache | Cachování. | Doporučený, volitelný |
@@ -35,15 +35,33 @@ Samostatný prvek Hero/Scalable Canvas vyžaduje Elementor s podporou Container.
 | Regenerate Thumbnails | Přegenerování náhledů po změně rozměrů. | Doporučený, volitelný |
 | WP Statistics | Statistiky návštěvnosti. | Doporučený, volitelný |
 | User Switching | Přepnutí uživatelského účtu při podpoře. | Doporučený, volitelný |
+| Git Updater | Aktualizace rodičovské šablony z GitHubu. | Doporučený, volitelný; vyžaduje PHP 8.0+ |
 
 TGM označuje balíček `advanced-custom-fields` jako povinný, ale některá pole v šabloně používají funkce ACF PRO. Pro plnou editaci všech produktových dat musí být aktivní ACF PRO. Licence PRO se řeší samostatně; instalátor šablony ji nedodává.
 
+WPConsent instalujte z [adresáře pluginů WordPressu](https://wordpress.org/plugins/wpconsent-cookies-banner-privacy-suite/) a nastavte banner, kategorie souhlasu a blokování externích skriptů i vložených médií podle schválených právních požadavků. Plugin nabízí vlastní blokování YouTube/Vimeo; ověřte jej zvlášť podle postupu níže.
+
+Git Updater je potřeba aktivovat, aby WordPress mohl nabídnout aktualizace rodičovské šablony z GitHubu. Nabídku aktualizace najdete na stránce **Nástěnka → Aktualizace** nebo **Vzhled → Šablony**. Úpravy konkrétního webu ponechte v child šabloně; aktualizace rodiče přepisuje jeho soubory.
+
 Další bezplatné nebo placené pluginy lze přidat podle zadání webu. Před nasazením ověřte kompatibilitu, duplicitu funkcí (zejména SEO, cache a cookie consent), licenci, aktualizace a chování na stagingu. Elementor Pro je volitelný, nikoli podmínka pro vlastní widgety šablony.
+
+### Provozní požadavky a doporučení
+
+Repozitář zatím nedefinuje ani netestuje minimální verzi WordPressu nebo PHP pro samotnou rodičovskou šablonu. Nepovažujte proto konkrétní starší verzi za garantovanou; při nasazení použijte aktuálně podporovaný WordPress a verze PHP vyžadované všemi aktivními pluginy. Požadavky hostingu WordPressu se průběžně mění, proto je ověřte v [oficiálních požadavcích WordPressu](https://wordpress.org/about/requirements/). Pokud používáte Git Updater, počítejte nejméně s PHP 8.0; jeho novější vydání mohou požadavky zvýšit.
+
+Pro spolehlivý provoz dále platí:
+
+- Používejte HTTPS a udržovaný hosting s databází podporovanou aktuální verzí WordPressu.
+- Před aktualizací šablony, WordPressu nebo pluginů udělejte zálohu souborů i databáze a změny nejprve ověřte na stagingu. Automatické aktualizace rodičovské šablony zapínejte jen tehdy, pokud máte ověřenou zálohu a postup obnovy.
+- WordPress musí mít možnost zapisovat do `wp-content/themes`, jinak aktualizace jedním kliknutím nemusí proběhnout. Pokud hosting zápis blokuje, použijte jeho doporučené nastavení přihlašovacích údajů k souborovému systému.
+- Git Updater vyžaduje dostupnost GitHubu z hostingu a aktivní plugin. Aktualizace nejsou okamžité oznámení při vydání; kontrola probíhá při běžném mechanismu aktualizací WordPressu. Soukromý repozitář navíc vyžaduje přístupové údaje Git Updateru.
+- Po aktualizaci vymažte cache WordPressu, serveru a CDN. Ověřte front-end i Elementor editor, produktové stránky, ACF data, souhlas s cookies, REST feed a šablonové přepisy v child šabloně.
+- V produkci nezobrazujte návštěvníkům PHP chyby; logování chyb ponechte dostupné správci nebo hostingu.
 
 ## 3. Doporučený postup založení webu
 
 1. Nainstalujte a aktivujte rodičovskou Glenmark Product a její child šablonu; jako aktivní téma používejte child.
-2. Nainstalujte Elementor, ACF PRO a CookieYes. Aktivujte další pluginy podle schváleného rozsahu projektu.
+2. Nainstalujte Elementor, ACF PRO a WPConsent. Aktivujte další pluginy podle schváleného rozsahu projektu.
 3. Importujte správný Elementor Site Settings Kit. V repozitáři jsou JSON nastavení v `elementor-site-settings/`; samostatně může být připraven i balíček pro child web. Import proveďte přes Elementor Import/Export Kit a zkontrolujte globální barvy, písma a nastavení webu.
 4. Vytvořte nebo importujte obsah a ACF záznamy. Produktová data zadávejte do CPT Produkty, ne pouze do volného textu stránky.
 5. Nastavte loga, navigaci, hlavičku, zápatí a sociální odkazy v administraci.
@@ -84,11 +102,11 @@ Produkty vytvářejte v administraci pod **Produkty**. Vyplňte název, podklady
 
 Lékárny jsou samostatný CPT. Každý záznam má logo a cílovou URL. Odkazy konkrétních lékáren na produktu se nastavují v polích produktu, případně u jednotlivých variant balení.
 
-## 7. CookieYes a video
+## 7. Souhlas s cookies a video
 
-CookieYes je povinná součást nastavení. Video widgety YouTube/Vimeo v Elementoru šablona standardně zadrží do souhlasu s marketingovými cookies a zobrazí tlačítko k udělení souhlasu. Šablona také podporuje režim s kategorií necessary, ale jeho použití má právní dopady a musí být výslovně posouzeno; neměňte výchozí režim pouze kvůli pohodlí.
+WPConsent je zvolený nástroj pro banner, správu souhlasu a blokování externích skriptů i vložených médií. Nastavení kategorií a pravidel blokování musí odpovídat schváleným právním požadavkům webu.
 
-Po změně integrace nebo kategorií ověřte reálné chování v anonymním okně: bez souhlasu nesmí být video načtené, po udělení souhlasu se musí dát spustit.
+V anonymním okně ověřte Elementor videa YouTube/Vimeo: před souhlasem se nesmí načíst jejich externí obsah a po udělení příslušného souhlasu musí jít video spustit. Vlastní video placeholder šablony vyžaduje samostatný test kompatibility s WPConsent; nepředpokládejte, že se automaticky propojí s jeho ovládáním. Pokud test neprojde, před spuštěním webu je potřeba doplnit odpovídající integraci nebo použít blokování videí přímo přes WPConsent.
 
 ## 8. Před předáním webu
 

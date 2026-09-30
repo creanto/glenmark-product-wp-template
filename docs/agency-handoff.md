@@ -8,7 +8,7 @@ Zdrojové soubory rodičovské i child šablony jsou dostupné v Git repozitář
 
 Základem pro tvorbu stránek je bezplatná verze Elementoru. Rodičovská šablona do něj přidává widgety pro výpis a prezentaci produktů, lékáren, článků, benefitů, CTA a další obsah. Elementor Pro ani jiné placené rozšíření nejsou podmínkou; další pluginy lze přidat podle potřeb projektu po ověření kompatibility.
 
-Pro kompletní produktová data je potřeba ACF PRO, protože datový model využívá mimo jiné opakovatelná pole a galerii. CookieYes zajišťuje souhlas s cookies a spolupracuje s blokováním videí do udělení souhlasu.
+Pro kompletní produktová data je potřeba ACF PRO, protože datový model využívá mimo jiné opakovatelná pole a galerii. Pro správu souhlasu s cookies a blokování externích skriptů používejte WPConsent; před nasazením ověřte také chování vložených videí YouTube/Vimeo.
 
 ## Co lze nastavit v administraci
 

@@ -75,6 +75,12 @@ function webrev_register_required_plugins()
             'slug' => 'user-switching',
             'required' => false,
         ],
+        [
+            'name' => 'Git Updater',
+            'slug' => 'git-updater',
+            'source' => 'https://github.com/afragen/git-updater/releases/download/14.4.2/git-updater-14.4.2.zip',
+            'required' => false,
+        ],
     ];
 
     $config = [
