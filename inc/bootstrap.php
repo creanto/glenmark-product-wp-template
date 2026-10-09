@@ -15,6 +15,7 @@ require_once __DIR__ . '/acf/pharmacy-fields.php';
 require_once __DIR__ . '/acf/post-fields.php';
 require_once __DIR__ . '/product-feed.php';
 require_once __DIR__ . '/shortcodes/product-filters.php';
+require_once __DIR__ . '/shared-content/bootstrap.php';
 require_once __DIR__ . '/site-settings.php';
 require_once __DIR__ . '/expert-gate.php';
 require_once __DIR__ . '/menu-item-settings.php';

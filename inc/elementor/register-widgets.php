@@ -31,6 +31,7 @@ function webrev_register_wr_elementor_widgets()
         $widget_dir . '/CTAWidget.php',
         $widget_dir . '/PharmacyGridWidget.php',
         $widget_dir . '/RichHeadingWidget.php',
+        $widget_dir . '/SharedContentWidget.php',
     ];
 
     foreach ($widget_files as $widget_file) {
@@ -50,6 +51,7 @@ function webrev_register_wr_elementor_widgets()
         'Webrev_CTA_Widget',
         'Webrev_PharmacyGrid_Widget',
         'Webrev_Rich_Heading_Widget',
+        'Webrev_Shared_Content_Widget',
     ];
 
     $widgets_manager = \Elementor\Plugin::instance()->widgets_manager;

@@ -16,20 +16,10 @@ require_once __DIR__ . '/tgm/class-tgm-plugin-activation.php';
 function webrev_register_required_plugins()
 {
     $plugins = [
-        // Required - theme templates/hooks actively integrate with these.
-        [
-            'name' => 'Advanced Custom Fields',
-            'slug' => 'advanced-custom-fields',
-            'required' => true,
-        ],
+
         [
             'name' => 'Elementor',
             'slug' => 'elementor',
-            'required' => true,
-        ],
-        [
-            'name' => 'CookieYes | GDPR Cookie Consent',
-            'slug' => 'cookie-law-info',
             'required' => true,
         ],
 
@@ -98,3 +88,19 @@ function webrev_register_required_plugins()
     tgmpa($plugins, $config);
 }
 add_action('tgmpa_register', 'webrev_register_required_plugins');
+
+function webrev_notice_acf_pro_required()
+{
+    if (function_exists('acf_is_pro') && acf_is_pro()) {
+        return;
+    }
+
+    if (!current_user_can('install_plugins')) {
+        return;
+    }
+
+    echo '<div class="notice notice-warning"><p>'
+        . esc_html__('Tato šablona vyžaduje ACF PRO pro kompletní produktová pole (galerie a opakovatelná pole). Nainstalujte ACF PRO z licencovaného zdroje; bezplatná verze ACF nestačí.', 'wr-pharma-product')
+        . '</p></div>';
+}
+add_action('admin_notices', 'webrev_notice_acf_pro_required');

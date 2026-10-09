@@ -7,6 +7,7 @@ Tato dokumentace je určena agenturám a vývojářům, kteří připravují neb
 - [Informace pro spolupracující agenturu](agency-handoff.md): stručné představení koncepce a možností úprav.
 - [Práce se šablonou v administraci](agency-guide.md): instalace, Elementor, Customizer, hlavička, zápatí, pluginy a běžná správa webu.
 - [Produkty, ACF a produktový feed](product-content-and-feed.md): zadávání produktů, význam polí, výchozí detail, Schema.org a veřejný JSON-LD feed.
+- [Sdílený obsah Glenmark](shared-content.md): nastavení centrálního API, živé shortcody/Elementor widget a editovatelné kopie s kontrolou verzí.
 
 ## Vývoj
 

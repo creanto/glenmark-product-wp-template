@@ -9,6 +9,7 @@ Tento dokument je pro vývojáře agentur. Závazná pravidla názvů a umístě
 | Společné chování všech webů Glenmark v ČR | Rodičovská šablona, vlastní modul pod `inc/` |
 | Barvy, výška hlavičky, varianty header/footer | Parent `config/theme-config.php` jako výchozí hodnota; child `site-specific/config/theme-config.php` jako override |
 | Nastavení spravované redakcí | WordPress Customizer, nastavení stránky nebo Elementor Site Settings |
+| Centrální sdílený obsah | Samostatný modul `inc/shared-content/`; API klient, shortcody a editorové kopie |
 | Vzhled jednoho konkrétního webu | Child SCSS/CSS v `site-specific/assets/css/` |
 | Specifická logika jednoho webu | Child `functions.php`; větší soubor lze vytvořit v child `site-specific/` a explicitně jej načíst z child `functions.php` |
 | Změna HTML hlavičky, zápatí či detailu produktu | Child template part nebo child template stejné relativní cesty |
@@ -87,7 +88,7 @@ Soubor `inc/elementor-json-editor.php` přidává administrační editor Element
 
 ## 6. Pluginy a integrace
 
-Požadavky a doporučení udržujte v `inc/plugin-activation.php`. ACF PRO je potřeba pro repeater a galerii použitou produktovým modelem, přestože TGM seznam uvádí základní slug ACF. Git Updater je doporučený plugin pro aktualizace rodičovské šablony z veřejného GitHub repozitáře; jeho TGM zdroj je instalační ZIP konkrétního vydání a případně je potřeba posunout jej při změně vydávané verze. Git Updater vyžaduje PHP 8.0+. Pro správu souhlasu s cookies a blokování externích skriptů je zvolen WPConsent. Kompatibilitu vlastního Elementor video placeholderu s jeho blokováním ověřte na stagingu před nasazením; automaticky ji nepředpokládejte.
+Požadavky a doporučení udržujte v `inc/plugin-activation.php`. ACF PRO je potřeba pro repeater a galerii použitou produktovým modelem, přestože TGM seznam uvádí základní slug ACF. Git Updater je doporučený plugin pro aktualizace rodičovské šablony z veřejného GitHub repozitáře; jeho TGM zdroj je instalační ZIP konkrétního vydání a případně je potřeba posunout jej při změně vydávané verze. Git Updater vyžaduje PHP 8.0+. Pro správu souhlasu s cookies je určen licencovaný WPConsent Pro. Licenční účet i aktivace na jednotlivých webech jsou ve správě Creanto; licenční klíč se klientům ani dalším třetím stranám nepředává a nesmí být v repozitáři. Kompatibilitu vlastního Elementor video placeholderu s blokováním médií ověřte na stagingu před nasazením; automaticky ji nepředpokládejte.
 
 ### Vydání aktualizace rodičovské šablony
 
