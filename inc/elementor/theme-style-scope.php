@@ -25,9 +25,9 @@ if (!defined('ABSPATH')) {
 /**
  * Wrapper the Theme Style rules are limited to. Change in one place.
  */
-function webrev_elementor_theme_style_scope()
+function glenmark_elementor_theme_style_scope()
 {
-    return (string) apply_filters('wr-pharma-product/elementor/theme_style_scope', '.site-content');
+    return (string) apply_filters('gln-pharma-product/elementor/theme_style_scope', '.site-content');
 }
 
 /**
@@ -38,9 +38,9 @@ function webrev_elementor_theme_style_scope()
  * default so the base font/color stays inheritable for header, footer and
  * anything else outside the content wrapper.
  */
-function webrev_elementor_theme_style_scoped_sections()
+function glenmark_elementor_theme_style_scoped_sections()
 {
-    return (array) apply_filters('wr-pharma-product/elementor/theme_style_scoped_sections', [
+    return (array) apply_filters('gln-pharma-product/elementor/theme_style_scoped_sections', [
         'section_typography' => false, // Body typography, links, H1-H6
         'section_buttons' => true,
         'section_form_fields' => true,
@@ -51,7 +51,7 @@ function webrev_elementor_theme_style_scoped_sections()
 /**
  * Prefix a single Elementor selector string with the scope wrapper.
  */
-function webrev_elementor_scope_selector_string($selector, $scope, $scope_root)
+function glenmark_elementor_scope_selector_string($selector, $scope, $scope_root)
 {
     $placeholder = '{{WRAPPER}}';
     $parts = explode(',', $selector);
@@ -83,19 +83,19 @@ function webrev_elementor_scope_selector_string($selector, $scope, $scope_root)
  * @param \Elementor\Controls_Stack $element
  * @param string                    $section_id
  */
-function webrev_elementor_scope_theme_style_section($element, $section_id, $args)
+function glenmark_elementor_scope_theme_style_section($element, $section_id, $args)
 {
     if (!$element instanceof \Elementor\Core\Kits\Documents\Kit) {
         return;
     }
 
-    $sections = webrev_elementor_theme_style_scoped_sections();
+    $sections = glenmark_elementor_theme_style_scoped_sections();
 
     if (!array_key_exists($section_id, $sections)) {
         return;
     }
 
-    $scope = trim(webrev_elementor_theme_style_scope());
+    $scope = trim(glenmark_elementor_theme_style_scope());
 
     if ('' === $scope) {
         return;
@@ -128,7 +128,7 @@ function webrev_elementor_scope_theme_style_section($element, $section_id, $args
         $has_changed = false;
 
         foreach ($control['selectors'] as $selector => $css) {
-            $scoped_selector = webrev_elementor_scope_selector_string($selector, $scope, $scope_root);
+            $scoped_selector = glenmark_elementor_scope_selector_string($selector, $scope, $scope_root);
 
             if ($scoped_selector !== $selector) {
                 $has_changed = true;
@@ -149,5 +149,5 @@ add_action('elementor/init', function () {
     }
 
     // Fired by Controls_Stack::end_controls_section(), so all controls of the section are registered.
-    add_action('elementor/element/after_section_end', 'webrev_elementor_scope_theme_style_section', 10, 3);
+    add_action('elementor/element/after_section_end', 'glenmark_elementor_scope_theme_style_section', 10, 3);
 });

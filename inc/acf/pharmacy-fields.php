@@ -4,14 +4,14 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_register_wr_pharmacy_acf_fields()
+function glenmark_register_gln_pharmacy_acf_fields()
 {
     if (!function_exists('acf_add_local_field_group')) {
         return;
     }
 
     acf_add_local_field_group([
-        'key' => 'group_wr_pharmacy_fields',
+        'key' => 'group_gln_pharmacy_fields',
         'title' => 'Lékárna',
         'fields' => [
             [
@@ -35,7 +35,7 @@ function webrev_register_wr_pharmacy_acf_fields()
                 [
                     'param' => 'post_type',
                     'operator' => '==',
-                    'value' => 'wr_pharmacy',
+                    'value' => 'gln_pharmacy',
                 ],
             ],
         ],
@@ -46,4 +46,4 @@ function webrev_register_wr_pharmacy_acf_fields()
         'instruction_placement' => 'label',
     ]);
 }
-add_action('init', 'webrev_register_wr_pharmacy_acf_fields', 20);
+add_action('init', 'glenmark_register_gln_pharmacy_acf_fields', 20);

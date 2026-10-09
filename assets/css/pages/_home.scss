@@ -1,12 +1,12 @@
-.wr-home {
-    color: $wr-color-text;
+.gln-home {
+    color: $gln-color-text;
 }
 
-.wr-home__section {
+.gln-home__section {
     @include section-padding(4rem, 4rem);
 }
 
-.wr-home-hero {
+.gln-home-hero {
     position: relative;
     padding: 4rem 0 3rem;
     overflow: hidden;
@@ -21,7 +21,7 @@
     }
 }
 
-.wr-home-hero__inner {
+.gln-home-hero__inner {
     position: relative;
     z-index: 1;
     display: grid;
@@ -30,13 +30,13 @@
     gap: 2rem;
 }
 
-.wr-home-hero__content {
+.gln-home-hero__content {
     h1 {
         margin: 0 0 1rem;
         font-size: clamp(2.6rem, 5vw, 5rem);
         line-height: 0.96;
         letter-spacing: -0.06em;
-        color: $wr-color-primary;
+        color: $gln-color-primary;
     }
 
     p {
@@ -48,23 +48,23 @@
     }
 }
 
-.wr-home-hero__actions {
+.gln-home-hero__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-.wr-home-hero__stats {
+.gln-home-hero__stats {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: 2rem;
 }
 
-.wr-home-hero__stat {
+.gln-home-hero__stat {
     min-width: 140px;
     padding: 1rem 1.1rem;
-    border: 1px solid $wr-color-border;
+    border: 1px solid $gln-color-border;
     border-radius: 18px;
     background: rgba(255, 255, 255, 0.8);
 
@@ -72,22 +72,22 @@
         display: block;
         font-size: 1.5rem;
         line-height: 1.1;
-        color: $wr-color-primary;
+        color: $gln-color-primary;
     }
 
     span {
         font-size: 0.82rem;
-        color: $wr-color-muted;
+        color: $gln-color-muted;
     }
 }
 
-.wr-home-hero__visual {
+.gln-home-hero__visual {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.wr-home-hero__visual-card {
+.gln-home-hero__visual-card {
     position: relative;
     width: min(100%, 420px);
     padding: 1.5rem 1.25rem 1.25rem;
@@ -116,7 +116,7 @@
     }
 }
 
-.wr-home-section-header {
+.gln-home-section-header {
     margin-bottom: 2rem;
 
     h2 {
@@ -124,32 +124,32 @@
         font-size: clamp(2rem, 3vw, 3rem);
         line-height: 1.08;
         letter-spacing: -0.05em;
-        color: $wr-color-primary;
+        color: $gln-color-primary;
     }
 
     p {
         max-width: 42rem;
         margin: 0;
-        color: $wr-color-muted;
+        color: $gln-color-muted;
         line-height: 1.7;
     }
 }
 
-.wr-home-product-grid {
+.gln-home-product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.5rem;
 }
 
-.wr-home-product-card {
+.gln-home-product-card {
     overflow: hidden;
-    background: $wr-color-white;
-    border: 1px solid $wr-color-border;
+    background: $gln-color-white;
+    border: 1px solid $gln-color-border;
     border-radius: 22px;
-    box-shadow: $wr-shadow-card;
+    box-shadow: $gln-shadow-card;
 }
 
-.wr-home-product-card__media {
+.gln-home-product-card__media {
     display: block;
     padding: 1rem;
     background: linear-gradient(180deg, #f7f9ff, #edf4ff);
@@ -161,18 +161,18 @@
     }
 }
 
-.wr-home-product-card__content {
+.gln-home-product-card__content {
     padding: 1.2rem 1.1rem 1.4rem;
 
     h3 {
         margin: 0 0 0.35rem;
         font-size: 1.2rem;
-        color: $wr-color-primary;
+        color: $gln-color-primary;
     }
 
     p {
         margin: 0 0 1rem;
-        color: $wr-color-muted;
+        color: $gln-color-muted;
     }
 
     a {
@@ -180,103 +180,103 @@
     }
 }
 
-.wr-home-product-card__meta {
+.gln-home-product-card__meta {
     display: inline-block;
     margin-bottom: 0.75rem;
     padding: 0.32rem 0.7rem;
     border-radius: 999px;
     background: rgba(227, 6, 19, 0.1);
-    color: $wr-color-accent;
+    color: $gln-color-accent;
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
-.wr-home-benefits {
-    background: $wr-color-surface;
+.gln-home-benefits {
+    background: $gln-color-surface;
 }
 
-.wr-home-benefits__grid {
+.gln-home-benefits__grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.25rem;
 }
 
-.wr-home-benefit {
+.gln-home-benefit {
     padding: 1.4rem 1.2rem;
     border: 1px solid rgba(16, 36, 60, 0.06);
     border-radius: 20px;
-    background: $wr-color-white;
+    background: $gln-color-white;
 
     h3 {
         margin: 0 0 0.6rem;
-        color: $wr-color-primary;
+        color: $gln-color-primary;
     }
 
     p {
         margin: 0;
-        color: $wr-color-muted;
+        color: $gln-color-muted;
     }
 }
 
-.wr-home-benefit__icon {
+.gln-home-benefit__icon {
     @include flex-center;
     width: 52px;
     height: 52px;
     margin-bottom: 1rem;
     border-radius: 14px;
     background: rgba(227, 6, 19, 0.08);
-    color: $wr-color-accent;
+    color: $gln-color-accent;
     font-weight: 800;
 }
 
-.wr-home-cta {
+.gln-home-cta {
     background: linear-gradient(135deg, #0e3479 0%, #1a2d4d 100%);
-    color: $wr-color-white;
+    color: $gln-color-white;
 
-    .wr-home-section-header {
+    .gln-home-section-header {
 
         h2,
         p {
-            color: $wr-color-white;
+            color: $gln-color-white;
         }
     }
 }
 
-.wr-home-cta__inner {
+.gln-home-cta__inner {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     gap: 1.5rem;
     align-items: center;
 }
 
-.wr-home-cta__content {
+.gln-home-cta__content {
     max-width: 40rem;
 }
 
-.wr-home-cta .wr-home__button--secondary {
+.gln-home-cta .gln-home__button--secondary {
     border-color: rgba(255, 255, 255, 0.4);
-    color: $wr-color-white;
+    color: $gln-color-white;
     background: rgba(227, 6, 19, 0.18);
 }
 
-.wr-home-cta .wr-home__button--secondary:hover {
+.gln-home-cta .gln-home__button--secondary:hover {
     background: rgba(255, 255, 255, 0.14);
     border-color: rgba(255, 255, 255, 0.6);
-    color: $wr-color-white;
+    color: $gln-color-white;
 }
 
 @media (max-width: 768px) {
 
-    .wr-home-hero__inner,
-    .wr-home-cta__inner,
-    .wr-home-product-grid,
-    .wr-home-benefits__grid {
+    .gln-home-hero__inner,
+    .gln-home-cta__inner,
+    .gln-home-product-grid,
+    .gln-home-benefits__grid {
         grid-template-columns: 1fr;
     }
 
-    .wr-home-hero {
+    .gln-home-hero {
         padding-top: 3rem;
     }
 }

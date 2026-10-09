@@ -14,7 +14,7 @@ if (have_posts()) {
     while (have_posts()) {
         the_post();
 
-        webrev_get_template_part('template-parts/content/article');
+        glenmark_get_template_part('template-parts/content/article');
     }
 }
 

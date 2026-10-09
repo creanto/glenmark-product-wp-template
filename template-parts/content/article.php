@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$built_with_elementor = webrev_is_built_with_elementor(get_the_ID());
+$built_with_elementor = glenmark_is_built_with_elementor(get_the_ID());
 $article_classes = $built_with_elementor ? 'entry-shell entry-shell--elementor' : 'entry-shell entry-shell--standard';
 $article_classes .= ' entry-shell--article-template';
 $categories = get_the_category();
@@ -18,16 +18,16 @@ $article_excerpt = trim(get_the_excerpt());
         <header class="article-hero article-hero--image-layout">
             <div class="article-hero__full-media">
                 <?php if (has_post_thumbnail()): ?>
-                    <?php the_post_thumbnail('wr-post-banner-large', ['class' => 'article-hero__image']); ?>
+                    <?php the_post_thumbnail('gln-post-banner-large', ['class' => 'article-hero__image']); ?>
                 <?php endif; ?>
             </div>
             <div class="container">
                 <div class="article-hero__overlay-panel">
-                    <nav class="wr-breadcrumbs wr-breadcrumbs--article" aria-label="Drobečková navigace">
-                        <ol class="wr-breadcrumbs__list">
-                            <li class="wr-breadcrumbs__item">
-                                <a class="wr-breadcrumbs__link" href="<?php echo esc_url(home_url('/')); ?>">
-                                    <svg class="wr-breadcrumbs__home-icon" viewBox="0 0 24 24" aria-hidden="true"
+                    <nav class="gln-breadcrumbs gln-breadcrumbs--article" aria-label="Drobečková navigace">
+                        <ol class="gln-breadcrumbs__list">
+                            <li class="gln-breadcrumbs__item">
+                                <a class="gln-breadcrumbs__link" href="<?php echo esc_url(home_url('/')); ?>">
+                                    <svg class="gln-breadcrumbs__home-icon" viewBox="0 0 24 24" aria-hidden="true"
                                         focusable="false">
                                         <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z" fill="none"
                                             stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
@@ -35,13 +35,13 @@ $article_excerpt = trim(get_the_excerpt());
                                 </a>
                             </li>
                             <?php if ($primary_category): ?>
-                                <li class="wr-breadcrumbs__item">
+                                <li class="gln-breadcrumbs__item">
                                     <?php if ($category_main_page): ?>
-                                        <a class="wr-breadcrumbs__link" href="<?php echo esc_url($category_main_page); ?>">
+                                        <a class="gln-breadcrumbs__link" href="<?php echo esc_url($category_main_page); ?>">
                                             <?php echo esc_html($primary_category->name); ?>
                                         </a>
                                     <?php else: ?>
-                                        <span class="wr-breadcrumbs__current" aria-current="page">
+                                        <span class="gln-breadcrumbs__current" aria-current="page">
                                             <?php echo esc_html($primary_category->name); ?>
                                         </span>
                                     <?php endif; ?>
@@ -60,11 +60,11 @@ $article_excerpt = trim(get_the_excerpt());
         <header class="article-hero">
             <div class="article-hero__heading">
                 <div class="container">
-                    <nav class="wr-breadcrumbs wr-breadcrumbs--article" aria-label="Drobečková navigace">
-                        <ol class="wr-breadcrumbs__list">
-                            <li class="wr-breadcrumbs__item">
-                                <a class="wr-breadcrumbs__link" href="<?php echo esc_url(home_url('/')); ?>">
-                                    <svg class="wr-breadcrumbs__home-icon" viewBox="0 0 24 24" aria-hidden="true"
+                    <nav class="gln-breadcrumbs gln-breadcrumbs--article" aria-label="Drobečková navigace">
+                        <ol class="gln-breadcrumbs__list">
+                            <li class="gln-breadcrumbs__item">
+                                <a class="gln-breadcrumbs__link" href="<?php echo esc_url(home_url('/')); ?>">
+                                    <svg class="gln-breadcrumbs__home-icon" viewBox="0 0 24 24" aria-hidden="true"
                                         focusable="false">
                                         <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z" fill="none"
                                             stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
@@ -72,13 +72,13 @@ $article_excerpt = trim(get_the_excerpt());
                                 </a>
                             </li>
                             <?php if ($primary_category): ?>
-                                <li class="wr-breadcrumbs__item">
+                                <li class="gln-breadcrumbs__item">
                                     <?php if ($category_main_page): ?>
-                                        <a class="wr-breadcrumbs__link" href="<?php echo esc_url($category_main_page); ?>">
+                                        <a class="gln-breadcrumbs__link" href="<?php echo esc_url($category_main_page); ?>">
                                             <?php echo esc_html($primary_category->name); ?>
                                         </a>
                                     <?php else: ?>
-                                        <span class="wr-breadcrumbs__current" aria-current="page">
+                                        <span class="gln-breadcrumbs__current" aria-current="page">
                                             <?php echo esc_html($primary_category->name); ?>
                                         </span>
                                     <?php endif; ?>
@@ -91,7 +91,7 @@ $article_excerpt = trim(get_the_excerpt());
             </div>
             <?php if (has_post_thumbnail()): ?>
                 <div class="container article-hero__media">
-                    <?php the_post_thumbnail('wr-post-banner', ['class' => 'article-hero__image']); ?>
+                    <?php the_post_thumbnail('gln-post-banner', ['class' => 'article-hero__image']); ?>
                 </div>
             <?php endif; ?>
         </header>
@@ -127,8 +127,8 @@ $article_excerpt = trim(get_the_excerpt());
                 <h2 id="article-related-posts-title" class="article-related-posts__title">
                     <?php echo esc_html($primary_category->name); ?>
                 </h2>
-                <div class="wr-post-grid article-related-posts__grid"
-                    style="--wr-post-grid-columns:3;--wr-post-grid-tablet-columns:2;">
+                <div class="gln-post-grid article-related-posts__grid"
+                    style="--gln-post-grid-columns:3;--gln-post-grid-tablet-columns:2;">
                     <?php while ($related_posts->have_posts()): ?>
                         <?php
                         $related_posts->the_post();
@@ -137,25 +137,25 @@ $article_excerpt = trim(get_the_excerpt());
                         $related_short_title = trim((string) get_field('short_title', $related_post_id));
                         $related_grid_title = $related_short_title !== '' ? $related_short_title : $related_title;
                         ?>
-                        <article class="wr-post-card wr-post-card--thumb-landscape">
-                            <div class="wr-post-card__media">
+                        <article class="gln-post-card gln-post-card--thumb-landscape">
+                            <div class="gln-post-card__media">
                                 <?php if (has_post_thumbnail($related_post_id)): ?>
-                                    <?php echo wp_get_attachment_image(get_post_thumbnail_id($related_post_id), 'medium_large', false, ['class' => 'wr-post-card__image']); ?>
+                                    <?php echo wp_get_attachment_image(get_post_thumbnail_id($related_post_id), 'medium_large', false, ['class' => 'gln-post-card__image']); ?>
                                 <?php else: ?>
-                                    <div class="wr-post-card__placeholder" aria-hidden="true"></div>
+                                    <div class="gln-post-card__placeholder" aria-hidden="true"></div>
                                 <?php endif; ?>
                             </div>
-                            <div class="wr-post-card__content">
-                                <h3 class="wr-post-card__title"><?php echo esc_html($related_grid_title); ?></h3>
-                                <span class="wr-post-card__link" aria-hidden="true">
+                            <div class="gln-post-card__content">
+                                <h3 class="gln-post-card__title"><?php echo esc_html($related_grid_title); ?></h3>
+                                <span class="gln-post-card__link" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                                         <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"
                                             stroke-linecap="round" stroke-linejoin="round"></path>
                                     </svg>
                                 </span>
                             </div>
-                            <a class="wr-post-card__stretched-link" href="<?php the_permalink(); ?>"
-                                aria-label="<?php echo esc_attr(sprintf(__('Read %s', 'wr-pharma-product'), $related_title)); ?>"></a>
+                            <a class="gln-post-card__stretched-link" href="<?php the_permalink(); ?>"
+                                aria-label="<?php echo esc_attr(sprintf(__('Read %s', 'gln-pharma-product'), $related_title)); ?>"></a>
                         </article>
                     <?php endwhile; ?>
                 </div>

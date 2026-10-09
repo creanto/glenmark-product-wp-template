@@ -2,7 +2,7 @@
     'use strict';
 
     var CONSENT_COOKIE = 'cookieyes-consent';
-    var PENDING_SELECTOR = '.wr-video-consent:not(.is-loaded)';
+    var PENDING_SELECTOR = '.gln-video-consent:not(.is-loaded)';
     var pollTimer = null;
 
     function getConsentMap() {
@@ -78,7 +78,7 @@
     }
 
     function onClick(event) {
-        var button = event.target.closest('.wr-video-consent__button');
+        var button = event.target.closest('.gln-video-consent__button');
 
         if (!button) {
             return;
@@ -86,7 +86,7 @@
 
         event.preventDefault();
 
-        var placeholder = button.closest('.wr-video-consent');
+        var placeholder = button.closest('.gln-video-consent');
 
         if (hasConsent(placeholder.getAttribute('data-category') || 'advertisement')) {
             loadVideo(placeholder);
@@ -103,7 +103,7 @@
     }
 
     function init() {
-        if (!document.querySelector('.wr-video-consent')) {
+        if (!document.querySelector('.gln-video-consent')) {
             return;
         }
 

@@ -12,7 +12,7 @@
             return;
         }
 
-        if (elementor.elementsManager.getElementTypeClass('wr-hero')) {
+        if (elementor.elementsManager.getElementTypeClass('gln-hero')) {
             return;
         }
 
@@ -23,7 +23,7 @@
 
         var heroType = new containerType.constructor();
         heroType.getType = function () {
-            return 'wr-hero';
+            return 'gln-hero';
         };
         elementor.elementsManager.registerElementType(heroType);
     }
@@ -61,22 +61,22 @@
                 return;
             }
 
-            var designWidth = parseFloat(this.$element.attr('data-wr-canvas-width')) || 1200;
-            var designHeight = parseFloat(this.$element.attr('data-wr-canvas-height')) || 410;
+            var designWidth = parseFloat(this.$element.attr('data-gln-canvas-width')) || 1200;
+            var designHeight = parseFloat(this.$element.attr('data-gln-canvas-height')) || 410;
             var viewportWidth = this.viewport.getBoundingClientRect().width;
             var styles = window.getComputedStyle(this.viewport);
             var maxContentWidth = parseFloat(styles.getPropertyValue('--container-max-width')) || 1310;
             var availableWidth = Math.min(viewportWidth, maxContentWidth);
             var scale = availableWidth > 0 ? availableWidth / designWidth : 1;
-            var grow = this.$element.attr('data-wr-canvas-grow') === 'yes';
+            var grow = this.$element.attr('data-gln-canvas-grow') === 'yes';
 
             if (!grow) {
                 scale = Math.min(scale, 1);
             }
 
-            this.$element[0].style.setProperty('--wr-scalable-canvas-design-width', designWidth + 'px');
-            this.$element[0].style.setProperty('--wr-scalable-canvas-design-height', designHeight + 'px');
-            this.$element[0].style.setProperty('--wr-scalable-canvas-scale', scale);
+            this.$element[0].style.setProperty('--gln-scalable-canvas-design-width', designWidth + 'px');
+            this.$element[0].style.setProperty('--gln-scalable-canvas-design-height', designHeight + 'px');
+            this.$element[0].style.setProperty('--gln-scalable-canvas-scale', scale);
             var contentOffset = Math.max(0, (viewportWidth - availableWidth) / 2);
             var stageOffset = grow || scale < 1 ? 0 : (availableWidth - designWidth) / 2;
             this.stage.style.marginLeft = (contentOffset + stageOffset) + 'px';
@@ -96,14 +96,14 @@
         }
         });
 
-        elementorFrontend.hooks.addAction('frontend/element_ready/wr-hero', function ($element) {
-            if (!$element.hasClass('wr-scalable-canvas') || !$element.children('.e-con-inner').length) {
+        elementorFrontend.hooks.addAction('frontend/element_ready/gln-hero', function ($element) {
+            if (!$element.hasClass('gln-scalable-canvas') || !$element.children('.e-con-inner').length) {
                 return;
             }
 
             elementorFrontend.elementsHandler.addHandler(ScalableCanvasHandler, {
                 $element: $element,
-                elementName: 'wr-hero'
+                elementName: 'gln-hero'
             });
         });
     }

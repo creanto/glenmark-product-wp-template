@@ -4,23 +4,23 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_register_wr_product_post_type()
+function glenmark_register_gln_product_post_type()
 {
     $labels = [
-        'name' => __('Produkty', 'wr-pharma-product'),
-        'singular_name' => __('Produkt', 'wr-pharma-product'),
-        'menu_name' => __('Produkty', 'wr-pharma-product'),
-        'name_admin_bar' => __('Produkt', 'wr-pharma-product'),
-        'add_new' => __('Přidat produkt', 'wr-pharma-product'),
-        'add_new_item' => __('Přidat nový produkt', 'wr-pharma-product'),
-        'edit_item' => __('Upravit produkt', 'wr-pharma-product'),
-        'new_item' => __('Nový produkt', 'wr-pharma-product'),
-        'view_item' => __('Zobrazit produkt', 'wr-pharma-product'),
-        'view_items' => __('Zobrazit produkty', 'wr-pharma-product'),
-        'search_items' => __('Hledat produkty', 'wr-pharma-product'),
-        'not_found' => __('Nebyly nalezeny žádné produkty.', 'wr-pharma-product'),
-        'not_found_in_trash' => __('V koši nebyly nalezeny žádné produkty.', 'wr-pharma-product'),
-        'all_items' => __('Všechny produkty', 'wr-pharma-product'),
+        'name' => __('Produkty', 'gln-pharma-product'),
+        'singular_name' => __('Produkt', 'gln-pharma-product'),
+        'menu_name' => __('Produkty', 'gln-pharma-product'),
+        'name_admin_bar' => __('Produkt', 'gln-pharma-product'),
+        'add_new' => __('Přidat produkt', 'gln-pharma-product'),
+        'add_new_item' => __('Přidat nový produkt', 'gln-pharma-product'),
+        'edit_item' => __('Upravit produkt', 'gln-pharma-product'),
+        'new_item' => __('Nový produkt', 'gln-pharma-product'),
+        'view_item' => __('Zobrazit produkt', 'gln-pharma-product'),
+        'view_items' => __('Zobrazit produkty', 'gln-pharma-product'),
+        'search_items' => __('Hledat produkty', 'gln-pharma-product'),
+        'not_found' => __('Nebyly nalezeny žádné produkty.', 'gln-pharma-product'),
+        'not_found_in_trash' => __('V koši nebyly nalezeny žádné produkty.', 'gln-pharma-product'),
+        'all_items' => __('Všechny produkty', 'gln-pharma-product'),
     ];
 
     $args = [
@@ -32,25 +32,25 @@ function webrev_register_wr_product_post_type()
         'supports' => ['title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'custom-fields', 'page-attributes'],
         'show_in_rest' => true,
         'menu_position' => 20,
-        'taxonomies' => ['wr_product_category'],
+        'taxonomies' => ['gln_product_category'],
     ];
 
-    register_post_type('wr_product', $args);
+    register_post_type('gln_product', $args);
 }
-add_action('init', 'webrev_register_wr_product_post_type', 0);
+add_action('init', 'glenmark_register_gln_product_post_type', 0);
 
 /**
- * Native drag & drop ordering for wr_product in the admin list table.
+ * Native drag & drop ordering for gln_product in the admin list table.
  * Uses the standard WordPress menu_order column (also editable via the
  * "Order" field added by the 'page-attributes' support above).
  */
-function webrev_wr_product_default_admin_order($query)
+function glenmark_gln_product_default_admin_order($query)
 {
     if (!is_admin() || !$query->is_main_query()) {
         return;
     }
 
-    if ('wr_product' !== $query->get('post_type')) {
+    if ('gln_product' !== $query->get('post_type')) {
         return;
     }
 
@@ -65,9 +65,9 @@ function webrev_wr_product_default_admin_order($query)
         $query->set('order', 'ASC');
     }
 }
-add_action('pre_get_posts', 'webrev_wr_product_default_admin_order');
+add_action('pre_get_posts', 'glenmark_gln_product_default_admin_order');
 
-function webrev_wr_product_admin_columns($columns)
+function glenmark_gln_product_admin_columns($columns)
 {
     $new_columns = [];
 
@@ -75,67 +75,67 @@ function webrev_wr_product_admin_columns($columns)
         $new_columns[$key] = $label;
 
         if ('title' === $key) {
-            $new_columns['wr_product_order'] = __('Pořadí', 'wr-pharma-product');
+            $new_columns['gln_product_order'] = __('Pořadí', 'gln-pharma-product');
         }
     }
 
     return $new_columns;
 }
-add_filter('manage_wr_product_posts_columns', 'webrev_wr_product_admin_columns');
+add_filter('manage_gln_product_posts_columns', 'glenmark_gln_product_admin_columns');
 
-function webrev_wr_product_admin_column_content($column, $post_id)
+function glenmark_gln_product_admin_column_content($column, $post_id)
 {
-    if ('wr_product_order' === $column) {
-        echo '<span class="wr-product-order-handle" data-post-id="' . esc_attr((string) $post_id) . '">'
+    if ('gln_product_order' === $column) {
+        echo '<span class="gln-product-order-handle" data-post-id="' . esc_attr((string) $post_id) . '">'
             . esc_html((string) get_post_field('menu_order', $post_id)) . '</span>';
     }
 }
-add_action('manage_wr_product_posts_custom_column', 'webrev_wr_product_admin_column_content', 10, 2);
+add_action('manage_gln_product_posts_custom_column', 'glenmark_gln_product_admin_column_content', 10, 2);
 
-function webrev_wr_product_sortable_columns($columns)
+function glenmark_gln_product_sortable_columns($columns)
 {
-    $columns['wr_product_order'] = 'menu_order';
+    $columns['gln_product_order'] = 'menu_order';
 
     return $columns;
 }
-add_filter('manage_edit-wr_product_sortable_columns', 'webrev_wr_product_sortable_columns');
+add_filter('manage_edit-gln_product_sortable_columns', 'glenmark_gln_product_sortable_columns');
 
-function webrev_wr_product_enqueue_admin_order_script($hook)
+function glenmark_gln_product_enqueue_admin_order_script($hook)
 {
     global $post_type;
 
-    if ('edit.php' !== $hook || 'wr_product' !== $post_type) {
+    if ('edit.php' !== $hook || 'gln_product' !== $post_type) {
         return;
     }
 
     wp_enqueue_script(
-        'wr-product-admin-order',
+        'gln-product-admin-order',
         get_template_directory_uri() . '/assets/js/admin-product-order.js',
         ['jquery', 'jquery-ui-sortable'],
         wp_get_theme()->get('Version'),
         true
     );
 
-    wp_localize_script('wr-product-admin-order', 'wrProductOrder', [
+    wp_localize_script('gln-product-admin-order', 'glnProductOrder', [
         'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('wr_product_reorder'),
+        'nonce' => wp_create_nonce('gln_product_reorder'),
     ]);
 }
-add_action('admin_enqueue_scripts', 'webrev_wr_product_enqueue_admin_order_script');
+add_action('admin_enqueue_scripts', 'glenmark_gln_product_enqueue_admin_order_script');
 
-function webrev_wr_product_handle_reorder_ajax()
+function glenmark_gln_product_handle_reorder_ajax()
 {
-    check_ajax_referer('wr_product_reorder', 'nonce');
+    check_ajax_referer('gln_product_reorder', 'nonce');
 
     if (!current_user_can('edit_others_posts')) {
-        wp_send_json_error(['message' => __('Nedostatečná oprávnění.', 'wr-pharma-product')], 403);
+        wp_send_json_error(['message' => __('Nedostatečná oprávnění.', 'gln-pharma-product')], 403);
     }
 
     $post_ids = isset($_POST['post_ids']) ? (array) $_POST['post_ids'] : [];
     $post_ids = array_map('absint', $post_ids);
 
     foreach ($post_ids as $index => $post_id) {
-        if ('wr_product' !== get_post_type($post_id)) {
+        if ('gln_product' !== get_post_type($post_id)) {
             continue;
         }
 
@@ -147,23 +147,23 @@ function webrev_wr_product_handle_reorder_ajax()
 
     wp_send_json_success();
 }
-add_action('wp_ajax_wr_product_reorder', 'webrev_wr_product_handle_reorder_ajax');
+add_action('wp_ajax_gln_product_reorder', 'glenmark_gln_product_handle_reorder_ajax');
 
-function webrev_register_wr_product_taxonomy()
+function glenmark_register_gln_product_taxonomy()
 {
     $category_labels = [
-        'name' => __('Kategorie produktů', 'wr-pharma-product'),
-        'singular_name' => __('Kategorie produktu', 'wr-pharma-product'),
-        'search_items' => __('Hledat kategorie', 'wr-pharma-product'),
-        'all_items' => __('Všechny kategorie', 'wr-pharma-product'),
-        'edit_item' => __('Upravit kategorii', 'wr-pharma-product'),
-        'update_item' => __('Aktualizovat kategorii', 'wr-pharma-product'),
-        'add_new_item' => __('Přidat novou kategorii', 'wr-pharma-product'),
-        'new_item_name' => __('Název nové kategorie', 'wr-pharma-product'),
-        'menu_name' => __('Kategorie', 'wr-pharma-product'),
+        'name' => __('Kategorie produktů', 'gln-pharma-product'),
+        'singular_name' => __('Kategorie produktu', 'gln-pharma-product'),
+        'search_items' => __('Hledat kategorie', 'gln-pharma-product'),
+        'all_items' => __('Všechny kategorie', 'gln-pharma-product'),
+        'edit_item' => __('Upravit kategorii', 'gln-pharma-product'),
+        'update_item' => __('Aktualizovat kategorii', 'gln-pharma-product'),
+        'add_new_item' => __('Přidat novou kategorii', 'gln-pharma-product'),
+        'new_item_name' => __('Název nové kategorie', 'gln-pharma-product'),
+        'menu_name' => __('Kategorie', 'gln-pharma-product'),
     ];
 
-    register_taxonomy('wr_product_category', ['wr_product'], [
+    register_taxonomy('gln_product_category', ['gln_product'], [
         'labels' => $category_labels,
         'hierarchical' => true,
         'public' => true,
@@ -172,4 +172,4 @@ function webrev_register_wr_product_taxonomy()
         'rewrite' => ['slug' => 'produkty/kategorie'],
     ]);
 }
-add_action('init', 'webrev_register_wr_product_taxonomy', 0);
+add_action('init', 'glenmark_register_gln_product_taxonomy', 0);

@@ -4,23 +4,23 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_register_wr_pharmacy_post_type()
+function glenmark_register_gln_pharmacy_post_type()
 {
     $labels = [
-        'name' => __('Lékárny', 'wr-pharma-product'),
-        'singular_name' => __('Lékárna', 'wr-pharma-product'),
-        'menu_name' => __('Lékárny', 'wr-pharma-product'),
-        'name_admin_bar' => __('Lékárna', 'wr-pharma-product'),
-        'add_new' => __('Přidat lékárnu', 'wr-pharma-product'),
-        'add_new_item' => __('Přidat novou lékárnu', 'wr-pharma-product'),
-        'edit_item' => __('Upravit lékárnu', 'wr-pharma-product'),
-        'new_item' => __('Nová lékárna', 'wr-pharma-product'),
-        'view_item' => __('Zobrazit lékárnu', 'wr-pharma-product'),
-        'view_items' => __('Zobrazit lékárny', 'wr-pharma-product'),
-        'search_items' => __('Hledat lékárny', 'wr-pharma-product'),
-        'not_found' => __('Nebyly nalezeny žádné lékárny.', 'wr-pharma-product'),
-        'not_found_in_trash' => __('V koši nebyly nalezeny žádné lékárny.', 'wr-pharma-product'),
-        'all_items' => __('Všechny lékárny', 'wr-pharma-product'),
+        'name' => __('Lékárny', 'gln-pharma-product'),
+        'singular_name' => __('Lékárna', 'gln-pharma-product'),
+        'menu_name' => __('Lékárny', 'gln-pharma-product'),
+        'name_admin_bar' => __('Lékárna', 'gln-pharma-product'),
+        'add_new' => __('Přidat lékárnu', 'gln-pharma-product'),
+        'add_new_item' => __('Přidat novou lékárnu', 'gln-pharma-product'),
+        'edit_item' => __('Upravit lékárnu', 'gln-pharma-product'),
+        'new_item' => __('Nová lékárna', 'gln-pharma-product'),
+        'view_item' => __('Zobrazit lékárnu', 'gln-pharma-product'),
+        'view_items' => __('Zobrazit lékárny', 'gln-pharma-product'),
+        'search_items' => __('Hledat lékárny', 'gln-pharma-product'),
+        'not_found' => __('Nebyly nalezeny žádné lékárny.', 'gln-pharma-product'),
+        'not_found_in_trash' => __('V koši nebyly nalezeny žádné lékárny.', 'gln-pharma-product'),
+        'all_items' => __('Všechny lékárny', 'gln-pharma-product'),
     ];
 
     $args = [
@@ -34,6 +34,6 @@ function webrev_register_wr_pharmacy_post_type()
         'menu_position' => 21,
     ];
 
-    register_post_type('wr_pharmacy', $args);
+    register_post_type('gln_pharmacy', $args);
 }
-add_action('init', 'webrev_register_wr_pharmacy_post_type', 0);
+add_action('init', 'glenmark_register_gln_pharmacy_post_type', 0);

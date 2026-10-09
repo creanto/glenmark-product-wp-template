@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_theme_setup()
+function glenmark_theme_setup()
 {
-    load_theme_textdomain('wr-pharma-product', get_stylesheet_directory() . '/languages');
+    load_theme_textdomain('gln-pharma-product', get_stylesheet_directory() . '/languages');
 
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
@@ -28,18 +28,18 @@ function webrev_theme_setup()
     add_theme_support('align-wide');
 
     register_nav_menus([
-        'primary' => __('Primary Menu', 'wr-pharma-product'),
-        'footer' => __('Footer Menu', 'wr-pharma-product'),
+        'primary' => __('Primary Menu', 'gln-pharma-product'),
+        'footer' => __('Footer Menu', 'gln-pharma-product'),
     ]);
 
-    add_image_size('wr-card', 720, 540, true);
-    add_image_size('wr-gallery', 640, 640, true);
-    add_image_size('wr-post-banner', 1300, 520, true);
-    add_image_size('wr-post-banner-large', 2500, 1000, true);
+    add_image_size('gln-card', 720, 540, true);
+    add_image_size('gln-gallery', 640, 640, true);
+    add_image_size('gln-post-banner', 1300, 520, true);
+    add_image_size('gln-post-banner-large', 2500, 1000, true);
 }
-add_action('after_setup_theme', 'webrev_theme_setup');
+add_action('after_setup_theme', 'glenmark_theme_setup');
 
-function webrev_set_default_post_template($post_id, $post, $update)
+function glenmark_set_default_post_template($post_id, $post, $update)
 {
     if ($update || 'post' !== $post->post_type || wp_is_post_revision($post_id)) {
         return;
@@ -47,13 +47,13 @@ function webrev_set_default_post_template($post_id, $post, $update)
 
     update_post_meta($post_id, '_wp_page_template', 'template-article.php');
 }
-add_action('wp_after_insert_post', 'webrev_set_default_post_template', 10, 3);
+add_action('wp_after_insert_post', 'glenmark_set_default_post_template', 10, 3);
 
-function webrev_register_sidebars()
+function glenmark_register_sidebars()
 {
     for ($index = 1; $index <= 4; $index++) {
         register_sidebar([
-            'name' => sprintf(__('Footer Column %d', 'wr-pharma-product'), $index),
+            'name' => sprintf(__('Footer Column %d', 'gln-pharma-product'), $index),
             'id' => 'footer_col_' . $index,
             'before_widget' => '<div class="widget">',
             'after_widget' => '</div>',
@@ -62,9 +62,9 @@ function webrev_register_sidebars()
         ]);
     }
 }
-add_action('widgets_init', 'webrev_register_sidebars');
+add_action('widgets_init', 'glenmark_register_sidebars');
 
-function webrev_allow_svg_uploads($mimes)
+function glenmark_allow_svg_uploads($mimes)
 {
     if (!current_user_can('upload_files')) {
         return $mimes;
@@ -75,9 +75,9 @@ function webrev_allow_svg_uploads($mimes)
 
     return $mimes;
 }
-add_filter('upload_mimes', 'webrev_allow_svg_uploads');
+add_filter('upload_mimes', 'glenmark_allow_svg_uploads');
 
-function webrev_fix_svg_filetype_check($data, $file, $filename, $mimes)
+function glenmark_fix_svg_filetype_check($data, $file, $filename, $mimes)
 {
     $filetype = wp_check_filetype($filename, $mimes);
     $ext = strtolower((string) ($filetype['ext'] ?? ''));
@@ -94,4 +94,4 @@ function webrev_fix_svg_filetype_check($data, $file, $filename, $mimes)
 
     return $data;
 }
-add_filter('wp_check_filetype_and_ext', 'webrev_fix_svg_filetype_check', 10, 4);
+add_filter('wp_check_filetype_and_ext', 'glenmark_fix_svg_filetype_check', 10, 4);

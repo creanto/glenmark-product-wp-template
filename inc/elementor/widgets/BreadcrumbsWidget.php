@@ -4,16 +4,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Webrev_Breadcrumbs_Widget extends \Elementor\Widget_Base
+class Glenmark_Breadcrumbs_Widget extends \Elementor\Widget_Base
 {
     public function get_name()
     {
-        return 'wr-breadcrumbs';
+        return 'gln-breadcrumbs';
     }
 
     public function get_title()
     {
-        return __('Drobečková navigace', 'wr-pharma-product');
+        return __('Drobečková navigace', 'gln-pharma-product');
     }
 
     public function get_icon()
@@ -23,7 +23,7 @@ class Webrev_Breadcrumbs_Widget extends \Elementor\Widget_Base
 
     public function get_categories()
     {
-        return ['webrev'];
+        return ['glenmark'];
     }
 
     protected function render()
@@ -53,21 +53,21 @@ class Webrev_Breadcrumbs_Widget extends \Elementor\Widget_Base
             ];
         }
 
-        echo '<nav class="wr-breadcrumbs" aria-label="' . esc_attr__('Drobečková navigace', 'wr-pharma-product') . '">';
-        echo '<ol class="wr-breadcrumbs__list">';
+        echo '<nav class="gln-breadcrumbs" aria-label="' . esc_attr__('Drobečková navigace', 'gln-pharma-product') . '">';
+        echo '<ol class="gln-breadcrumbs__list">';
 
         foreach ($items as $index => $item) {
             $is_current = empty($item['url']);
 
-            echo '<li class="wr-breadcrumbs__item">';
+            echo '<li class="gln-breadcrumbs__item">';
             if (!$is_current && !empty($item['url'])) {
-                echo '<a class="wr-breadcrumbs__link" href="' . esc_url($item['url']) . '">';
+                echo '<a class="gln-breadcrumbs__link" href="' . esc_url($item['url']) . '">';
             } else {
-                echo '<span class="wr-breadcrumbs__current" aria-current="page">';
+                echo '<span class="gln-breadcrumbs__current" aria-current="page">';
             }
 
             if (!empty($item['home'])) {
-                echo '<svg class="wr-breadcrumbs__home-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+                echo '<svg class="gln-breadcrumbs__home-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
             }
             echo esc_html($item['label']);
             echo (!$is_current && !empty($item['url'])) ? '</a>' : '</span>';

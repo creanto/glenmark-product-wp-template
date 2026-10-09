@@ -4,69 +4,69 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$header_sticky = (bool) webrev_get_header_sticky();
-$header_shrink = (bool) webrev_get_header_shrink();
-$header_hide_on_scroll = (bool) webrev_get_header_hide_on_scroll();
-$header_mode = is_singular() ? webrev_get_header_mode() : 'normal';
+$header_sticky = (bool) glenmark_get_header_sticky();
+$header_shrink = (bool) glenmark_get_header_shrink();
+$header_hide_on_scroll = (bool) glenmark_get_header_hide_on_scroll();
+$header_mode = is_singular() ? glenmark_get_header_mode() : 'normal';
 $header_transparent = 'transparent' === $header_mode;
 $header_glassy = 'glassy' === $header_mode;
 $header_glassy_dark = 'glassy-dark' === $header_mode;
 $header_overlay_mode = $header_transparent || $header_glassy || $header_glassy_dark;
 $header_sticky_effective = $header_sticky || $header_overlay_mode;
 $header_can_shrink = $header_sticky_effective && $header_shrink;
-$header_background_color = webrev_sanitize_header_background_color(webrev_get_setting('header_background_color', ''));
-$header_background_image_id = (int) webrev_get_setting('header_background_image', 0);
+$header_background_color = glenmark_sanitize_header_background_color(glenmark_get_setting('header_background_color', ''));
+$header_background_image_id = (int) glenmark_get_setting('header_background_image', 0);
 $header_background_image_url = $header_background_image_id > 0 ? wp_get_attachment_image_url($header_background_image_id, 'full') : '';
-$header_background_size = webrev_sanitize_header_background_size(webrev_get_setting('header_background_size', 'cover'));
-$header_background_position = webrev_sanitize_header_background_position(webrev_get_setting('header_background_position', 'center center'));
-$header_background_repeat = webrev_sanitize_header_background_repeat(webrev_get_setting('header_background_repeat', 'no-repeat'));
-$header_logo_max_width = webrev_sanitize_header_logo_max_width(webrev_get_setting('header_logo_max_width', 260));
-$header_navigation_link_color = webrev_sanitize_header_background_color(webrev_get_setting('header_navigation_link_color', ''));
-$header_navigation_separators = (bool) webrev_get_setting('header_navigation_separators', false);
+$header_background_size = glenmark_sanitize_header_background_size(glenmark_get_setting('header_background_size', 'cover'));
+$header_background_position = glenmark_sanitize_header_background_position(glenmark_get_setting('header_background_position', 'center center'));
+$header_background_repeat = glenmark_sanitize_header_background_repeat(glenmark_get_setting('header_background_repeat', 'no-repeat'));
+$header_logo_max_width = glenmark_sanitize_header_logo_max_width(glenmark_get_setting('header_logo_max_width', 260));
+$header_navigation_link_color = glenmark_sanitize_header_background_color(glenmark_get_setting('header_navigation_link_color', ''));
+$header_navigation_separators = (bool) glenmark_get_setting('header_navigation_separators', false);
 $header_style_parts = [];
 
 if ('' !== $header_background_color) {
-    $header_style_parts[] = '--wr-header-custom-bg-color: ' . $header_background_color;
+    $header_style_parts[] = '--gln-header-custom-bg-color: ' . $header_background_color;
 }
 
 if ('' !== $header_background_image_url) {
-    $header_style_parts[] = '--wr-header-custom-bg-image: url(' . esc_url($header_background_image_url) . ')';
-    $header_style_parts[] = '--wr-header-custom-bg-size: ' . $header_background_size;
-    $header_style_parts[] = '--wr-header-custom-bg-position: ' . $header_background_position;
-    $header_style_parts[] = '--wr-header-custom-bg-repeat: ' . $header_background_repeat;
+    $header_style_parts[] = '--gln-header-custom-bg-image: url(' . esc_url($header_background_image_url) . ')';
+    $header_style_parts[] = '--gln-header-custom-bg-size: ' . $header_background_size;
+    $header_style_parts[] = '--gln-header-custom-bg-position: ' . $header_background_position;
+    $header_style_parts[] = '--gln-header-custom-bg-repeat: ' . $header_background_repeat;
 }
 
 $mobile_nav_background_color = '' !== $header_background_color ? $header_background_color : 'rgba(255, 255, 255, 0.94)';
 $mobile_nav_background_image = '' !== $header_background_image_url ? 'url(' . esc_url($header_background_image_url) . ')' : 'none';
-$header_style_parts[] = '--wr-mobile-nav-bg-color: ' . $mobile_nav_background_color;
-$header_style_parts[] = '--wr-mobile-nav-bg-image: ' . $mobile_nav_background_image;
-$header_style_parts[] = '--wr-mobile-nav-bg-size: ' . ('' !== $header_background_image_url ? $header_background_size : 'cover');
-$header_style_parts[] = '--wr-mobile-nav-bg-position: ' . ('' !== $header_background_image_url ? $header_background_position : 'center center');
-$header_style_parts[] = '--wr-mobile-nav-bg-repeat: ' . ('' !== $header_background_image_url ? $header_background_repeat : 'no-repeat');
-$header_style_parts[] = '--wr-header-logo-max-width: ' . $header_logo_max_width . 'px';
+$header_style_parts[] = '--gln-mobile-nav-bg-color: ' . $mobile_nav_background_color;
+$header_style_parts[] = '--gln-mobile-nav-bg-image: ' . $mobile_nav_background_image;
+$header_style_parts[] = '--gln-mobile-nav-bg-size: ' . ('' !== $header_background_image_url ? $header_background_size : 'cover');
+$header_style_parts[] = '--gln-mobile-nav-bg-position: ' . ('' !== $header_background_image_url ? $header_background_position : 'center center');
+$header_style_parts[] = '--gln-mobile-nav-bg-repeat: ' . ('' !== $header_background_image_url ? $header_background_repeat : 'no-repeat');
+$header_style_parts[] = '--gln-header-logo-max-width: ' . $header_logo_max_width . 'px';
 
 if ('' !== $header_navigation_link_color) {
-    $header_style_parts[] = '--wr-header-navigation-link-color: ' . $header_navigation_link_color;
+    $header_style_parts[] = '--gln-header-navigation-link-color: ' . $header_navigation_link_color;
 }
 
 $header_style_attr = implode('; ', $header_style_parts);
 
-$default_logo_id = webrev_get_logo_default_id();
-$transparent_logo_id = webrev_get_logo_transparent_id();
+$default_logo_id = glenmark_get_logo_default_id();
+$transparent_logo_id = glenmark_get_logo_transparent_id();
 $has_transparent_logo = $transparent_logo_id > 0;
 
 $social_links = [
     'facebook' => [
-        'url' => trim((string) webrev_get_setting('social_facebook', '')),
-        'label' => __('Facebook', 'wr-pharma-product'),
+        'url' => trim((string) glenmark_get_setting('social_facebook', '')),
+        'label' => __('Facebook', 'gln-pharma-product'),
     ],
     'instagram' => [
-        'url' => trim((string) webrev_get_setting('social_instagram', '')),
-        'label' => __('Instagram', 'wr-pharma-product'),
+        'url' => trim((string) glenmark_get_setting('social_instagram', '')),
+        'label' => __('Instagram', 'gln-pharma-product'),
     ],
     'youtube' => [
-        'url' => trim((string) webrev_get_setting('social_youtube', '')),
-        'label' => __('YouTube', 'wr-pharma-product'),
+        'url' => trim((string) glenmark_get_setting('social_youtube', '')),
+        'label' => __('YouTube', 'gln-pharma-product'),
     ],
 ];
 $has_social_links = !empty($social_links['facebook']['url']) || !empty($social_links['instagram']['url']) || !empty($social_links['youtube']['url']);
@@ -105,7 +105,7 @@ if ($header_transparent && $has_transparent_logo) {
     $header_classes[] = 'has-transparent-logo';
 }
 
-if ($header_overlay_mode && (bool) webrev_get_header_logo_show_on_scroll()) {
+if ($header_overlay_mode && (bool) glenmark_get_header_logo_show_on_scroll()) {
     $header_classes[] = 'has-logo-show-on-scroll';
 }
 
@@ -137,7 +137,7 @@ if ($primary_menu_id > 0) {
 
 if (empty($top_level_items)) {
     $fallback_item = (object) [
-        'title' => esc_html__('Uvod', 'wr-pharma-product'),
+        'title' => esc_html__('Uvod', 'gln-pharma-product'),
         'url' => home_url('/'),
         'target' => '',
         'xfn' => '',
@@ -168,8 +168,8 @@ $render_split_menu = static function ($items, $extra_class = '') {
             $classes = array_filter(array_map('sanitize_html_class', $item->classes));
         }
 
-        if (webrev_is_hero_menu_item($item->ID)) {
-            $classes[] = 'webrev-menu-item--hero';
+        if (glenmark_is_hero_menu_item($item->ID)) {
+            $classes[] = 'glenmark-menu-item--hero';
         }
 
         echo '<li class="' . esc_attr(implode(' ', $classes)) . '">';
@@ -205,7 +205,7 @@ $render_split_menu = static function ($items, $extra_class = '') {
     <div class="container site-header-inner site-header-inner--centered">
         <div class="site-header-side site-header-side--left">
             <nav class="site-navigation-split site-navigation-split--left"
-                aria-label="<?php esc_attr_e('Primary navigation left', 'wr-pharma-product'); ?>">
+                aria-label="<?php esc_attr_e('Primary navigation left', 'gln-pharma-product'); ?>">
                 <?php $render_split_menu($left_items, 'nav-menu--left'); ?>
             </nav>
         </div>
@@ -213,9 +213,9 @@ $render_split_menu = static function ($items, $extra_class = '') {
         <div class="site-branding site-branding--centered">
             <?php if ($default_logo_id > 0): ?>
                 <a class="custom-logo-link" href="<?php echo esc_url(home_url('/')); ?>" rel="home">
-                    <?php echo webrev_get_logo_image_html($default_logo_id, 'site-logo-default'); ?>
+                    <?php echo glenmark_get_logo_image_html($default_logo_id, 'site-logo-default'); ?>
                     <?php if ($has_transparent_logo): ?>
-                        <?php echo webrev_get_logo_image_html($transparent_logo_id, 'site-logo-transparent'); ?>
+                        <?php echo glenmark_get_logo_image_html($transparent_logo_id, 'site-logo-transparent'); ?>
                     <?php endif; ?>
                 </a>
             <?php else: ?>
@@ -225,13 +225,13 @@ $render_split_menu = static function ($items, $extra_class = '') {
 
         <div class="site-header-side site-header-side--right">
             <nav class="site-navigation-split site-navigation-split--right"
-                aria-label="<?php esc_attr_e('Primary navigation right', 'wr-pharma-product'); ?>">
+                aria-label="<?php esc_attr_e('Primary navigation right', 'gln-pharma-product'); ?>">
                 <?php $render_split_menu($right_items, 'nav-menu--right'); ?>
             </nav>
 
             <?php if ($has_social_links): ?>
                 <div class="site-header-social site-header-social--desktop"
-                    aria-label="<?php esc_attr_e('Social links', 'wr-pharma-product'); ?>">
+                    aria-label="<?php esc_attr_e('Social links', 'gln-pharma-product'); ?>">
                     <?php foreach ($social_links as $network => $data): ?>
                         <?php if (empty($data['url'])) {
                             continue;
@@ -268,21 +268,21 @@ $render_split_menu = static function ($items, $extra_class = '') {
             <?php endif; ?>
 
             <button class="header-menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation"
-                aria-label="<?php esc_attr_e('Menu', 'wr-pharma-product'); ?>">
+                aria-label="<?php esc_attr_e('Menu', 'gln-pharma-product'); ?>">
                 <span class="header-menu-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>
             </button>
         </div>
 
         <nav id="site-navigation" class="site-navigation"
-            aria-label="<?php esc_attr_e('Primary navigation', 'wr-pharma-product'); ?>">
+            aria-label="<?php esc_attr_e('Primary navigation', 'gln-pharma-product'); ?>">
             <button class="site-navigation-close" type="button"
-                aria-label="<?php esc_attr_e('Close menu', 'wr-pharma-product'); ?>">
+                aria-label="<?php esc_attr_e('Close menu', 'gln-pharma-product'); ?>">
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round"></path>
                 </svg>
             </button>
-            <?php webrev_render_primary_nav_menu(); ?>
+            <?php glenmark_render_primary_nav_menu(); ?>
 
         </nav>
     </div>

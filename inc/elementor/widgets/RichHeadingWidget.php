@@ -4,16 +4,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Webrev_Rich_Heading_Widget extends \Elementor\Widget_Base
+class Glenmark_Rich_Heading_Widget extends \Elementor\Widget_Base
 {
     public function get_name()
     {
-        return 'wr-rich-heading';
+        return 'gln-rich-heading';
     }
 
     public function get_title()
     {
-        return __('Rich Heading', 'wr-pharma-product');
+        return __('Rich Heading', 'gln-pharma-product');
     }
 
     public function get_icon()
@@ -23,7 +23,7 @@ class Webrev_Rich_Heading_Widget extends \Elementor\Widget_Base
 
     public function get_categories()
     {
-        return ['basic', 'webrev'];
+        return ['basic', 'glenmark'];
     }
 
     public function get_keywords()
@@ -36,24 +36,24 @@ class Webrev_Rich_Heading_Widget extends \Elementor\Widget_Base
         $this->start_controls_section(
             'section_title',
             [
-                'label' => __('Heading', 'wr-pharma-product'),
+                'label' => __('Heading', 'gln-pharma-product'),
             ]
         );
 
         $this->add_control(
             'title',
             [
-                'label' => __('Title', 'wr-pharma-product'),
+                'label' => __('Title', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::WYSIWYG,
-                'placeholder' => __('Enter your title', 'wr-pharma-product'),
-                'default' => __('Add Your Heading Text Here', 'wr-pharma-product'),
+                'placeholder' => __('Enter your title', 'gln-pharma-product'),
+                'default' => __('Add Your Heading Text Here', 'gln-pharma-product'),
             ]
         );
 
         $this->add_control(
             'link',
             [
-                'label' => __('Link', 'wr-pharma-product'),
+                'label' => __('Link', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::URL,
                 'default' => [
                     'url' => '',
@@ -64,15 +64,15 @@ class Webrev_Rich_Heading_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'size',
             [
-                'label' => __('Size', 'wr-pharma-product'),
+                'label' => __('Size', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'options' => [
-                    'default' => __('Default', 'wr-pharma-product'),
-                    'small' => __('Small', 'wr-pharma-product'),
-                    'medium' => __('Medium', 'wr-pharma-product'),
-                    'large' => __('Large', 'wr-pharma-product'),
-                    'xl' => __('XL', 'wr-pharma-product'),
-                    'xxl' => __('XXL', 'wr-pharma-product'),
+                    'default' => __('Default', 'gln-pharma-product'),
+                    'small' => __('Small', 'gln-pharma-product'),
+                    'medium' => __('Medium', 'gln-pharma-product'),
+                    'large' => __('Large', 'gln-pharma-product'),
+                    'xl' => __('XL', 'gln-pharma-product'),
+                    'xxl' => __('XXL', 'gln-pharma-product'),
                 ],
                 'default' => 'default',
                 'condition' => [
@@ -84,7 +84,7 @@ class Webrev_Rich_Heading_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'header_size',
             [
-                'label' => __('HTML Tag', 'wr-pharma-product'),
+                'label' => __('HTML Tag', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'options' => [
                     'h1' => 'H1',
@@ -106,7 +106,7 @@ class Webrev_Rich_Heading_Widget extends \Elementor\Widget_Base
         $this->start_controls_section(
             'section_title_style',
             [
-                'label' => __('Heading', 'wr-pharma-product'),
+                'label' => __('Heading', 'gln-pharma-product'),
                 'tab' => \Elementor\Controls_Manager::TAB_STYLE,
             ]
         );
@@ -114,23 +114,23 @@ class Webrev_Rich_Heading_Widget extends \Elementor\Widget_Base
         $this->add_responsive_control(
             'align',
             [
-                'label' => __('Alignment', 'wr-pharma-product'),
+                'label' => __('Alignment', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::CHOOSE,
                 'options' => [
                     'start' => [
-                        'title' => __('Start', 'wr-pharma-product'),
+                        'title' => __('Start', 'gln-pharma-product'),
                         'icon' => 'eicon-text-align-left',
                     ],
                     'center' => [
-                        'title' => __('Center', 'wr-pharma-product'),
+                        'title' => __('Center', 'gln-pharma-product'),
                         'icon' => 'eicon-text-align-center',
                     ],
                     'end' => [
-                        'title' => __('End', 'wr-pharma-product'),
+                        'title' => __('End', 'gln-pharma-product'),
                         'icon' => 'eicon-text-align-right',
                     ],
                     'justify' => [
-                        'title' => __('Justified', 'wr-pharma-product'),
+                        'title' => __('Justified', 'gln-pharma-product'),
                         'icon' => 'eicon-text-align-justify',
                     ],
                 ],
@@ -168,22 +168,22 @@ class Webrev_Rich_Heading_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'blend_mode',
             [
-                'label' => __('Blend Mode', 'wr-pharma-product'),
+                'label' => __('Blend Mode', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'options' => [
-                    '' => __('Normal', 'wr-pharma-product'),
-                    'multiply' => __('Multiply', 'wr-pharma-product'),
-                    'screen' => __('Screen', 'wr-pharma-product'),
-                    'overlay' => __('Overlay', 'wr-pharma-product'),
-                    'darken' => __('Darken', 'wr-pharma-product'),
-                    'lighten' => __('Lighten', 'wr-pharma-product'),
-                    'color-dodge' => __('Color Dodge', 'wr-pharma-product'),
-                    'saturation' => __('Saturation', 'wr-pharma-product'),
-                    'color' => __('Color', 'wr-pharma-product'),
-                    'difference' => __('Difference', 'wr-pharma-product'),
-                    'exclusion' => __('Exclusion', 'wr-pharma-product'),
-                    'hue' => __('Hue', 'wr-pharma-product'),
-                    'luminosity' => __('Luminosity', 'wr-pharma-product'),
+                    '' => __('Normal', 'gln-pharma-product'),
+                    'multiply' => __('Multiply', 'gln-pharma-product'),
+                    'screen' => __('Screen', 'gln-pharma-product'),
+                    'overlay' => __('Overlay', 'gln-pharma-product'),
+                    'darken' => __('Darken', 'gln-pharma-product'),
+                    'lighten' => __('Lighten', 'gln-pharma-product'),
+                    'color-dodge' => __('Color Dodge', 'gln-pharma-product'),
+                    'saturation' => __('Saturation', 'gln-pharma-product'),
+                    'color' => __('Color', 'gln-pharma-product'),
+                    'difference' => __('Difference', 'gln-pharma-product'),
+                    'exclusion' => __('Exclusion', 'gln-pharma-product'),
+                    'hue' => __('Hue', 'gln-pharma-product'),
+                    'luminosity' => __('Luminosity', 'gln-pharma-product'),
                 ],
                 'selectors' => [
                     '{{WRAPPER}} .elementor-heading-title' => 'mix-blend-mode: {{VALUE}}',
@@ -196,14 +196,14 @@ class Webrev_Rich_Heading_Widget extends \Elementor\Widget_Base
         $this->start_controls_tab(
             'title_colors_normal',
             [
-                'label' => __('Normal', 'wr-pharma-product'),
+                'label' => __('Normal', 'gln-pharma-product'),
             ]
         );
 
         $this->add_control(
             'title_color',
             [
-                'label' => __('Text Color', 'wr-pharma-product'),
+                'label' => __('Text Color', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .elementor-heading-title' => 'color: {{VALUE}};',
@@ -216,14 +216,14 @@ class Webrev_Rich_Heading_Widget extends \Elementor\Widget_Base
         $this->start_controls_tab(
             'title_colors_hover',
             [
-                'label' => __('Hover', 'wr-pharma-product'),
+                'label' => __('Hover', 'gln-pharma-product'),
             ]
         );
 
         $this->add_control(
             'title_hover_color',
             [
-                'label' => __('Link Color', 'wr-pharma-product'),
+                'label' => __('Link Color', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .elementor-heading-title a:hover, {{WRAPPER}} .elementor-heading-title a:focus' => 'color: {{VALUE}};',
@@ -234,7 +234,7 @@ class Webrev_Rich_Heading_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'title_hover_color_transition_duration',
             [
-                'label' => __('Transition Duration', 'wr-pharma-product'),
+                'label' => __('Transition Duration', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::SLIDER,
                 'size_units' => ['s', 'ms', 'custom'],
                 'default' => [

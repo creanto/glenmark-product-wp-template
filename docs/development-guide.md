@@ -14,15 +14,15 @@ Tento dokument je pro vývojáře agentur. Závazná pravidla názvů a umístě
 | Změna HTML hlavičky, zápatí či detailu produktu | Child template part nebo child template stejné relativní cesty |
 | Nový obsah / produktová data | WordPress záznamy a ACF, ne pevný text v šabloně |
 
-Rodičovská šablona se načítá jako základ. Child `functions.php` se spouští navíc; nevytvářejte v něm znovu obecné funkce rodiče. WordPress při `get_template_part()` a `locate_template()` hledá odpovídající soubor v child šabloně před rodičem. Produktový detail explicitně používá `single-wr_product.php`; child může dodat soubor stejného jména.
+Rodičovská šablona se načítá jako základ. Child `functions.php` se spouští navíc; nevytvářejte v něm znovu obecné funkce rodiče. WordPress při `get_template_part()` a `locate_template()` hledá odpovídající soubor v child šabloně před rodičem. Produktový detail explicitně používá `single-gln_product.php`; child může dodat soubor stejného jména.
 
-Soubory assetů vyhledávané přes `webrev_get_theme_file_path()` a `webrev_get_theme_file_uri()` mohou být přepsány stejnou relativní cestou v child. Tato možnost se týká jen míst, která dané helpery používají.
+Soubory assetů vyhledávané přes `glenmark_get_theme_file_path()` a `glenmark_get_theme_file_uri()` mohou být přepsány stejnou relativní cestou v child. Tato možnost se týká jen míst, která dané helpery používají.
 
 ## 2. `theme-config.php`
 
 Rodič načte `config/theme-config.php` a následně, pokud existuje, sloučí `site-specific/config/theme-config.php` z aktivního stylesheet (child) adresáře. Sloučení používá `array_replace_recursive()`: child hodnoty přepisují odpovídající klíče rodiče, zatímco neuvedené klíče zůstávají zachované.
 
-K hodnotám přistupujte přes `webrev_config('cesta.k.hodnote', $default)`. Nepřistupujte přímo k souboru konfigurace z náhodného modulu. Hlavní aktuální skupiny jsou:
+K hodnotám přistupujte přes `glenmark_config('cesta.k.hodnote', $default)`. Nepřistupujte přímo k souboru konfigurace z náhodného modulu. Hlavní aktuální skupiny jsou:
 
 - `layout.container_width`;
 - `layout.header_variants` a `layout.footer_variants` s popiskem a relativní cestou k template partu;
@@ -40,7 +40,7 @@ Do konfigurace patří hodnoty, ne algoritmy. WordPress Customizer hodnoty se uk
 3. Template zapisujte jako přenositelné PHP: data escapujte přes příslušné WordPress funkce a vzhled ponechte v CSS.
 4. Variantu ověřte v **Vzhled → Přizpůsobit** a také jako výchozí i transparentní režim.
 
-Rodičovské varianty jsou v `template-parts/header/` a `template-parts/footer/`. K vykreslení se používá `webrev_get_template_part()`.
+Rodičovské varianty jsou v `template-parts/header/` a `template-parts/footer/`. K vykreslení se používá `glenmark_get_template_part()`.
 
 ## 3. Barvy, písma a kaskáda CSS
 
@@ -55,21 +55,21 @@ Při psaní CSS/SCSS dodržujte tuto prioritu:
 
 Viz [referenci Elementor CSS proměnných](elementor-css-variables.md). Nevytvářejte vlastní aliasy pro Elementor barvy a písma, pokud už lze použít `--e-*` token. Hodnota fallback patří přímo do CSS vlastnosti.
 
-Parent source SCSS je v `assets/css/`; hlavní vstup je `theme.scss`, výstup je `theme.css`. U child je aktuální source `site-specific/assets/css/site.scss` a načítaný výstup `site-specific/assets/css/site.css`; písma mají `fonts.scss`/`fonts.css`. `site.css` je načten až po `webrev-theme`. CSS neupravujte bez odpovídající úpravy SCSS. Child `functions.php` načítá CSS, nikoli SCSS; produkční web potřebuje aktuální zkompilovaný výstup.
+Parent source SCSS je v `assets/css/`; hlavní vstup je `theme.scss`, výstup je `theme.css`. U child je aktuální source `site-specific/assets/css/site.scss` a načítaný výstup `site-specific/assets/css/site.css`; písma mají `fonts.scss`/`fonts.css`. `site.css` je načten až po `glenmark-theme`. CSS neupravujte bez odpovídající úpravy SCSS. Child `functions.php` načítá CSS, nikoli SCSS; produkční web potřebuje aktuální zkompilovaný výstup.
 
 Rodičovský `config/theme-config.php` také předává vybrané hodnoty do inline CSS a může načítat Google Font Open Sans podle `typography.font_family`. Nezaměňujte tuto konfiguraci za plnou synchronizaci s Elementor Kit.
 
 ## 4. PHP a hooky
 
 - Každý PHP modul začíná ochranou `ABSPATH`.
-- Obecné funkce používají prefix `webrev_`; child-only funkce mají jasný site prefix.
+- Obecné funkce používají prefix `glenmark_`; child-only funkce mají jasný site prefix.
 - Obecný modul patří do jediného odpovědného souboru pod `inc/` a musí být explicitně připojen v `inc/bootstrap.php`.
 - Kód pro konkrétní web patří do child `functions.php` nebo do child souboru, který je z něj explicitně načten.
 - Vstupy validujte, výstupy escapujte (`esc_html`, `esc_attr`, `esc_url`, `wp_kses_post`) a používejte nonce/capability check u zápisových endpointů.
 - Pro sdílenou odchylku přidejte pojmenovaný filtr nebo akci; v child hooku zachovejte priority a počet argumentů.
 - Nepřidávejte produktové výjimky do obecných helperů nebo widgetů.
 
-Rodičovská šablona má například filtr `wr-pharma-product/elementor/theme_style_scope`. Ne každý modul má rozšiřovací filtr. Pokud child potřebuje upravit interní ACF mapping, schema nebo výstup feedu, nejprve posuďte, zda je změna obecná; pro sdílený use case doplňte filtr do rodiče místo kopírování celého modulu.
+Rodičovská šablona má například filtr `gln-pharma-product/elementor/theme_style_scope`. Ne každý modul má rozšiřovací filtr. Pokud child potřebuje upravit interní ACF mapping, schema nebo výstup feedu, nejprve posuďte, zda je změna obecná; pro sdílený use case doplňte filtr do rodiče místo kopírování celého modulu.
 
 ## 5. Elementor a obsahové moduly
 
@@ -81,7 +81,7 @@ Widgety se registrují v `inc/elementor/register-widgets.php`; konkrétní imple
 4. otestujte editor, front-end, prázdný stav a mobil;
 5. obecný widget neváževejte na jednu stránku nebo jeden Elementor Kit.
 
-Zvláštní logika hlavičky a expert gate rozšiřuje nastavení Elementor dokumentu. Custom element Scalable Canvas se registruje jen při dostupné podpoře Container. Widget Product Filters je v registrátoru, ale odpovídající shortcode `wr_product_filters` nyní vrací prázdný řetězec; před rozšířením nebo použitím jej považujte za nedokončený.
+Zvláštní logika hlavičky a expert gate rozšiřuje nastavení Elementor dokumentu. Custom element Scalable Canvas se registruje jen při dostupné podpoře Container. Widget Product Filters je v registrátoru, ale odpovídající shortcode `gln_product_filters` nyní vrací prázdný řetězec; před rozšířením nebo použitím jej považujte za nedokončený.
 
 Soubor `inc/elementor-json-editor.php` přidává administrační editor Elementor JSON s REST endpointy chráněnými oprávněním `manage_options`. Při práci s ním zálohujte dokument; nejde o veřejné API.
 
@@ -116,3 +116,30 @@ Před předáním ověřte:
 - JSON-LD stránky a REST feed, veřejnou dostupnost obrázků a dokumentů;
 - consent video, SEO duplicity a cache;
 - že dokumentace odpovídá skutečné cestě zdroje a generovaného souboru.
+
+## 9. Nasazení po změně prefixů
+
+Aktuální kód používá dlouhý prefix `glenmark` a krátký prefix `gln`, včetně variant `Glenmark` a `GLN`. Změna se týká také uložených identifikátorů, nikoli jen PHP funkcí a CSS. Šablona neprovádí automatickou migraci databáze a neposkytuje aliasy původního API.
+
+U nové instalace použijte aktuální rodičovskou i child šablonu společně. U existujícího webu nejprve připravte a ověřte migraci na stagingu; samotné nahrání nových souborů nestačí.
+
+### Data a integrace k migraci
+
+| Oblast | Aktuální identifikátory / požadovaná kontrola |
+| --- | --- |
+| Produkty a lékárny | `post_type` hodnoty `gln_product` a `gln_pharmacy`; zachovejte ID záznamů a jejich obsah. |
+| Produktové kategorie | Taxonomie `gln_product_category`; zachovejte term ID a vztahy k produktům. |
+| Customizer a metadata | Klíče `glenmark_*` v `theme_mods` a metadata `_glenmark_*`, včetně nastavení hlavičky a expert gate. |
+| Elementor | Názvy vlastních widgetů `gln-*`, prvek `gln-hero`, nastavení `gln_animation_*`, `gln_transform_*`, `gln_canvas_*` a `glenmark_*`; také seznam podporovaných CPT v nastavení pluginu. |
+| ACF | Identifikátory skupin `group_gln_*` a odkazy na CPT/taxonomii; neprovádějte plošné přejmenování polí `product_*`, jejichž názvy zůstaly zachované. |
+| Vlastní obsah | Uložené shortcode názvy, CSS třídy, vlastní CSS a atributy používající předchozí prefixy. |
+| Navazující kód | Vlastní PHP hooky, callbacky, třídy a enqueue závislosti mimo tyto tři šablony. |
+| REST integrace | Veřejný feed nyní používá `/wp-json/gln-pharma-product/v1/product-feed`; změňte také klienty a odkazy na endpointy administračního JSON editoru. |
+
+### Postup pro existující web
+
+1. Zálohujte databázi i původní soubory a připravte staging se stejnými pluginy. Uchovejte exporty Elementor dokumentů, Site Settings a Customizer hodnot.
+2. Zmapujte skutečně uložené identifikátory podle původní verze šablony. Náhrady omezte na její data; neměňte běžná slova, vestavěné tokeny Elementoru ani data cizích pluginů.
+3. Migrujte strukturální hodnoty CPT a taxonomie a následně uložená nastavení. Pro serializované hodnoty použijte WordPress API nebo nástroj, který bezpečně pracuje s PHP serializací, například WP-CLI `search-replace --precise`. Nejprve ověřte rozsah přes `--dry-run`; SQL `REPLACE()` nad serializovanými hodnotami není bezpečné. Elementor JSON upravujte jako strukturovaná data.
+4. Nasaďte aktualizovaný parent a příslušnou child šablonu společně s migrací. Obnovte přepisovací pravidla, přegenerujte Elementor CSS/data a vyprázdněte cache. Názvy adresářů šablon ani veřejný slug `produkty` se touto změnou nemění.
+5. Ověřte počty produktů a lékáren, jejich kategorie a ACF pole, vlastní widgety v editoru i na front-endu, nastavení hlavičky, animace, expert gate, videa a nový REST feed. Při rollbacku obnovte společně původní soubory i databázi.

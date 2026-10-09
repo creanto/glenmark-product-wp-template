@@ -1,10 +1,10 @@
-# Elementor CSS Variables for wr-pharma-product
+# Elementor CSS Variables for gln-pharma-product
 
 Tento soubor je referencni seznam CSS promennych z Elementoru, ktere mame pouzivat primo v SCSS.
 
 Pravidlo:
 - V SCSS pouzivej primo Elementor promenne `--e-*`.
-- Nevytvarej nove aliasy typu `--wr-*` pro barvy a typografii.
+- Nevytvarej nove aliasy typu `--gln-*` pro barvy a typografii.
 - Kdyz promenna neni dostupna, pouzij lokalni hodnotu primo na vlastnosti (fallback).
 
 ## 1) Global colors (`--e-global-color-*`)

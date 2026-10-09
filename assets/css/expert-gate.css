@@ -1,4 +1,4 @@
-.wr-expert-gate {
+.gln-expert-gate {
     position: fixed;
     inset: 0;
     z-index: 100000;
@@ -8,17 +8,17 @@
     padding: 1.5rem;
 }
 
-.wr-expert-gate[hidden] {
+.gln-expert-gate[hidden] {
     display: none;
 }
 
-.wr-expert-gate__overlay {
+.gln-expert-gate__overlay {
     position: absolute;
     inset: 0;
     background-color: rgba(255, 255, 255, 0.92);
 }
 
-.wr-expert-gate__dialog {
+.gln-expert-gate__dialog {
     position: relative;
     width: 100%;
     max-width: 32rem;
@@ -29,25 +29,25 @@
     box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.25);
 }
 
-.wr-expert-gate__text {
+.gln-expert-gate__text {
     margin: 0 0 1.5rem;
     font-size: 1rem;
     line-height: 1.6;
     color: #12222f;
 }
 
-.wr-expert-gate__text > *:last-child {
+.gln-expert-gate__text > *:last-child {
     margin-bottom: 0;
 }
 
-.wr-expert-gate__actions {
+.gln-expert-gate__actions {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.75rem;
 }
 
-.wr-expert-gate__button {
+.gln-expert-gate__button {
     display: inline-block;
     padding: 0.75rem 1.5rem;
     border: 1px solid transparent;
@@ -57,29 +57,29 @@
     cursor: pointer;
 }
 
-.wr-expert-gate__button--confirm {
+.gln-expert-gate__button--confirm {
     background-color: #e2001a;
     color: #fff;
 }
 
-.wr-expert-gate__button--confirm:hover,
-.wr-expert-gate__button--confirm:focus {
+.gln-expert-gate__button--confirm:hover,
+.gln-expert-gate__button--confirm:focus {
     background-color: #b80015;
     color: #fff;
 }
 
-.wr-expert-gate__button--decline {
+.gln-expert-gate__button--decline {
     background-color: transparent;
     color: #12222f;
     border-color: #12222f;
 }
 
-.wr-expert-gate__button--decline:hover,
-.wr-expert-gate__button--decline:focus {
+.gln-expert-gate__button--decline:hover,
+.gln-expert-gate__button--decline:focus {
     background-color: #12222f;
     color: #fff;
 }
 
-body.wr-expert-gate-locked {
+body.gln-expert-gate-locked {
     overflow: hidden;
 }

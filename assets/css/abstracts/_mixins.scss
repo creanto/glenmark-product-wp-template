@@ -1,5 +1,5 @@
 @mixin container {
-    width: $wr-container;
+    width: $gln-container;
     margin: 0 auto;
 }
 
@@ -14,10 +14,10 @@
 }
 
 @mixin card-base {
-    background: $wr-color-white;
-    border: 1px solid $wr-color-border;
+    background: $gln-color-white;
+    border: 1px solid $gln-color-border;
     border-radius: 22px;
-    box-shadow: $wr-shadow-card;
+    box-shadow: $gln-shadow-card;
 }
 
 @mixin button-base {

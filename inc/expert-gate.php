@@ -9,35 +9,35 @@ if (!defined('ABSPATH')) {
  * flagged (per page/post) as intended for healthcare professionals only.
  */
 
-function webrev_expert_gate_meta_key()
+function glenmark_expert_gate_meta_key()
 {
-    return '_webrev_expert_only';
+    return '_glenmark_expert_only';
 }
 
-function webrev_expert_gate_post_types()
+function glenmark_expert_gate_post_types()
 {
-    return webrev_get_header_settings_post_types();
+    return glenmark_get_header_settings_post_types();
 }
 
-function webrev_expert_gate_defaults()
+function glenmark_expert_gate_defaults()
 {
     return [
-        'text' => __('Obsah této stránky je určen výhradně odborníkům ve zdravotnictví (lékařům, lékárníkům a dalším zdravotnickým pracovníkům) ve smyslu zákona č. 40/1995 Sb. Kliknutím na tlačítko „Jsem odborník“ potvrzujete, že jste odborníkem v uvedeném smyslu.', 'wr-pharma-product'),
-        'confirm_label' => __('Jsem odborník', 'wr-pharma-product'),
-        'decline_label' => __('Nejsem odborník', 'wr-pharma-product'),
+        'text' => __('Obsah této stránky je určen výhradně odborníkům ve zdravotnictví (lékařům, lékárníkům a dalším zdravotnickým pracovníkům) ve smyslu zákona č. 40/1995 Sb. Kliknutím na tlačítko „Jsem odborník“ potvrzujete, že jste odborníkem v uvedeném smyslu.', 'gln-pharma-product'),
+        'confirm_label' => __('Jsem odborník', 'gln-pharma-product'),
+        'decline_label' => __('Nejsem odborník', 'gln-pharma-product'),
         'decline_url' => home_url('/'),
     ];
 }
 
-function webrev_expert_gate_get_setting($key)
+function glenmark_expert_gate_get_setting($key)
 {
-    $defaults = webrev_expert_gate_defaults();
+    $defaults = glenmark_expert_gate_defaults();
     $default = array_key_exists($key, $defaults) ? $defaults[$key] : '';
 
-    return get_theme_mod('webrev_expert_gate_' . $key, $default);
+    return get_theme_mod('glenmark_expert_gate_' . $key, $default);
 }
 
-function webrev_is_expert_gate_enabled($post_id = null)
+function glenmark_is_expert_gate_enabled($post_id = null)
 {
     $post_id = $post_id ? (int) $post_id : (int) get_queried_object_id();
 
@@ -45,52 +45,52 @@ function webrev_is_expert_gate_enabled($post_id = null)
         return false;
     }
 
-    return (bool) get_post_meta($post_id, webrev_expert_gate_meta_key(), true);
+    return (bool) get_post_meta($post_id, glenmark_expert_gate_meta_key(), true);
 }
 
 /* --- Classic editor meta box --- */
 
-function webrev_add_expert_gate_metabox()
+function glenmark_add_expert_gate_metabox()
 {
-    foreach (webrev_expert_gate_post_types() as $post_type) {
+    foreach (glenmark_expert_gate_post_types() as $post_type) {
         add_meta_box(
-            'webrev-expert-gate',
-            __('Expert only', 'wr-pharma-product'),
-            'webrev_render_expert_gate_metabox',
+            'glenmark-expert-gate',
+            __('Expert only', 'gln-pharma-product'),
+            'glenmark_render_expert_gate_metabox',
             $post_type,
             'side',
             'default'
         );
     }
 }
-add_action('add_meta_boxes', 'webrev_add_expert_gate_metabox');
+add_action('add_meta_boxes', 'glenmark_add_expert_gate_metabox');
 
-function webrev_render_expert_gate_metabox($post)
+function glenmark_render_expert_gate_metabox($post)
 {
     $post_id = isset($post->ID) ? (int) $post->ID : 0;
-    $enabled = (bool) get_post_meta($post_id, webrev_expert_gate_meta_key(), true);
+    $enabled = (bool) get_post_meta($post_id, glenmark_expert_gate_meta_key(), true);
 
-    wp_nonce_field('webrev_save_expert_gate', 'webrev_expert_gate_nonce');
+    wp_nonce_field('glenmark_save_expert_gate', 'glenmark_expert_gate_nonce');
     ?>
     <p>
         <label>
-            <input type="checkbox" name="webrev_expert_gate_enabled" value="1" <?php checked($enabled); ?> />
-            <?php esc_html_e('Show "experts only" notice before this page', 'wr-pharma-product'); ?>
+            <input type="checkbox" name="glenmark_expert_gate_enabled" value="1" <?php checked($enabled); ?> />
+            <?php esc_html_e('Show "experts only" notice before this page', 'gln-pharma-product'); ?>
         </label>
     </p>
     <p class="description">
-        <?php esc_html_e('Text and button labels are configured in Customizer → Expert only notice.', 'wr-pharma-product'); ?>
+        <?php esc_html_e('Text and button labels are configured in Customizer → Expert only notice.', 'gln-pharma-product'); ?>
     </p>
     <?php
 }
 
-function webrev_save_expert_gate_metabox($post_id)
+function glenmark_save_expert_gate_metabox($post_id)
 {
-    if (!isset($_POST['webrev_expert_gate_nonce'])) {
+    if (!isset($_POST['glenmark_expert_gate_nonce'])) {
         return;
     }
 
-    if (!wp_verify_nonce(wp_unslash($_POST['webrev_expert_gate_nonce']), 'webrev_save_expert_gate')) {
+    if (!wp_verify_nonce(wp_unslash($_POST['glenmark_expert_gate_nonce']), 'glenmark_save_expert_gate')) {
         return;
     }
 
@@ -102,13 +102,13 @@ function webrev_save_expert_gate_metabox($post_id)
         return;
     }
 
-    update_post_meta($post_id, webrev_expert_gate_meta_key(), !empty($_POST['webrev_expert_gate_enabled']) ? '1' : '');
+    update_post_meta($post_id, glenmark_expert_gate_meta_key(), !empty($_POST['glenmark_expert_gate_enabled']) ? '1' : '');
 }
-add_action('save_post', 'webrev_save_expert_gate_metabox');
+add_action('save_post', 'glenmark_save_expert_gate_metabox');
 
 /* --- Elementor document control (so the toggle is also reachable from the Elementor editor) --- */
 
-function webrev_expert_gate_document_supported($document)
+function glenmark_expert_gate_document_supported($document)
 {
     if (!is_object($document) || !method_exists($document, 'get_main_id')) {
         return false;
@@ -120,46 +120,46 @@ function webrev_expert_gate_document_supported($document)
         return false;
     }
 
-    return in_array((string) get_post_type($post_id), webrev_expert_gate_post_types(), true);
+    return in_array((string) get_post_type($post_id), glenmark_expert_gate_post_types(), true);
 }
 
-function webrev_register_elementor_expert_gate_control($document)
+function glenmark_register_elementor_expert_gate_control($document)
 {
     if (!class_exists('Elementor\\Controls_Manager')) {
         return;
     }
 
-    if (!webrev_expert_gate_document_supported($document)) {
+    if (!glenmark_expert_gate_document_supported($document)) {
         return;
     }
 
     $post_id = (int) $document->get_main_id();
 
     $document->start_controls_section(
-        'webrev_expert_gate_settings',
+        'glenmark_expert_gate_settings',
         [
-            'label' => __('Expert only', 'wr-pharma-product'),
+            'label' => __('Expert only', 'gln-pharma-product'),
             'tab' => \Elementor\Controls_Manager::TAB_SETTINGS,
         ]
     );
 
     $document->add_control(
-        'webrev_expert_gate_enabled_control',
+        'glenmark_expert_gate_enabled_control',
         [
-            'label' => __('Show "experts only" notice', 'wr-pharma-product'),
+            'label' => __('Show "experts only" notice', 'gln-pharma-product'),
             'type' => \Elementor\Controls_Manager::SWITCHER,
-            'default' => (bool) get_post_meta($post_id, webrev_expert_gate_meta_key(), true) ? 'yes' : '',
-            'description' => __('Text and button labels are configured in Customizer → Expert only notice.', 'wr-pharma-product'),
+            'default' => (bool) get_post_meta($post_id, glenmark_expert_gate_meta_key(), true) ? 'yes' : '',
+            'description' => __('Text and button labels are configured in Customizer → Expert only notice.', 'gln-pharma-product'),
         ]
     );
 
     $document->end_controls_section();
 }
-add_action('elementor/documents/register_controls', 'webrev_register_elementor_expert_gate_control');
+add_action('elementor/documents/register_controls', 'glenmark_register_elementor_expert_gate_control');
 
-function webrev_save_elementor_expert_gate_control($document, $data = [])
+function glenmark_save_elementor_expert_gate_control($document, $data = [])
 {
-    if (!webrev_expert_gate_document_supported($document)) {
+    if (!glenmark_expert_gate_document_supported($document)) {
         return;
     }
 
@@ -171,17 +171,17 @@ function webrev_save_elementor_expert_gate_control($document, $data = [])
         $settings = $document->get_settings();
     }
 
-    if (!is_array($settings) || !array_key_exists('webrev_expert_gate_enabled_control', $settings)) {
+    if (!is_array($settings) || !array_key_exists('glenmark_expert_gate_enabled_control', $settings)) {
         return;
     }
 
-    update_post_meta($post_id, webrev_expert_gate_meta_key(), 'yes' === $settings['webrev_expert_gate_enabled_control'] ? '1' : '');
+    update_post_meta($post_id, glenmark_expert_gate_meta_key(), 'yes' === $settings['glenmark_expert_gate_enabled_control'] ? '1' : '');
 }
-add_action('elementor/document/after_save', 'webrev_save_elementor_expert_gate_control', 10, 2);
+add_action('elementor/document/after_save', 'glenmark_save_elementor_expert_gate_control', 10, 2);
 
 /* --- Customizer --- */
 
-function webrev_sanitize_expert_gate_url($value)
+function glenmark_sanitize_expert_gate_url($value)
 {
     $value = trim((string) $value);
 
@@ -192,94 +192,94 @@ function webrev_sanitize_expert_gate_url($value)
     return esc_url_raw($value);
 }
 
-function webrev_register_expert_gate_customizer($wp_customize)
+function glenmark_register_expert_gate_customizer($wp_customize)
 {
-    $defaults = webrev_expert_gate_defaults();
+    $defaults = glenmark_expert_gate_defaults();
 
-    webrev_register_customize_rich_text_control_class();
+    glenmark_register_customize_rich_text_control_class();
 
-    $wp_customize->add_section('webrev_expert_gate', [
-        'title' => __('Expert only notice', 'wr-pharma-product'),
+    $wp_customize->add_section('glenmark_expert_gate', [
+        'title' => __('Expert only notice', 'gln-pharma-product'),
         'priority' => 33,
     ]);
 
-    $wp_customize->add_setting('webrev_expert_gate_text', [
+    $wp_customize->add_setting('glenmark_expert_gate_text', [
         'default' => $defaults['text'],
-        'sanitize_callback' => 'webrev_sanitize_rich_text',
+        'sanitize_callback' => 'glenmark_sanitize_rich_text',
     ]);
 
     $wp_customize->add_control(
-        new Webrev_Customize_Rich_Text_Control($wp_customize, 'webrev_expert_gate_text', ['label' => __('Notice text', 'wr-pharma-product'), 'section' => 'webrev_expert_gate',])
+        new Glenmark_Customize_Rich_Text_Control($wp_customize, 'glenmark_expert_gate_text', ['label' => __('Notice text', 'gln-pharma-product'), 'section' => 'glenmark_expert_gate',])
     );
 
-    $wp_customize->add_setting('webrev_expert_gate_confirm_label', [
+    $wp_customize->add_setting('glenmark_expert_gate_confirm_label', [
         'default' => $defaults['confirm_label'],
         'sanitize_callback' => 'sanitize_text_field',
     ]);
 
-    $wp_customize->add_control('webrev_expert_gate_confirm_label', [
-        'label' => __('Confirm button label', 'wr-pharma-product'),
-        'section' => 'webrev_expert_gate',
+    $wp_customize->add_control('glenmark_expert_gate_confirm_label', [
+        'label' => __('Confirm button label', 'gln-pharma-product'),
+        'section' => 'glenmark_expert_gate',
         'type' => 'text',
     ]);
 
-    $wp_customize->add_setting('webrev_expert_gate_decline_label', [
+    $wp_customize->add_setting('glenmark_expert_gate_decline_label', [
         'default' => $defaults['decline_label'],
         'sanitize_callback' => 'sanitize_text_field',
     ]);
 
-    $wp_customize->add_control('webrev_expert_gate_decline_label', [
-        'label' => __('Decline button label', 'wr-pharma-product'),
-        'section' => 'webrev_expert_gate',
+    $wp_customize->add_control('glenmark_expert_gate_decline_label', [
+        'label' => __('Decline button label', 'gln-pharma-product'),
+        'section' => 'glenmark_expert_gate',
         'type' => 'text',
     ]);
 
-    $wp_customize->add_setting('webrev_expert_gate_decline_url', [
+    $wp_customize->add_setting('glenmark_expert_gate_decline_url', [
         'default' => $defaults['decline_url'],
-        'sanitize_callback' => 'webrev_sanitize_expert_gate_url',
+        'sanitize_callback' => 'glenmark_sanitize_expert_gate_url',
     ]);
 
-    $wp_customize->add_control('webrev_expert_gate_decline_url', [
-        'label' => __('Redirect URL when declined', 'wr-pharma-product'),
-        'description' => __('Where a visitor who is not an expert gets sent.', 'wr-pharma-product'),
-        'section' => 'webrev_expert_gate',
+    $wp_customize->add_control('glenmark_expert_gate_decline_url', [
+        'label' => __('Redirect URL when declined', 'gln-pharma-product'),
+        'description' => __('Where a visitor who is not an expert gets sent.', 'gln-pharma-product'),
+        'section' => 'glenmark_expert_gate',
         'type' => 'url',
     ]);
 }
-add_action('customize_register', 'webrev_register_expert_gate_customizer');
+add_action('customize_register', 'glenmark_register_expert_gate_customizer');
 
 /* --- Frontend rendering --- */
 
-function webrev_render_expert_gate()
+function glenmark_render_expert_gate()
 {
     if (is_admin() || !is_singular()) {
         return;
     }
 
-    if (!webrev_is_expert_gate_enabled()) {
+    if (!glenmark_is_expert_gate_enabled()) {
         return;
     }
 
-    $text = wp_kses_post(webrev_expert_gate_get_setting('text'));
+    $text = wp_kses_post(glenmark_expert_gate_get_setting('text'));
 
     if ('' === trim(wp_strip_all_tags($text))) {
         return;
     }
 
-    $confirm_label = webrev_expert_gate_get_setting('confirm_label');
-    $decline_label = webrev_expert_gate_get_setting('decline_label');
-    $decline_url = webrev_sanitize_expert_gate_url(webrev_expert_gate_get_setting('decline_url'));
+    $confirm_label = glenmark_expert_gate_get_setting('confirm_label');
+    $decline_label = glenmark_expert_gate_get_setting('decline_label');
+    $decline_url = glenmark_sanitize_expert_gate_url(glenmark_expert_gate_get_setting('decline_url'));
     ?>
-    <div class="wr-expert-gate" data-decline-url="<?php echo esc_url($decline_url); ?>" role="dialog" aria-modal="true"
-        aria-label="<?php esc_attr_e('Expert only notice', 'wr-pharma-product'); ?>">
-        <div class="wr-expert-gate__overlay"></div>
-        <div class="wr-expert-gate__dialog">
-            <div class="wr-expert-gate__text"><?php echo wp_kses_post($text); ?></div>
-            <div class="wr-expert-gate__actions">
-                <button type="button" class="wr-expert-gate__button wr-expert-gate__button--confirm">
+    <div class="gln-expert-gate" data-decline-url="<?php echo esc_url($decline_url); ?>" role="dialog" aria-modal="true"
+        aria-label="<?php esc_attr_e('Expert only notice', 'gln-pharma-product'); ?>">
+        <div class="gln-expert-gate__overlay"></div>
+        <div class="gln-expert-gate__dialog">
+            <div class="gln-expert-gate__text"><?php echo wp_kses_post($text); ?></div>
+            <div class="gln-expert-gate__actions">
+                <button type="button" class="gln-expert-gate__button gln-expert-gate__button--confirm">
                     <?php echo esc_html($confirm_label); ?>
                 </button>
-                <button type="button" class="wr-expert-gate__button wr-expert-gate__button--decline">
+                <button type="button" class="gln-expert-gate__button gln-expert-gate__button--decline">
                     <?php echo esc_html($decline_label); ?>
                 </button>
             </div>
@@ -287,25 +287,25 @@ function webrev_render_expert_gate()
     </div>
     <?php
 }
-add_action('wp_footer', 'webrev_render_expert_gate', 5);
+add_action('wp_footer', 'glenmark_render_expert_gate', 5);
 
-function webrev_enqueue_expert_gate_assets()
+function glenmark_enqueue_expert_gate_assets()
 {
-    if (is_admin() || !is_singular() || !webrev_is_expert_gate_enabled()) {
+    if (is_admin() || !is_singular() || !glenmark_is_expert_gate_enabled()) {
         return;
     }
 
-    $css_path = webrev_get_theme_file_path('assets/css/expert-gate.css');
-    $css_uri = webrev_get_theme_file_uri('assets/css/expert-gate.css');
-    $js_path = webrev_get_theme_file_path('assets/js/expert-gate.js');
-    $js_uri = webrev_get_theme_file_uri('assets/js/expert-gate.js');
+    $css_path = glenmark_get_theme_file_path('assets/css/expert-gate.css');
+    $css_uri = glenmark_get_theme_file_uri('assets/css/expert-gate.css');
+    $js_path = glenmark_get_theme_file_path('assets/js/expert-gate.js');
+    $js_uri = glenmark_get_theme_file_uri('assets/js/expert-gate.js');
 
     if (!empty($css_uri)) {
-        wp_enqueue_style('webrev-expert-gate', $css_uri, [], $css_path ? (string) filemtime($css_path) : null);
+        wp_enqueue_style('glenmark-expert-gate', $css_uri, [], $css_path ? (string) filemtime($css_path) : null);
     }
 
     if (!empty($js_uri)) {
-        wp_enqueue_script('webrev-expert-gate', $js_uri, [], $js_path ? (string) filemtime($js_path) : null, true);
+        wp_enqueue_script('glenmark-expert-gate', $js_uri, [], $js_path ? (string) filemtime($js_path) : null, true);
     }
 }
-add_action('wp_enqueue_scripts', 'webrev_enqueue_expert_gate_assets');
+add_action('wp_enqueue_scripts', 'glenmark_enqueue_expert_gate_assets');

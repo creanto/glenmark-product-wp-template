@@ -19,7 +19,7 @@ get_header();
                     <article <?php post_class('campaign-card'); ?>>
                         <?php if (has_post_thumbnail()): ?>
                             <a class="campaign-card-media" href="<?php the_permalink(); ?>">
-                                <?php the_post_thumbnail('webrev-card'); ?>
+                                <?php the_post_thumbnail('glenmark-card'); ?>
                             </a>
                         <?php endif; ?>
                         <div class="campaign-card-content">
@@ -32,7 +32,7 @@ get_header();
 
             <?php the_posts_pagination(); ?>
         <?php else: ?>
-            <p><?php esc_html_e('Obsah zatim neni k dispozici.', 'wr-pharma-product'); ?></p>
+            <p><?php esc_html_e('Obsah zatim neni k dispozici.', 'gln-pharma-product'); ?></p>
         <?php endif; ?>
     </div>
 </section>

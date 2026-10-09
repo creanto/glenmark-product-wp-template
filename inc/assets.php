@@ -4,16 +4,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_enqueue_theme_assets()
+function glenmark_enqueue_theme_assets()
 {
     $theme = wp_get_theme();
     $version = $theme->get('Version') ?: '1.0.0';
-    $theme_css_path = webrev_get_theme_file_path('assets/css/theme.css');
-    $theme_css_uri = webrev_get_theme_file_uri('assets/css/theme.css');
+    $theme_css_path = glenmark_get_theme_file_path('assets/css/theme.css');
+    $theme_css_uri = glenmark_get_theme_file_uri('assets/css/theme.css');
 
-    if ('open sans' === strtolower((string) webrev_config('typography.font_family', ''))) {
+    if ('open sans' === strtolower((string) glenmark_config('typography.font_family', ''))) {
         wp_enqueue_style(
-            'webrev-open-sans',
+            'glenmark-open-sans',
             'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap',
             [],
             null
@@ -29,29 +29,29 @@ function webrev_enqueue_theme_assets()
     }
 
     if (!empty($theme_css_uri)) {
-        wp_enqueue_style('webrev-theme', $theme_css_uri, [], $version);
+        wp_enqueue_style('glenmark-theme', $theme_css_uri, [], $version);
     }
 
-    $slick_css_uri = webrev_get_theme_file_uri('assets/slick/slick.css');
+    $slick_css_uri = glenmark_get_theme_file_uri('assets/slick/slick.css');
     if (!empty($slick_css_uri)) {
-        wp_enqueue_style('webrev-slick', $slick_css_uri, [], $version);
+        wp_enqueue_style('glenmark-slick', $slick_css_uri, [], $version);
     }
 
-    $slick_theme_css_uri = webrev_get_theme_file_uri('assets/slick/slick-theme.css');
+    $slick_theme_css_uri = glenmark_get_theme_file_uri('assets/slick/slick-theme.css');
     if (!empty($slick_theme_css_uri)) {
-        wp_enqueue_style('webrev-slick-theme', $slick_theme_css_uri, ['webrev-slick'], $version);
+        wp_enqueue_style('glenmark-slick-theme', $slick_theme_css_uri, ['glenmark-slick'], $version);
     }
 
-    $magnific_css_uri = webrev_get_theme_file_uri('assets/magnific/magnific-popup.css');
+    $magnific_css_uri = glenmark_get_theme_file_uri('assets/magnific/magnific-popup.css');
     if (!empty($magnific_css_uri)) {
-        wp_enqueue_style('webrev-magnific', $magnific_css_uri, [], $version);
+        wp_enqueue_style('glenmark-magnific', $magnific_css_uri, [], $version);
     }
 
-    $header_height = (int) webrev_get_setting('header_height', 88);
-    $header_shrink_height = (int) webrev_get_setting('header_shrink_height', 68);
-    $inline_css = ':root{--wr-header-height:' . esc_attr((string) $header_height) . 'px;--wr-header-height-shrunk:' . esc_attr((string) $header_shrink_height) . 'px;}';
+    $header_height = (int) glenmark_get_setting('header_height', 88);
+    $header_shrink_height = (int) glenmark_get_setting('header_shrink_height', 68);
+    $inline_css = ':root{--gln-header-height:' . esc_attr((string) $header_height) . 'px;--gln-header-height-shrunk:' . esc_attr((string) $header_shrink_height) . 'px;}';
 
-    $colors = webrev_config('colors', []);
+    $colors = glenmark_config('colors', []);
     $color_vars = '';
 
     foreach (['blue' => 'primary', 'blue-dark' => 'secondary', 'red' => 'accent', 'white' => 'white', 'bg' => 'bg'] as $css_var => $config_key) {
@@ -64,10 +64,10 @@ function webrev_enqueue_theme_assets()
         $inline_css .= ':root{' . $color_vars . '}';
     }
 
-    wp_add_inline_style('webrev-theme', $inline_css);
+    wp_add_inline_style('glenmark-theme', $inline_css);
 
-    $theme_js_path = webrev_get_theme_file_path('assets/js/theme.js');
-    $theme_js_uri = webrev_get_theme_file_uri('assets/js/theme.js');
+    $theme_js_path = glenmark_get_theme_file_path('assets/js/theme.js');
+    $theme_js_uri = glenmark_get_theme_file_uri('assets/js/theme.js');
     $theme_js_version = $version;
 
     if (!empty($theme_js_path)) {
@@ -78,22 +78,22 @@ function webrev_enqueue_theme_assets()
         }
     }
 
-    $slick_js_uri = webrev_get_theme_file_uri('assets/slick/slick.min.js');
+    $slick_js_uri = glenmark_get_theme_file_uri('assets/slick/slick.min.js');
     if (!empty($slick_js_uri)) {
-        wp_enqueue_script('webrev-slick', $slick_js_uri, ['jquery'], $version, true);
+        wp_enqueue_script('glenmark-slick', $slick_js_uri, ['jquery'], $version, true);
     }
 
-    $magnific_js_uri = webrev_get_theme_file_uri('assets/magnific/jquery.magnific-popup.min.js');
+    $magnific_js_uri = glenmark_get_theme_file_uri('assets/magnific/jquery.magnific-popup.min.js');
     if (!empty($magnific_js_uri)) {
-        wp_enqueue_script('webrev-magnific', $magnific_js_uri, ['jquery'], $version, true);
+        wp_enqueue_script('glenmark-magnific', $magnific_js_uri, ['jquery'], $version, true);
     }
 
     if (!empty($theme_js_uri)) {
-        wp_enqueue_script('webrev-theme', $theme_js_uri, ['jquery', 'webrev-slick', 'webrev-magnific'], $theme_js_version, true);
+        wp_enqueue_script('glenmark-theme', $theme_js_uri, ['jquery', 'glenmark-slick', 'glenmark-magnific'], $theme_js_version, true);
     }
 
-    $nbsp_fix_path = webrev_get_theme_file_path('assets/js/nbsp-fix.js');
-    $nbsp_fix_uri = webrev_get_theme_file_uri('assets/js/nbsp-fix.js');
+    $nbsp_fix_path = glenmark_get_theme_file_path('assets/js/nbsp-fix.js');
+    $nbsp_fix_uri = glenmark_get_theme_file_uri('assets/js/nbsp-fix.js');
     $nbsp_fix_version = $version;
 
     if (!empty($nbsp_fix_path)) {
@@ -105,7 +105,7 @@ function webrev_enqueue_theme_assets()
     }
 
     if (!empty($nbsp_fix_uri)) {
-        wp_enqueue_script('webrev-nbsp-fix', $nbsp_fix_uri, [], $nbsp_fix_version, true);
+        wp_enqueue_script('glenmark-nbsp-fix', $nbsp_fix_uri, [], $nbsp_fix_version, true);
     }
 }
-add_action('wp_enqueue_scripts', 'webrev_enqueue_theme_assets');
+add_action('wp_enqueue_scripts', 'glenmark_enqueue_theme_assets');

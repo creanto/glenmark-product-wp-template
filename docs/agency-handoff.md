@@ -25,7 +25,7 @@ Barvy a písma nastavujte nejprve globálně v Elementoru. Vlastní CSS může v
 
 ## Produkty a feed
 
-Výchozí produktový detail zajišťuje rodičovská šablona a lze jej upravit nebo přepsat v child. Veřejný JSON-LD katalog produktů je dostupný na `/wp-json/wr-pharma-product/v1/product-feed`. Feed vychází z publikovaných produktů a jejich ACF polí. Není to cenový Merchant Center feed a neobsahuje cenu ani skladovou dostupnost.
+Výchozí produktový detail zajišťuje rodičovská šablona a lze jej upravit nebo přepsat v child. Veřejný JSON-LD katalog produktů je dostupný na `/wp-json/gln-pharma-product/v1/product-feed`. Feed vychází z publikovaných produktů a jejich ACF polí. Není to cenový Merchant Center feed a neobsahuje cenu ani skladovou dostupnost.
 
 Pozor: feed zahrnuje všechny publikované produkty, i když je na jejich stránce zapnuté potvrzení pro odborníky. Toto potvrzení není zabezpečení ani omezení přístupu k feedu.
 

@@ -1,4 +1,4 @@
-.webrev-back-to-top {
+.glenmark-back-to-top {
     position: fixed;
     bottom: max(1.5rem, env(safe-area-inset-bottom));
     left: max(1.5rem, env(safe-area-inset-left));
@@ -37,7 +37,7 @@
 }
 
 @media (max-width: 640px) {
-    .webrev-back-to-top {
+    .glenmark-back-to-top {
         bottom: max(1rem, env(safe-area-inset-bottom));
         left: max(1rem, env(safe-area-inset-left));
         width: 44px;

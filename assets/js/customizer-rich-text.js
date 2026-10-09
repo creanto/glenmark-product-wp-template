@@ -27,7 +27,7 @@
         var $textarea = $(textarea);
         var editorId = getEditorId($textarea);
 
-        if (!editorId || $textarea.data('webrevRichTextReady')) {
+        if (!editorId || $textarea.data('glenmarkRichTextReady')) {
             return;
         }
 
@@ -35,7 +35,7 @@
             return;
         }
 
-        $textarea.data('webrevRichTextReady', true);
+        $textarea.data('glenmarkRichTextReady', true);
 
         window.wp.editor.initialize(editorId, {
             mediaButtons: false,
@@ -48,7 +48,7 @@
         });
     }
 
-    $(document).on('input change', 'textarea[data-webrev-rich-text="1"]', function () {
+    $(document).on('input change', 'textarea[data-glenmark-rich-text="1"]', function () {
         var settingId = $(this).data('customizeSettingLink');
 
         if (settingId && customize.has(settingId)) {
@@ -57,7 +57,7 @@
     });
 
     $(document).on('tinymce-editor-init', function (event, editor) {
-        if (!$('#' + editor.id).is('textarea[data-webrev-rich-text="1"]')) {
+        if (!$('#' + editor.id).is('textarea[data-glenmark-rich-text="1"]')) {
             return;
         }
 
@@ -67,7 +67,7 @@
     });
 
     function initializeEditors() {
-        $('textarea[data-webrev-rich-text="1"]').each(function () {
+        $('textarea[data-glenmark-rich-text="1"]').each(function () {
             initializeEditor(this);
         });
     }

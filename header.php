@@ -16,16 +16,16 @@ if (!defined('ABSPATH')) {
     <?php wp_body_open(); ?>
     <div id="page" class="site">
         <?php
-        if (!function_exists('webrev_render_site_header')) {
-            $webrev_bootstrap = __DIR__ . '/inc/bootstrap.php';
+        if (!function_exists('glenmark_render_site_header')) {
+            $glenmark_bootstrap = __DIR__ . '/inc/bootstrap.php';
 
-            if (file_exists($webrev_bootstrap)) {
-                require_once $webrev_bootstrap;
+            if (file_exists($glenmark_bootstrap)) {
+                require_once $glenmark_bootstrap;
             }
         }
 
-        if (function_exists('webrev_render_site_header')) {
-            webrev_render_site_header();
+        if (function_exists('glenmark_render_site_header')) {
+            glenmark_render_site_header();
         } else {
             get_template_part('template-parts/header/default');
         }
