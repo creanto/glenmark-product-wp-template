@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_register_wr_product_acf_fields()
+function glenmark_register_gln_product_acf_fields()
 {
     if (!function_exists('acf_add_local_field_group')) {
         return;
@@ -15,13 +15,13 @@ function webrev_register_wr_product_acf_fields()
             [
                 'param' => 'post_type',
                 'operator' => '==',
-                'value' => 'wr_product',
+                'value' => 'gln_product',
             ],
         ],
     ];
 
     acf_add_local_field_group([
-        'key' => 'group_wr_product_basic_information',
+        'key' => 'group_gln_product_basic_information',
         'title' => 'Produkt - Základní informace',
         'fields' => [
             [
@@ -57,7 +57,7 @@ function webrev_register_wr_product_acf_fields()
                 'label' => 'Kategorie produktu',
                 'name' => 'product_category',
                 'type' => 'taxonomy',
-                'taxonomy' => 'wr_product_category',
+                'taxonomy' => 'gln_product_category',
                 'field_type' => 'select',
                 'add_term' => 1,
                 'save_terms' => 1,
@@ -218,7 +218,7 @@ function webrev_register_wr_product_acf_fields()
     ]);
 
     acf_add_local_field_group([
-        'key' => 'group_wr_product_schema',
+        'key' => 'group_gln_product_schema',
         'title' => 'Produkt - Product schema',
         'fields' => [
             [
@@ -295,7 +295,7 @@ function webrev_register_wr_product_acf_fields()
     ]);
 
     acf_add_local_field_group([
-        'key' => 'group_wr_product_detailed_information',
+        'key' => 'group_gln_product_detailed_information',
         'title' => 'Produkt - obrázky',
         'fields' => [
 
@@ -337,7 +337,7 @@ function webrev_register_wr_product_acf_fields()
     ]);
 
     acf_add_local_field_group([
-        'key' => 'group_wr_product_icons',
+        'key' => 'group_gln_product_icons',
         'title' => 'Produkt - Ikony',
         'fields' => [
             [
@@ -394,7 +394,7 @@ function webrev_register_wr_product_acf_fields()
     ]);
 
     acf_add_local_field_group([
-        'key' => 'group_wr_product_pharmacies',
+        'key' => 'group_gln_product_pharmacies',
         'title' => 'Produkt - Lékárny',
         'fields' => [
             [
@@ -513,7 +513,7 @@ function webrev_register_wr_product_acf_fields()
     ]);
 
     acf_add_local_field_group([
-        'key' => 'group_wr_product_package_variants',
+        'key' => 'group_gln_product_package_variants',
         'title' => 'Produkt - Produktové varianty (balení)',
         'fields' => [
             [
@@ -679,7 +679,7 @@ function webrev_register_wr_product_acf_fields()
     ]);
 
     acf_add_local_field_group([
-        'key' => 'group_wr_product_registered_packages',
+        'key' => 'group_gln_product_registered_packages',
         'title' => 'Produkt - Registrovaná balení',
         'fields' => [
             [
@@ -738,4 +738,4 @@ function webrev_register_wr_product_acf_fields()
         'instruction_placement' => 'label',
     ]);
 }
-add_action('init', 'webrev_register_wr_product_acf_fields', 20);
+add_action('init', 'glenmark_register_gln_product_acf_fields', 20);

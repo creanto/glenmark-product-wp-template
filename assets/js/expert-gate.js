@@ -2,20 +2,20 @@
     'use strict';
 
     function init() {
-        var gate = document.querySelector('.wr-expert-gate');
+        var gate = document.querySelector('.gln-expert-gate');
 
         if (!gate) {
             return;
         }
 
-        document.body.classList.add('wr-expert-gate-locked');
+        document.body.classList.add('gln-expert-gate-locked');
 
-        var confirmButton = gate.querySelector('.wr-expert-gate__button--confirm');
-        var declineButton = gate.querySelector('.wr-expert-gate__button--decline');
+        var confirmButton = gate.querySelector('.gln-expert-gate__button--confirm');
+        var declineButton = gate.querySelector('.gln-expert-gate__button--decline');
 
         function close() {
             gate.setAttribute('hidden', 'hidden');
-            document.body.classList.remove('wr-expert-gate-locked');
+            document.body.classList.remove('gln-expert-gate-locked');
         }
 
         if (confirmButton) {

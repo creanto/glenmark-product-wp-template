@@ -1,47 +1,47 @@
-.wr-button,
-.wr-home__button,
-.wr-home__button--secondary {
+.gln-button,
+.gln-home__button,
+.gln-home__button--secondary {
     @include button-base;
 }
 
-.wr-button--primary,
-.wr-home__button {
-    background: $wr-color-primary;
-    color: $wr-color-white;
-    border-color: $wr-color-primary;
+.gln-button--primary,
+.gln-home__button {
+    background: $gln-color-primary;
+    color: $gln-color-white;
+    border-color: $gln-color-primary;
 }
 
-.wr-button--secondary,
-.wr-home__button--secondary {
+.gln-button--secondary,
+.gln-home__button--secondary {
     background: transparent;
-    border-color: $wr-color-accent;
-    color: $wr-color-primary;
+    border-color: $gln-color-accent;
+    color: $gln-color-primary;
 }
 
-.wr-home__button:hover,
-.wr-button--primary:hover {
-    background: $wr-color-secondary;
-    border-color: $wr-color-secondary;
-    color: $wr-color-white;
+.gln-home__button:hover,
+.gln-button--primary:hover {
+    background: $gln-color-secondary;
+    border-color: $gln-color-secondary;
+    color: $gln-color-white;
 }
 
-.wr-home__button--secondary:hover,
-.wr-button--secondary:hover {
+.gln-home__button--secondary:hover,
+.gln-button--secondary:hover {
     background: rgba(227, 6, 19, 0.06);
-    border-color: $wr-color-accent;
-    color: $wr-color-primary;
+    border-color: $gln-color-accent;
+    color: $gln-color-primary;
 }
 
-.wr-button--buy {
+.gln-button--buy {
     background: linear-gradient(to bottom, #f15b5d, #d71620);
-    border-color: $wr-color-accent;
-    border-radius: $wr-button-radius;
-    color: $wr-color-white;
+    border-color: $gln-color-accent;
+    border-radius: $gln-button-radius;
+    color: $gln-color-white;
 }
 
-.wr-button--buy:hover,
-.wr-button--buy:focus {
+.gln-button--buy:hover,
+.gln-button--buy:focus {
     background: linear-gradient(to bottom, #e44a4d, #bd1019);
-    border-color: color-mix(in srgb, $wr-color-accent, $wr-color-primary 20%);
-    color: $wr-color-white;
+    border-color: color-mix(in srgb, $gln-color-accent, $gln-color-primary 20%);
+    color: $gln-color-white;
 }

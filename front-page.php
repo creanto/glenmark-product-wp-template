@@ -7,11 +7,11 @@ if (!defined('ABSPATH')) {
 get_header();
 ?>
 
-<div class="wr-page-content">
+<div class="gln-page-content">
     <?php if (have_posts()): ?>
         <?php while (have_posts()):
             the_post(); ?>
-            <article id="post-<?php the_ID(); ?>" <?php post_class('wr-content-entry'); ?>>
+            <article id="post-<?php the_ID(); ?>" <?php post_class('gln-content-entry'); ?>>
                 <?php the_content(); ?>
             </article>
         <?php endwhile; ?>

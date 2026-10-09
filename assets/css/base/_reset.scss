@@ -16,9 +16,9 @@ html {
 
 body {
     margin: 0;
-    font-family: $wr-font-text;
-    color: $wr-color-text;
-    background: $wr-color-bg;
+    font-family: $gln-font-text;
+    color: $gln-color-text;
+    background: $gln-color-bg;
     line-height: 1.65;
     letter-spacing: 0;
 }
@@ -59,7 +59,7 @@ h4,
 h5,
 h6 {
     margin: 0 0 0.75rem;
-    font-family: $wr-font-primary;
+    font-family: $gln-font-primary;
     line-height: 1.08;
     letter-spacing: -0.04em;
 }
@@ -91,7 +91,7 @@ p {
 .site-main h6,
 .elementor-heading-title,
 .elementor-widget-heading .elementor-heading-title {
-    font-family: $wr-font-primary;
+    font-family: $gln-font-primary;
 
 }
 
@@ -109,7 +109,7 @@ p {
 }
 
 .text-white {
-    color: $wr-color-white;
+    color: $gln-color-white;
 
     b,
     strong,
@@ -120,12 +120,12 @@ p {
     h5,
     h6,
     .elementor-heading-title {
-        color: $wr-color-accent;
+        color: $gln-color-accent;
     }
 }
 
 .text-yellow {
-    color: $wr-color-accent;
+    color: $gln-color-accent;
 
     b,
     strong,
@@ -136,7 +136,7 @@ p {
     h5,
     h6,
     .elementor-heading-title {
-        color: $wr-color-white;
+        color: $gln-color-white;
     }
 }
 
@@ -164,7 +164,7 @@ img.alignleft {
     background:
         radial-gradient(circle 36rem at 42% 8%, rgba(44, 164, 229, 0.5) 0%, rgba(44, 164, 229, 0) 72%),
         radial-gradient(circle 32rem at 85% 58%, rgba(44, 164, 229, 0.5) 0%, rgba(44, 164, 229, 0) 72%),
-        $wr-color-primary;
+        $gln-color-primary;
 }
 
 .menu-legal {

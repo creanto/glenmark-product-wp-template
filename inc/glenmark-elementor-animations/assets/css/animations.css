@@ -1,0 +1,142 @@
+.gln-animate {
+    --gln-animation-duration: 700ms;
+    --gln-animation-delay: 0ms;
+    --gln-animation-distance: 50px;
+    --gln-animation-distance-negative: -50px;
+    --gln-animation-easing: ease-out;
+    --gln-animation-order-delay: 0ms;
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    transition-delay: calc(var(--gln-animation-delay) + var(--gln-animation-order-delay));
+    transition-duration: var(--gln-animation-duration);
+    transition-property: opacity, transform;
+    transition-timing-function: var(--gln-animation-easing);
+    will-change: opacity, transform;
+}
+
+.gln-animation-fade:not(.gln-animation-active),
+.gln-animation-fade-up:not(.gln-animation-active),
+.gln-animation-fade-down:not(.gln-animation-active),
+.gln-animation-fade-left:not(.gln-animation-active),
+.gln-animation-fade-right:not(.gln-animation-active),
+.gln-animation-scale-in:not(.gln-animation-active),
+.gln-animation-scale-out:not(.gln-animation-active) {
+    opacity: 0;
+}
+
+.gln-animation-fade-up:not(.gln-animation-active),
+.gln-animation-slide-up:not(.gln-animation-active) {
+    transform: translate3d(0, var(--gln-animation-distance), 0) scale(1);
+}
+
+.gln-animation-fade-down:not(.gln-animation-active),
+.gln-animation-slide-down:not(.gln-animation-active) {
+    transform: translate3d(0, var(--gln-animation-distance-negative), 0) scale(1);
+}
+
+.gln-animation-fade-left:not(.gln-animation-active),
+.gln-animation-slide-left:not(.gln-animation-active) {
+    transform: translate3d(var(--gln-animation-distance-negative), 0, 0) scale(1);
+}
+
+.gln-animation-fade-right:not(.gln-animation-active),
+.gln-animation-slide-right:not(.gln-animation-active) {
+    transform: translate3d(var(--gln-animation-distance), 0, 0) scale(1);
+}
+
+.gln-animation-scale-in:not(.gln-animation-active) {
+    transform: translate3d(0, 0, 0) scale(var(--gln-animation-initial-scale, 0.85));
+}
+
+.gln-animation-scale-out:not(.gln-animation-active) {
+    transform: translate3d(0, 0, 0) scale(var(--gln-animation-initial-scale, 1.15));
+}
+
+.elementor-editor-active .gln-animate:not(.gln-animation-preview-pending) {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gln-animate {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+        transition: none;
+    }
+}
+
+.gln-transform {
+    --gln-transform-duration: 300ms;
+    --gln-transform-easing: ease;
+    --gln-transform-hover-rotate: 0deg;
+    --gln-transform-hover-scale: 1;
+}
+
+.gln-transform:not(.gln-animate) {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    transition-duration: var(--gln-transform-duration);
+    transition-property: transform;
+    transition-timing-function: var(--gln-transform-easing);
+    will-change: transform;
+}
+
+.gln-transform .elementor-button {
+    transition-duration: var(--gln-transform-duration);
+    transition-property: background-color, border-color, color, padding, transform;
+    transition-timing-function: var(--gln-transform-easing);
+}
+
+.gln-transform-scale:hover,
+.gln-transform-scale:focus-within {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(var(--gln-transform-hover-scale));
+}
+
+.gln-transform-rotate:hover,
+.gln-transform-rotate:focus-within {
+    animation: gln-transform-hover-rotate var(--gln-transform-duration) var(--gln-transform-easing);
+}
+
+.gln-transform-rotate-scale:hover,
+.gln-transform-rotate-scale:focus-within {
+    animation: gln-transform-hover-rotate-scale var(--gln-transform-duration) var(--gln-transform-easing) forwards;
+}
+
+.gln-transform:hover .elementor-button,
+.gln-transform:focus-within .elementor-button {
+    padding: var(--gln-transform-button-padding-top) var(--gln-transform-button-padding-right) var(--gln-transform-button-padding-bottom) var(--gln-transform-button-padding-left);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gln-transform,
+    .gln-transform .elementor-button {
+        transition: none;
+    }
+
+    .gln-transform-rotate:hover,
+    .gln-transform-rotate:focus-within,
+    .gln-transform-rotate-scale:hover,
+    .gln-transform-rotate-scale:focus-within {
+        animation: none;
+    }
+}
+
+@keyframes gln-transform-hover-rotate {
+    from {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+
+    to {
+        transform: translate3d(0, 0, 0) rotate(var(--gln-transform-hover-rotate)) scale(1);
+    }
+}
+
+@keyframes gln-transform-hover-rotate-scale {
+    from {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+
+    to {
+        transform: translate3d(0, 0, 0) rotate(var(--gln-transform-hover-rotate)) scale(var(--gln-transform-hover-scale));
+    }
+}

@@ -8,7 +8,7 @@
     var backupItems = [];
 
     function setStatus(message, type) {
-        var $status = $('#webrev-editor-status');
+        var $status = $('#glenmark-editor-status');
         if (!$status.length) {
             return;
         }
@@ -25,7 +25,7 @@
 
     function getEditorValue() {
         if (!editorInstance || !editorInstance.codemirror) {
-            return $('#webrev-elementor-json-editor').val() || '';
+            return $('#glenmark-elementor-json-editor').val() || '';
         }
 
         return editorInstance.codemirror.getValue();
@@ -33,7 +33,7 @@
 
     function setEditorValue(value) {
         if (!editorInstance || !editorInstance.codemirror) {
-            $('#webrev-elementor-json-editor').val(value);
+            $('#glenmark-elementor-json-editor').val(value);
             return;
         }
 
@@ -43,29 +43,29 @@
 
     function markDirty() {
         hasUnsavedChanges = true;
-        $('#webrev-save-json').prop('disabled', false);
+        $('#glenmark-save-json').prop('disabled', false);
         setStatus('Neuložené změny', 'warning');
     }
 
     function markClean() {
         hasUnsavedChanges = false;
-        $('#webrev-save-json').prop('disabled', false);
+        $('#glenmark-save-json').prop('disabled', false);
         setStatus('Uložené', 'success');
     }
 
     function updateDirtyState() {
         var content = getEditorValue();
         hasUnsavedChanges = content !== currentJson;
-        $('#webrev-save-json').prop('disabled', !hasUnsavedChanges);
+        $('#glenmark-save-json').prop('disabled', !hasUnsavedChanges);
     }
 
     function buildStructureTree(data, depth) {
         depth = depth || 0;
         if (!Array.isArray(data)) {
-            return '<div class="wr-tree-empty">Žádná data</div>';
+            return '<div class="gln-tree-empty">Žádná data</div>';
         }
 
-        var html = '<ul class="wr-tree">';
+        var html = '<ul class="gln-tree">';
 
         data.forEach(function (item) {
             if (!item || typeof item !== 'object') {
@@ -100,8 +100,8 @@
                 label += ': ' + String(title).replace(/<[^>]*>/g, '').slice(0, 32);
             }
 
-            html += '<li class="wr-tree-item" data-element-id="' + id + '">';
-            html += '<button type="button" class="wr-tree-node">' + $('<div>').text(label + ' #' + id).html() + '</button>';
+            html += '<li class="gln-tree-item" data-element-id="' + id + '">';
+            html += '<button type="button" class="gln-tree-node">' + $('<div>').text(label + ' #' + id).html() + '</button>';
 
             if (Array.isArray(item.elements) && item.elements.length) {
                 html += buildStructureTree(item.elements, depth + 1);
@@ -199,10 +199,10 @@
         }
 
         var html = buildStructureTree(data);
-        $('#webrev-structure-tree').html(html);
+        $('#glenmark-structure-tree').html(html);
 
-        $('#webrev-structure-tree .wr-tree-node').on('click', function () {
-            var id = $(this).closest('.wr-tree-item').data('elementId');
+        $('#glenmark-structure-tree .gln-tree-node').on('click', function () {
+            var id = $(this).closest('.gln-tree-item').data('elementId');
             if (id) {
                 findElementIdInJson(String(id));
             }
@@ -213,14 +213,14 @@
         currentPostId = payload.id;
         currentJson = JSON.stringify(payload.data || [], null, 2);
 
-        $('#webrev-document-title').text(payload.title || '—');
-        $('#webrev-document-id').text(payload.id || '—');
-        $('#webrev-document-type').text(payload.post_type || '—');
-        $('#webrev-document-status').text(payload.status_label || payload.status || '—');
-        $('#webrev-document-elementor').text(payload.elementor ? 'ano' : 'ne');
+        $('#glenmark-document-title').text(payload.title || '—');
+        $('#glenmark-document-id').text(payload.id || '—');
+        $('#glenmark-document-type').text(payload.post_type || '—');
+        $('#glenmark-document-status').text(payload.status_label || payload.status || '—');
+        $('#glenmark-document-elementor').text(payload.elementor ? 'ano' : 'ne');
 
-        $('#webrev-open-page').attr('href', payload.frontend_url || '#');
-        $('#webrev-open-elementor').attr('href', payload.editor_url || '#');
+        $('#glenmark-open-page').attr('href', payload.frontend_url || '#');
+        $('#glenmark-open-elementor').attr('href', payload.editor_url || '#');
 
         setEditorValue(currentJson);
         updateStructureTree(payload.data || []);
@@ -241,10 +241,10 @@
         setStatus('Načítám Elementor JSON…', 'warning');
 
         $.ajax({
-            url: webrevElementorJsonEditor.restRoot + '/elementor-documents/' + postId,
+            url: glenmarkElementorJsonEditor.restRoot + '/elementor-documents/' + postId,
             method: 'GET',
             beforeSend: function (xhr) {
-                xhr.setRequestHeader('X-WP-Nonce', webrevElementorJsonEditor.nonce);
+                xhr.setRequestHeader('X-WP-Nonce', glenmarkElementorJsonEditor.nonce);
             },
             success: function (response) {
                 handleDocumentResponse(response);
@@ -275,11 +275,11 @@
         }
 
         $.ajax({
-            url: webrevElementorJsonEditor.restRoot + '/elementor-documents/' + currentPostId + '/save',
+            url: glenmarkElementorJsonEditor.restRoot + '/elementor-documents/' + currentPostId + '/save',
             method: 'POST',
             contentType: 'application/json',
             beforeSend: function (xhr) {
-                xhr.setRequestHeader('X-WP-Nonce', webrevElementorJsonEditor.nonce);
+                xhr.setRequestHeader('X-WP-Nonce', glenmarkElementorJsonEditor.nonce);
             },
             data: JSON.stringify({
                 json: value
@@ -308,10 +308,10 @@
 
         var newIndex = 0;
         $.ajax({
-            url: webrevElementorJsonEditor.restRoot + '/elementor-documents/' + currentPostId + '/backups',
+            url: glenmarkElementorJsonEditor.restRoot + '/elementor-documents/' + currentPostId + '/backups',
             method: 'GET',
             beforeSend: function (xhr) {
-                xhr.setRequestHeader('X-WP-Nonce', webrevElementorJsonEditor.nonce);
+                xhr.setRequestHeader('X-WP-Nonce', glenmarkElementorJsonEditor.nonce);
             },
             success: function (response) {
                 var backups = response && response.backups ? response.backups : [];
@@ -322,11 +322,11 @@
 
                 if (window.confirm('Obnovit předchozí verzi?')) {
                     $.ajax({
-                        url: webrevElementorJsonEditor.restRoot + '/elementor-documents/' + currentPostId + '/restore',
+                        url: glenmarkElementorJsonEditor.restRoot + '/elementor-documents/' + currentPostId + '/restore',
                         method: 'POST',
                         contentType: 'application/json',
                         beforeSend: function (xhr) {
-                            xhr.setRequestHeader('X-WP-Nonce', webrevElementorJsonEditor.nonce);
+                            xhr.setRequestHeader('X-WP-Nonce', glenmarkElementorJsonEditor.nonce);
                         },
                         data: JSON.stringify({ backup_index: newIndex }),
                         success: function (restoreResponse) {
@@ -350,7 +350,7 @@
     }
 
     function initializeEditor() {
-        var textarea = document.getElementById('webrev-elementor-json-editor');
+        var textarea = document.getElementById('glenmark-elementor-json-editor');
         if (!textarea) {
             return;
         }
@@ -393,27 +393,27 @@
             markDirty();
         });
 
-        $('#webrev-save-json').on('click', saveDocument);
-        $('#webrev-format-json').on('click', formatJson);
-        $('#webrev-minify-json').on('click', minifyJson);
-        $('#webrev-reload-json').on('click', function () {
+        $('#glenmark-save-json').on('click', saveDocument);
+        $('#glenmark-format-json').on('click', formatJson);
+        $('#glenmark-minify-json').on('click', minifyJson);
+        $('#glenmark-reload-json').on('click', function () {
             if (currentPostId) {
                 fetchDocument(currentPostId);
             }
         });
-        $('#webrev-search-json').on('click', function () {
+        $('#glenmark-search-json').on('click', function () {
             if (editorInstance && editorInstance.codemirror) {
                 editorInstance.codemirror.execCommand('findPersistent');
             }
         });
-        $('#webrev-search-replace-json').on('click', function () {
+        $('#glenmark-search-replace-json').on('click', function () {
             if (editorInstance && editorInstance.codemirror) {
                 editorInstance.codemirror.execCommand('replace');
             }
         });
-        $('#webrev-restore-last-version').on('click', restoreLastVersion);
-        $('#webrev-find-element-id').on('click', function () {
-            var value = $('#webrev-element-id-input').val();
+        $('#glenmark-restore-last-version').on('click', restoreLastVersion);
+        $('#glenmark-find-element-id').on('click', function () {
+            var value = $('#glenmark-element-id-input').val();
             if (value) {
                 findElementIdInJson(String(value).trim());
             }
@@ -443,15 +443,15 @@
             }
 
             $.ajax({
-                url: webrevElementorJsonEditor.restRoot + '/elementor-documents',
+                url: glenmarkElementorJsonEditor.restRoot + '/elementor-documents',
                 method: 'GET',
                 data: { search: value },
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-WP-Nonce', webrevElementorJsonEditor.nonce);
+                    xhr.setRequestHeader('X-WP-Nonce', glenmarkElementorJsonEditor.nonce);
                 },
                 success: function (response) {
                     var items = response && response.items ? response.items : [];
-                    var $select = $('#webrev-elementor-post-select');
+                    var $select = $('#glenmark-elementor-post-select');
                     $select.empty();
                     $select.append('<option value="">Vyberte příspěvek</option>');
                     items.forEach(function (item) {
@@ -461,13 +461,13 @@
             });
         }
 
-        $('#webrev-elementor-post-search').on('input', function () {
+        $('#glenmark-elementor-post-search').on('input', function () {
             refreshPostSelect($(this).val());
         });
 
         refreshPostSelect('');
 
-        $('#webrev-elementor-post-select').on('change', function () {
+        $('#glenmark-elementor-post-select').on('change', function () {
             var value = $(this).val();
             if (value) {
                 fetchDocument(value);

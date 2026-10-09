@@ -4,21 +4,21 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_shared_content_render_key($key, $format = 'auto', $field = '', $linked = false)
+function glenmark_shared_content_render_key($key, $format = 'auto', $field = '', $linked = false)
 {
-    $item = webrev_shared_content_get_item(sanitize_text_field((string) $key));
+    $item = glenmark_shared_content_get_item(sanitize_text_field((string) $key));
     if (!$item) {
         return '';
     }
 
     if ('' !== $field) {
-        return webrev_shared_content_render_field($item, $field, $linked);
+        return glenmark_shared_content_render_field($item, $field, $linked);
     }
 
-    return webrev_shared_content_render_item($item, $format);
+    return glenmark_shared_content_render_item($item, $format);
 }
 
-function webrev_shared_content_render_item($item, $format = 'auto')
+function glenmark_shared_content_render_item($item, $format = 'auto')
 {
     $data = isset($item['data']) && is_array($item['data']) ? $item['data'] : [];
     $type = isset($item['type']) ? (string) $item['type'] : 'content';
@@ -31,25 +31,25 @@ function webrev_shared_content_render_item($item, $format = 'auto')
     }
 
     if ('address' === $format) {
-        return webrev_shared_content_render_address($data);
+        return glenmark_shared_content_render_address($data);
     }
 
     if ('contact' === $format || 'footer' === $format) {
-        return webrev_shared_content_render_contact($data);
+        return glenmark_shared_content_render_contact($data);
     }
 
     if ('link' === $format) {
-        return webrev_shared_content_render_link($data);
+        return glenmark_shared_content_render_link($data);
     }
 
     if ('content' === $format || 'document' === $format || 'auto' === $format) {
-        return webrev_shared_content_render_html($data['content_html'] ?? '');
+        return glenmark_shared_content_render_html($data['content_html'] ?? '');
     }
 
     return '';
 }
 
-function webrev_shared_content_render_field($item, $field, $linked = false)
+function glenmark_shared_content_render_field($item, $field, $linked = false)
 {
     $data = isset($item['data']) && is_array($item['data']) ? $item['data'] : [];
     if (!array_key_exists($field, $data)) {
@@ -58,7 +58,7 @@ function webrev_shared_content_render_field($item, $field, $linked = false)
 
     $value = (string) $data[$field];
     if ('content_html' === $field) {
-        return webrev_shared_content_render_html($value);
+        return glenmark_shared_content_render_html($value);
     }
 
     if ('website_url' === $field) {
@@ -80,12 +80,12 @@ function webrev_shared_content_render_field($item, $field, $linked = false)
     return esc_html($value);
 }
 
-function webrev_shared_content_render_html($html)
+function glenmark_shared_content_render_html($html)
 {
-    return wp_kses_post(webrev_shared_content_replace_tokens((string) $html));
+    return wp_kses_post(glenmark_shared_content_replace_tokens((string) $html));
 }
 
-function webrev_shared_content_render_address($data)
+function glenmark_shared_content_render_address($data)
 {
     $lines = [];
     foreach (['building', 'street'] as $field) {
@@ -105,14 +105,14 @@ function webrev_shared_content_render_address($data)
         $lines[] = esc_html((string) $data['country']);
     }
 
-    return empty($lines) ? '' : '<address class="wr-shared-content-address">' . implode("<br>\n", $lines) . '</address>';
+    return empty($lines) ? '' : '<address class="gln-shared-content-address">' . implode("<br>\n", $lines) . '</address>';
 }
 
-function webrev_shared_content_render_contact($data)
+function glenmark_shared_content_render_contact($data)
 {
-    $parts = ['<div class="wr-shared-content-contact">'];
+    $parts = ['<div class="gln-shared-content-contact">'];
     if (!empty($data['company_name'])) {
-        $parts[] = '<p class="wr-shared-content-company">';
+        $parts[] = '<p class="gln-shared-content-company">';
         if (!empty($data['website_url'])) {
             $parts[] = '<a href="' . esc_url($data['website_url']) . '">' . esc_html((string) $data['company_name']) . '</a>';
         } else {
@@ -121,16 +121,16 @@ function webrev_shared_content_render_contact($data)
         $parts[] = '</p>';
     }
 
-    $address = webrev_shared_content_render_address($data);
+    $address = glenmark_shared_content_render_address($data);
     if ('' !== $address) {
         $parts[] = $address;
     }
     if (!empty($data['phone'])) {
-        $parts[] = '<p class="wr-shared-content-phone">' . webrev_shared_content_render_field(['data' => $data], 'phone', true) . '</p>';
+        $parts[] = '<p class="gln-shared-content-phone">' . glenmark_shared_content_render_field(['data' => $data], 'phone', true) . '</p>';
     }
     foreach (['email_primary', 'email_secondary'] as $field) {
         if (!empty($data[$field])) {
-            $parts[] = '<p class="wr-shared-content-email">' . webrev_shared_content_render_field(['data' => $data], $field, true) . '</p>';
+            $parts[] = '<p class="gln-shared-content-email">' . glenmark_shared_content_render_field(['data' => $data], $field, true) . '</p>';
         }
     }
     $parts[] = '</div>';
@@ -138,7 +138,7 @@ function webrev_shared_content_render_contact($data)
     return implode("\n", $parts);
 }
 
-function webrev_shared_content_render_link($data)
+function glenmark_shared_content_render_link($data)
 {
     if (empty($data['website_url'])) {
         return '';
@@ -149,39 +149,39 @@ function webrev_shared_content_render_link($data)
     return '<a href="' . esc_url($data['website_url']) . '">' . esc_html($label) . '</a>';
 }
 
-function webrev_shared_content_shortcode($attributes)
+function glenmark_shared_content_shortcode($attributes)
 {
     $attributes = shortcode_atts([
         'key' => '',
         'field' => '',
         'format' => 'auto',
         'link' => '0',
-    ], $attributes, 'wr_shared_content');
+    ], $attributes, 'gln_shared_content');
 
     if ('' === (string) $attributes['key']) {
         return '';
     }
 
-    return webrev_shared_content_render_key(
+    return glenmark_shared_content_render_key(
         $attributes['key'],
         sanitize_key($attributes['format']),
         sanitize_key($attributes['field']),
         '1' === (string) $attributes['link']
     );
 }
-add_shortcode('wr_shared_content', 'webrev_shared_content_shortcode');
+add_shortcode('gln_shared_content', 'glenmark_shared_content_shortcode');
 
-function webrev_shared_contact_shortcode($attributes)
+function glenmark_shared_contact_shortcode($attributes)
 {
     $attributes = shortcode_atts([
         'key' => '',
         'format' => 'contact',
-    ], $attributes, 'wr_shared_contact');
+    ], $attributes, 'gln_shared_contact');
 
     if ('' === (string) $attributes['key']) {
         return '';
     }
 
-    return webrev_shared_content_render_key($attributes['key'], sanitize_key($attributes['format']));
+    return glenmark_shared_content_render_key($attributes['key'], sanitize_key($attributes['format']));
 }
-add_shortcode('wr_shared_contact', 'webrev_shared_contact_shortcode');
+add_shortcode('gln_shared_contact', 'glenmark_shared_contact_shortcode');

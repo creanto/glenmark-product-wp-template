@@ -4,28 +4,28 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_register_product_feed_route()
+function glenmark_register_product_feed_route()
 {
-    register_rest_route('wr-pharma-product/v1', '/product-feed', [
+    register_rest_route('gln-pharma-product/v1', '/product-feed', [
         'methods' => WP_REST_Server::READABLE,
-        'callback' => 'webrev_get_product_feed_response',
+        'callback' => 'glenmark_get_product_feed_response',
         'permission_callback' => '__return_true',
     ]);
 }
-add_action('rest_api_init', 'webrev_register_product_feed_route');
+add_action('rest_api_init', 'glenmark_register_product_feed_route');
 
-function webrev_render_product_feed_discovery_link()
+function glenmark_render_product_feed_discovery_link()
 {
     echo '<link rel="alternate" type="application/ld+json" href="'
-        . esc_url(rest_url('wr-pharma-product/v1/product-feed'))
+        . esc_url(rest_url('gln-pharma-product/v1/product-feed'))
         . '" title="Produktový katalog">' . "\n";
 }
-add_action('wp_head', 'webrev_render_product_feed_discovery_link', 1);
+add_action('wp_head', 'glenmark_render_product_feed_discovery_link', 1);
 
-function webrev_get_product_feed_response()
+function glenmark_get_product_feed_response()
 {
     $products = get_posts([
-        'post_type' => 'wr_product',
+        'post_type' => 'gln_product',
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'orderby' => ['menu_order' => 'ASC', 'title' => 'ASC'],
@@ -36,7 +36,7 @@ function webrev_get_product_feed_response()
     $graph = [];
 
     foreach ($products as $product) {
-        $schema = webrev_get_product_feed_product($product->ID);
+        $schema = glenmark_get_product_feed_product($product->ID);
 
         if (!empty($schema)) {
             $graph[] = $schema;
@@ -52,9 +52,9 @@ function webrev_get_product_feed_response()
     ]);
 }
 
-function webrev_get_product_feed_product($product_id)
+function glenmark_get_product_feed_product($product_id)
 {
-    $product = webrev_get_wr_product_schema_data($product_id);
+    $product = glenmark_get_gln_product_schema_data($product_id);
 
     if (empty($product)) {
         return [];
@@ -77,15 +77,15 @@ function webrev_get_product_feed_product($product_id)
     ];
 
     foreach ($field_properties as $field_name => $label) {
-        webrev_product_feed_add_property($properties, $label, get_field($field_name, $product_id));
+        glenmark_product_feed_add_property($properties, $label, get_field($field_name, $product_id));
     }
 
-    webrev_product_feed_add_property(
+    glenmark_product_feed_add_property(
         $properties,
         'V prodeji',
         get_field('product_for_sale', $product_id) ? 'Ano' : 'Ne'
     );
-    webrev_product_feed_add_property(
+    glenmark_product_feed_add_property(
         $properties,
         'VPOIS',
         get_field('product_vpois', $product_id) ? 'Ano' : 'Ne'
@@ -93,7 +93,7 @@ function webrev_get_product_feed_product($product_id)
 
     $spc_url = esc_url_raw((string) get_field('product_spc', $product_id));
     if ('' !== $spc_url) {
-        webrev_product_feed_add_property($properties, 'SPC / příbalová informace', $spc_url);
+        glenmark_product_feed_add_property($properties, 'SPC / příbalová informace', $spc_url);
     }
 
     $product_website_url = esc_url_raw((string) get_field('product_website_url', $product_id));
@@ -101,14 +101,14 @@ function webrev_get_product_feed_product($product_id)
         $product['sameAs'] = [$product_website_url];
     }
 
-    $image_urls = webrev_get_product_feed_image_urls($product_id);
+    $image_urls = glenmark_get_product_feed_image_urls($product_id);
     if (!empty($image_urls)) {
         $product['image'] = 1 === count($image_urls) ? $image_urls[0] : $image_urls;
     }
 
-    $pharmacies = webrev_get_product_feed_pharmacies($product_id);
+    $pharmacies = glenmark_get_product_feed_pharmacies($product_id);
     foreach ($pharmacies as $pharmacy_name => $url) {
-        webrev_product_feed_add_property($properties, 'Koupit u ' . $pharmacy_name, $url);
+        glenmark_product_feed_add_property($properties, 'Koupit u ' . $pharmacy_name, $url);
     }
 
     $registered_packages = get_field('product_registered_packages', $product_id);
@@ -118,7 +118,7 @@ function webrev_get_product_feed_product($product_id)
 
             foreach (['strength', 'quantity', 'sukl_code'] as $key) {
                 if (!empty($package[$key])) {
-                    $package_parts[] = webrev_prepare_schema_text_value($package[$key]);
+                    $package_parts[] = glenmark_prepare_schema_text_value($package[$key]);
                 }
             }
 
@@ -133,7 +133,7 @@ function webrev_get_product_feed_product($product_id)
             foreach (['spc' => 'SPC', 'pil' => 'PIL'] as $key => $label) {
                 $url = isset($package[$key]) ? esc_url_raw((string) $package[$key]) : '';
                 if ('' !== $url) {
-                    webrev_product_feed_add_property($properties, $label . ' balení', $url);
+                    glenmark_product_feed_add_property($properties, $label . ' balení', $url);
                 }
             }
         }
@@ -141,17 +141,17 @@ function webrev_get_product_feed_product($product_id)
 
     $registered_packages_url = esc_url_raw((string) get_field('product_registered_packages_url', $product_id));
     if ('' !== $registered_packages_url) {
-        webrev_product_feed_add_property($properties, 'Registrovaná balení', $registered_packages_url);
+        glenmark_product_feed_add_property($properties, 'Registrovaná balení', $registered_packages_url);
     }
 
     $icon_rows = get_field('product_icons', $product_id);
     if (is_array($icon_rows)) {
         foreach ($icon_rows as $icon) {
-            $label = isset($icon['label']) ? webrev_prepare_schema_text_value($icon['label']) : '';
-            $description = isset($icon['description']) ? webrev_prepare_schema_text_value($icon['description']) : '';
+            $label = isset($icon['label']) ? glenmark_prepare_schema_text_value($icon['label']) : '';
+            $description = isset($icon['description']) ? glenmark_prepare_schema_text_value($icon['description']) : '';
             $value = trim($label . ('' !== $description ? ': ' . $description : ''));
 
-            webrev_product_feed_add_property($properties, 'Vlastnost produktu', $value);
+            glenmark_product_feed_add_property($properties, 'Vlastnost produktu', $value);
         }
     }
 
@@ -159,7 +159,7 @@ function webrev_get_product_feed_product($product_id)
         $product['additionalProperty'] = array_values($properties);
     }
 
-    $variants = webrev_get_product_feed_variants($product_id);
+    $variants = glenmark_get_product_feed_variants($product_id);
     if (!empty($variants)) {
         $product['hasVariant'] = $variants;
     }
@@ -167,9 +167,9 @@ function webrev_get_product_feed_product($product_id)
     return $product;
 }
 
-function webrev_product_feed_add_property(&$properties, $name, $value)
+function glenmark_product_feed_add_property(&$properties, $name, $value)
 {
-    $value = webrev_prepare_schema_text_value($value);
+    $value = glenmark_prepare_schema_text_value($value);
 
     if ('' === $value) {
         return;
@@ -182,7 +182,7 @@ function webrev_product_feed_add_property(&$properties, $name, $value)
     ];
 }
 
-function webrev_get_product_feed_image_urls($product_id)
+function glenmark_get_product_feed_image_urls($product_id)
 {
     $image_ids = array_filter([
         get_post_thumbnail_id($product_id),
@@ -196,7 +196,7 @@ function webrev_get_product_feed_image_urls($product_id)
 
     $image_urls = [];
     foreach (array_unique($image_ids) as $image_id) {
-        $image_url = webrev_get_product_feed_image_url($image_id);
+        $image_url = glenmark_get_product_feed_image_url($image_id);
         if ('' !== $image_url) {
             $image_urls[] = $image_url;
         }
@@ -205,7 +205,7 @@ function webrev_get_product_feed_image_urls($product_id)
     return array_values(array_unique($image_urls));
 }
 
-function webrev_get_product_feed_image_url($image)
+function glenmark_get_product_feed_image_url($image)
 {
     if (is_array($image)) {
         $image = isset($image['ID']) ? $image['ID'] : (isset($image['id']) ? $image['id'] : '');
@@ -218,7 +218,7 @@ function webrev_get_product_feed_image_url($image)
     return is_string($image) ? esc_url_raw($image) : '';
 }
 
-function webrev_get_product_feed_pharmacies($product_id)
+function glenmark_get_product_feed_pharmacies($product_id)
 {
     $pharmacy_fields = [
         'product_pharmacy_benu' => 'Benu',
@@ -244,7 +244,7 @@ function webrev_get_product_feed_pharmacies($product_id)
     return $pharmacies;
 }
 
-function webrev_get_product_feed_variants($product_id)
+function glenmark_get_product_feed_variants($product_id)
 {
     $rows = get_field('product_package_variants', $product_id);
     if (!is_array($rows)) {
@@ -270,7 +270,7 @@ function webrev_get_product_feed_variants($product_id)
             continue;
         }
 
-        $name = webrev_prepare_schema_text_value(
+        $name = glenmark_prepare_schema_text_value(
             trim((isset($row['variant_name']) ? $row['variant_name'] : '') . ' '
                 . (isset($row['variant_count']) ? $row['variant_count'] : ''))
         );
@@ -283,7 +283,7 @@ function webrev_get_product_feed_variants($product_id)
             'name' => $name,
         ];
 
-        $image_url = webrev_get_product_feed_image_url(isset($row['variant_image']) ? $row['variant_image'] : '');
+        $image_url = glenmark_get_product_feed_image_url(isset($row['variant_image']) ? $row['variant_image'] : '');
         if ('' !== $image_url) {
             $variant['image'] = $image_url;
         }
@@ -298,7 +298,7 @@ function webrev_get_product_feed_variants($product_id)
                 ? esc_url_raw((string) $variant_pharmacies[$field_name])
                 : '';
             if ('' !== $url) {
-                webrev_product_feed_add_property($variant_properties, 'Koupit u ' . $label, $url);
+                glenmark_product_feed_add_property($variant_properties, 'Koupit u ' . $label, $url);
             }
         }
 

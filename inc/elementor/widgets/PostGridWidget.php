@@ -4,16 +4,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Webrev_PostGrid_Widget extends \Elementor\Widget_Base
+class Glenmark_PostGrid_Widget extends \Elementor\Widget_Base
 {
     public function get_name()
     {
-        return 'wr-post-grid';
+        return 'gln-post-grid';
     }
 
     public function get_title()
     {
-        return __('Post Grid', 'wr-pharma-product');
+        return __('Post Grid', 'gln-pharma-product');
     }
 
     public function get_icon()
@@ -23,7 +23,7 @@ class Webrev_PostGrid_Widget extends \Elementor\Widget_Base
 
     public function get_categories()
     {
-        return ['webrev'];
+        return ['glenmark'];
     }
 
     protected function register_controls()
@@ -43,7 +43,7 @@ class Webrev_PostGrid_Widget extends \Elementor\Widget_Base
         $this->start_controls_section(
             'content_section',
             [
-                'label' => __('Content', 'wr-pharma-product'),
+                'label' => __('Content', 'gln-pharma-product'),
                 'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -51,7 +51,7 @@ class Webrev_PostGrid_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'categories',
             [
-                'label' => __('Categories', 'wr-pharma-product'),
+                'label' => __('Categories', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::SELECT2,
                 'options' => $category_options,
                 'multiple' => true,
@@ -61,7 +61,7 @@ class Webrev_PostGrid_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'posts_per_page',
             [
-                'label' => __('Posts to show', 'wr-pharma-product'),
+                'label' => __('Posts to show', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::NUMBER,
                 'default' => 6,
                 'min' => 1,
@@ -72,7 +72,7 @@ class Webrev_PostGrid_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'columns',
             [
-                'label' => __('Columns', 'wr-pharma-product'),
+                'label' => __('Columns', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'default' => '3',
                 'options' => [
@@ -87,13 +87,13 @@ class Webrev_PostGrid_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'thumbnail_size',
             [
-                'label' => __('Thumbnail shape', 'wr-pharma-product'),
+                'label' => __('Thumbnail shape', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::SELECT,
                 'default' => 'square',
                 'options' => [
-                    'square' => __('Square (1:1)', 'wr-pharma-product'),
-                    'landscape' => __('Landscape (16:9)', 'wr-pharma-product'),
-                    'portrait' => __('Portrait (3:4)', 'wr-pharma-product'),
+                    'square' => __('Square (1:1)', 'gln-pharma-product'),
+                    'landscape' => __('Landscape (16:9)', 'gln-pharma-product'),
+                    'portrait' => __('Portrait (3:4)', 'gln-pharma-product'),
                 ],
             ]
         );
@@ -101,10 +101,10 @@ class Webrev_PostGrid_Widget extends \Elementor\Widget_Base
         $this->add_control(
             'show_excerpt',
             [
-                'label' => __('Show excerpt', 'wr-pharma-product'),
+                'label' => __('Show excerpt', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::SWITCHER,
-                'label_on' => __('Show', 'wr-pharma-product'),
-                'label_off' => __('Hide', 'wr-pharma-product'),
+                'label_on' => __('Show', 'gln-pharma-product'),
+                'label_off' => __('Hide', 'gln-pharma-product'),
                 'default' => 'yes',
             ]
         );
@@ -137,11 +137,11 @@ class Webrev_PostGrid_Widget extends \Elementor\Widget_Base
         $query = new \WP_Query($query_args);
 
         if (!$query->have_posts()) {
-            echo '<div class="wr-empty-state">' . esc_html__('No posts available.', 'wr-pharma-product') . '</div>';
+            echo '<div class="gln-empty-state">' . esc_html__('No posts available.', 'gln-pharma-product') . '</div>';
             return;
         }
 
-        echo '<div class="wr-post-grid" style="--wr-post-grid-columns:' . esc_attr((string) $columns) . ';--wr-post-grid-tablet-columns:' . esc_attr((string) $tablet_columns) . ';">';
+        echo '<div class="gln-post-grid" style="--gln-post-grid-columns:' . esc_attr((string) $columns) . ';--gln-post-grid-tablet-columns:' . esc_attr((string) $tablet_columns) . ';">';
 
         while ($query->have_posts()) {
             $query->the_post();
@@ -152,28 +152,28 @@ class Webrev_PostGrid_Widget extends \Elementor\Widget_Base
             $url = get_permalink($post_id);
             $excerpt = wp_trim_words(get_the_excerpt($post_id), 22);
 
-            echo '<article class="wr-post-card wr-post-card--thumb-' . esc_attr($thumbnail_size) . '">';
-            echo '<div class="wr-post-card__media">';
+            echo '<article class="gln-post-card gln-post-card--thumb-' . esc_attr($thumbnail_size) . '">';
+            echo '<div class="gln-post-card__media">';
 
             if (has_post_thumbnail($post_id)) {
-                echo wp_get_attachment_image(get_post_thumbnail_id($post_id), 'medium_large', false, ['class' => 'wr-post-card__image']);
+                echo wp_get_attachment_image(get_post_thumbnail_id($post_id), 'medium_large', false, ['class' => 'gln-post-card__image']);
             } else {
-                echo '<div class="wr-post-card__placeholder" aria-hidden="true"></div>';
+                echo '<div class="gln-post-card__placeholder" aria-hidden="true"></div>';
             }
 
             echo '</div>';
-            echo '<div class="wr-post-card__content">';
-            echo '<h3 class="wr-post-card__title">' . esc_html($grid_title) . '</h3>';
+            echo '<div class="gln-post-card__content">';
+            echo '<h3 class="gln-post-card__title">' . esc_html($grid_title) . '</h3>';
 
             if ($show_excerpt && $excerpt) {
-                echo '<p class="wr-post-card__excerpt">' . esc_html($excerpt) . '</p>';
+                echo '<p class="gln-post-card__excerpt">' . esc_html($excerpt) . '</p>';
             }
 
-            echo '<span class="wr-post-card__link" aria-hidden="true">';
+            echo '<span class="gln-post-card__link" aria-hidden="true">';
             echo '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
             echo '</span>';
             echo '</div>';
-            echo '<a class="wr-post-card__stretched-link" href="' . esc_url($url) . '" aria-label="' . esc_attr(sprintf(__('Read %s', 'wr-pharma-product'), $title)) . '"></a>';
+            echo '<a class="gln-post-card__stretched-link" href="' . esc_url($url) . '" aria-label="' . esc_attr(sprintf(__('Read %s', 'gln-pharma-product'), $title)) . '"></a>';
             echo '</article>';
         }
 

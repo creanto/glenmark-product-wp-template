@@ -4,16 +4,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Webrev_Shared_Content_Widget extends \Elementor\Widget_Base
+class Glenmark_Shared_Content_Widget extends \Elementor\Widget_Base
 {
     public function get_name()
     {
-        return 'wr-shared-content';
+        return 'gln-shared-content';
     }
 
     public function get_title()
     {
-        return __('Sdílený obsah Glenmark', 'wr-pharma-product');
+        return __('Sdílený obsah Glenmark', 'gln-pharma-product');
     }
 
     public function get_icon()
@@ -23,7 +23,7 @@ class Webrev_Shared_Content_Widget extends \Elementor\Widget_Base
 
     public function get_categories()
     {
-        return ['webrev'];
+        return ['glenmark'];
     }
 
     public function get_keywords()
@@ -33,59 +33,59 @@ class Webrev_Shared_Content_Widget extends \Elementor\Widget_Base
 
     protected function register_controls()
     {
-        $items = webrev_shared_content_get_items();
-        $item_options = ['' => __('Vyberte sdílený obsah', 'wr-pharma-product')];
+        $items = glenmark_shared_content_get_items();
+        $item_options = ['' => __('Vyberte sdílený obsah', 'gln-pharma-product')];
         foreach ($items as $key => $item) {
             $item_options[$key] = (string) ($item['title'] ?? $key) . ' (' . $key . ')';
         }
 
         $this->start_controls_section('section_shared_content', [
-            'label' => __('Sdílený obsah', 'wr-pharma-product'),
+            'label' => __('Sdílený obsah', 'gln-pharma-product'),
         ]);
 
         $this->add_control('item_key', [
-            'label' => __('Položka', 'wr-pharma-product'),
+            'label' => __('Položka', 'gln-pharma-product'),
             'type' => \Elementor\Controls_Manager::SELECT2,
             'options' => $item_options,
             'label_block' => true,
         ]);
 
         $this->add_control('format', [
-            'label' => __('Zobrazení', 'wr-pharma-product'),
+            'label' => __('Zobrazení', 'gln-pharma-product'),
             'type' => \Elementor\Controls_Manager::SELECT,
             'options' => [
-                'auto' => __('Automaticky podle typu', 'wr-pharma-product'),
-                'contact' => __('Celý kontakt', 'wr-pharma-product'),
-                'address' => __('Adresa', 'wr-pharma-product'),
-                'content' => __('HTML obsah / dokument', 'wr-pharma-product'),
-                'link' => __('Odkaz', 'wr-pharma-product'),
-                'field' => __('Jedno pole', 'wr-pharma-product'),
+                'auto' => __('Automaticky podle typu', 'gln-pharma-product'),
+                'contact' => __('Celý kontakt', 'gln-pharma-product'),
+                'address' => __('Adresa', 'gln-pharma-product'),
+                'content' => __('HTML obsah / dokument', 'gln-pharma-product'),
+                'link' => __('Odkaz', 'gln-pharma-product'),
+                'field' => __('Jedno pole', 'gln-pharma-product'),
             ],
             'default' => 'auto',
         ]);
 
         $this->add_control('field', [
-            'label' => __('Pole', 'wr-pharma-product'),
+            'label' => __('Pole', 'gln-pharma-product'),
             'type' => \Elementor\Controls_Manager::SELECT,
             'options' => [
-                'company_name' => __('Název společnosti', 'wr-pharma-product'),
-                'building' => __('Budova', 'wr-pharma-product'),
-                'street' => __('Ulice a číslo', 'wr-pharma-product'),
-                'postal_code' => __('PSČ', 'wr-pharma-product'),
-                'city' => __('Město', 'wr-pharma-product'),
-                'country' => __('Země', 'wr-pharma-product'),
-                'phone' => __('Telefon', 'wr-pharma-product'),
-                'email_primary' => __('Hlavní e-mail', 'wr-pharma-product'),
-                'email_secondary' => __('Další e-mail', 'wr-pharma-product'),
-                'link_label' => __('Text odkazu', 'wr-pharma-product'),
-                'website_url' => __('URL', 'wr-pharma-product'),
-                'content_html' => __('HTML obsah', 'wr-pharma-product'),
+                'company_name' => __('Název společnosti', 'gln-pharma-product'),
+                'building' => __('Budova', 'gln-pharma-product'),
+                'street' => __('Ulice a číslo', 'gln-pharma-product'),
+                'postal_code' => __('PSČ', 'gln-pharma-product'),
+                'city' => __('Město', 'gln-pharma-product'),
+                'country' => __('Země', 'gln-pharma-product'),
+                'phone' => __('Telefon', 'gln-pharma-product'),
+                'email_primary' => __('Hlavní e-mail', 'gln-pharma-product'),
+                'email_secondary' => __('Další e-mail', 'gln-pharma-product'),
+                'link_label' => __('Text odkazu', 'gln-pharma-product'),
+                'website_url' => __('URL', 'gln-pharma-product'),
+                'content_html' => __('HTML obsah', 'gln-pharma-product'),
             ],
             'condition' => ['format' => 'field'],
         ]);
 
         $this->add_control('link_field', [
-            'label' => __('Telefon/e-mail jako odkaz', 'wr-pharma-product'),
+            'label' => __('Telefon/e-mail jako odkaz', 'gln-pharma-product'),
             'type' => \Elementor\Controls_Manager::SWITCHER,
             'return_value' => 'yes',
             'default' => 'yes',
@@ -106,6 +106,6 @@ class Webrev_Shared_Content_Widget extends \Elementor\Widget_Base
         $field = 'field' === $format && !empty($settings['field']) ? $settings['field'] : '';
         $linked = 'yes' === ($settings['link_field'] ?? '');
 
-        echo webrev_shared_content_render_key($settings['item_key'], $format, $field, $linked);
+        echo glenmark_shared_content_render_key($settings['item_key'], $format, $field, $linked);
     }
 }

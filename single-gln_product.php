@@ -17,7 +17,7 @@ if (have_posts()) {
             $product_id = (int) $parent_product_id;
         }
 
-        if ($preview_product_id > 0 && 'wr_product' === get_post_type($preview_product_id)) {
+        if ($preview_product_id > 0 && 'gln_product' === get_post_type($preview_product_id)) {
             $product_id = $preview_product_id;
         }
 
@@ -40,7 +40,7 @@ if (have_posts()) {
         $icons = get_field('product_icons', $product_id) ?: [];
         $composition = get_field('product_composition', $product_id) ?: '';
         // $short_text = get_field('product_short_text', $product_id) ?: '';
-        $built_with_elementor = webrev_is_built_with_elementor($product_id);
+        $built_with_elementor = glenmark_is_built_with_elementor($product_id);
         $has_long_description = $built_with_elementor || $description || '' !== trim((string) get_post_field('post_content', $product_id));
         $legal = get_field('product_legal_notice', $product_id) ?: '';
         $spc = get_field('product_spc', $product_id) ?: '';
@@ -125,37 +125,37 @@ if (have_posts()) {
 
         $has_package_variants = count($package_variants) > 1;
         ?>
-        <article id="product-<?php echo esc_attr($product_id); ?>" class="wr-product-template">
-            <section class="wr-product-hero radiant-bg">
-                <div class="container wr-product-hero__inner">
-                    <div class="wr-product-hero__text">
+        <article id="product-<?php echo esc_attr($product_id); ?>" class="gln-product-template">
+            <section class="gln-product-hero radiant-bg">
+                <div class="container gln-product-hero__inner">
+                    <div class="gln-product-hero__text">
                         <?php if ($claim): ?>
-                            <div class="wr-product-hero__claim">
-                                <h2 class="wr-product-highlight">
+                            <div class="gln-product-hero__claim">
+                                <h2 class="gln-product-highlight">
                                     <?php echo esc_html($claim); ?>
                                 </h2>
                                 <?php if ($product_subtitle_more): ?>
-                                    <p class="wr-product-subtitle">
+                                    <p class="gln-product-subtitle">
                                         <?php echo esc_html($product_subtitle_more); ?>
                                     </p>
                                 <?php endif; ?>
                             </div>
                         <?php endif; ?>
-                        <div class="wr-product-hero__row">
-                            <div class="wr-product-hero__copy">
-                                <div class="wr-product-hero__copy-text">
+                        <div class="gln-product-hero__row">
+                            <div class="gln-product-hero__copy">
+                                <div class="gln-product-hero__copy-text">
                                     <!--  <h1><?php echo esc_html($product_name); ?></h1>
                             <?php if ($product_subtitle): ?>
-                                <p class="wr-product-subtitle"><?php echo esc_html($product_subtitle); ?></p>
+                                <p class="gln-product-subtitle"><?php echo esc_html($product_subtitle); ?></p>
                             <?php endif; ?> -->
                                     <?php if ($main_benefits): ?>
-                                        <div class="wr-product-benefits reveal-line">
+                                        <div class="gln-product-benefits reveal-line">
                                             <?php echo wp_kses_post($main_benefits); ?>
                                         </div>
                                     <?php endif; ?>
                                 </div>
                                 <?php if ($indication || $active_ingredients || $contained_ingredients): ?>
-                                    <div class="wr-product-chips" aria-label="Vlastnosti produktu">
+                                    <div class="gln-product-chips" aria-label="Vlastnosti produktu">
                                         <?php foreach ([
                                             ['label' => 'Indikace', 'value' => $indication],
                                             ['label' => 'Účinné látky', 'value' => $active_ingredients],
@@ -164,9 +164,9 @@ if (have_posts()) {
                                             <?php if (!$property['value']) {
                                                 continue;
                                             } ?>
-                                            <div class="wr-product-chip-group">
-                                                <span class="wr-product-chip-label"><?php echo esc_html($property['label']); ?></span>
-                                                <span class="wr-product-chip">
+                                            <div class="gln-product-chip-group">
+                                                <span class="gln-product-chip-label"><?php echo esc_html($property['label']); ?></span>
+                                                <span class="gln-product-chip">
                                                     <?php echo nl2br(esc_html($property['value'])); ?>
                                                 </span>
                                             </div>
@@ -175,14 +175,14 @@ if (have_posts()) {
                                 <?php endif; ?>
                             </div>
                             <?php if ($packshot_id && ($has_package_variants || $pharmacies)): ?>
-                                <div class="wr-product-hero__actions">
+                                <div class="gln-product-hero__actions">
                                     <?php if ($has_package_variants): ?>
-                                        <div class="wr-variant-switch-group">
-                                            <span class="wr-variant-switch__label">Vyberte velikost balení</span>
-                                            <div class="wr-variant-switch" role="group" aria-label="Vyberte variantu balíčku">
+                                        <div class="gln-variant-switch-group">
+                                            <span class="gln-variant-switch__label">Vyberte velikost balení</span>
+                                            <div class="gln-variant-switch" role="group" aria-label="Vyberte variantu balíčku">
                                                 <?php foreach ($package_variants as $variant_index => $variant): ?>
                                                     <button type="button"
-                                                        class="wr-variant-switch__item<?php echo $variant_index === 0 ? ' is-active' : ''; ?>"
+                                                        class="gln-variant-switch__item<?php echo $variant_index === 0 ? ' is-active' : ''; ?>"
                                                         data-image="<?php echo esc_url($variant['image']); ?>"
                                                         data-pharmacies='<?php echo esc_attr(wp_json_encode($variant['pharmacies'])); ?>'
                                                         aria-pressed="<?php echo $variant_index === 0 ? 'true' : 'false'; ?>">
@@ -193,23 +193,23 @@ if (have_posts()) {
                                         </div>
                                     <?php endif; ?>
                                     <?php if ($pharmacies): ?>
-                                        <a class="wr-button wr-button--buy wr-product-buy-modal-trigger"
-                                            href="#wr-product-buy-modal-<?php echo esc_attr($product_id); ?>">Koupit</a>
+                                        <a class="gln-button gln-button--buy gln-product-buy-modal-trigger"
+                                            href="#gln-product-buy-modal-<?php echo esc_attr($product_id); ?>">Koupit</a>
                                     <?php endif; ?>
                                 </div>
                             <?php endif; ?>
                         </div>
                     </div>
                     <?php if ($packshot_id): ?>
-                        <div class="wr-product-hero__media" <?php if ($has_package_variants && $variant_box_width && $variant_box_height): ?>
+                        <div class="gln-product-hero__media" <?php if ($has_package_variants && $variant_box_width && $variant_box_height): ?>
                                 style="width: <?php echo esc_attr(ceil($variant_box_width)); ?>px; height: <?php echo esc_attr(ceil($variant_box_height)); ?>px;"
                             <?php endif; ?>>
                             <?php if ($has_package_variants): ?>
-                                <img id="wr-product-packshot-<?php echo esc_attr($product_id); ?>"
-                                    class="wr-product-packshot reveal-line" src="<?php echo esc_url($package_variants[0]['image']); ?>"
+                                <img id="gln-product-packshot-<?php echo esc_attr($product_id); ?>"
+                                    class="gln-product-packshot reveal-line" src="<?php echo esc_url($package_variants[0]['image']); ?>"
                                     alt="<?php echo esc_attr($full_name); ?>">
                             <?php else: ?>
-                                <?php echo wp_get_attachment_image($packshot_id, 'large', false, ['class' => 'wr-product-packshot reveal-line']); ?>
+                                <?php echo wp_get_attachment_image($packshot_id, 'large', false, ['class' => 'gln-product-packshot reveal-line']); ?>
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
@@ -217,22 +217,22 @@ if (have_posts()) {
             </section>
 
             <?php if ($pharmacies): ?>
-                <div id="wr-product-buy-modal-<?php echo esc_attr($product_id); ?>" class="wr-product-buy-modal mfp-hide">
-                    <div class="wr-product-buy-modal__dialog">
-                        <h2 class="wr-product-buy-modal__title">Kde koupit</h2>
-                        <p class="wr-product-buy-modal__product">
+                <div id="gln-product-buy-modal-<?php echo esc_attr($product_id); ?>" class="gln-product-buy-modal mfp-hide">
+                    <div class="gln-product-buy-modal__dialog">
+                        <h2 class="gln-product-buy-modal__title">Kde koupit</h2>
+                        <p class="gln-product-buy-modal__product">
                             <?php echo esc_html($product_name); ?>
                         </p>
-                        <div class="wr-product-buy-modal__logos">
+                        <div class="gln-product-buy-modal__logos">
                             <?php foreach ($pharmacies as $pharmacy): ?>
-                                <a class="wr-product-buy-modal__logo-link" href="<?php echo esc_url($pharmacy['url']); ?>"
+                                <a class="gln-product-buy-modal__logo-link" href="<?php echo esc_url($pharmacy['url']); ?>"
                                     data-pharmacy-key="<?php echo esc_attr($pharmacy['key']); ?>" target="_blank"
                                     rel="noopener noreferrer" aria-label="<?php echo esc_attr($pharmacy['label']); ?>">
                                     <?php if ($pharmacy['logo']): ?>
-                                        <img class="wr-product-buy-modal__logo" src="<?php echo esc_url($pharmacy['logo']); ?>"
+                                        <img class="gln-product-buy-modal__logo" src="<?php echo esc_url($pharmacy['logo']); ?>"
                                             alt="<?php echo esc_attr($pharmacy['label']); ?>">
                                     <?php else: ?>
-                                        <span class="wr-product-buy-modal__logo-fallback">
+                                        <span class="gln-product-buy-modal__logo-fallback">
                                             <?php echo esc_html($pharmacy['label']); ?>
                                         </span>
                                     <?php endif; ?>
@@ -244,9 +244,9 @@ if (have_posts()) {
             <?php endif; ?>
 
             <?php if ($short_description || $has_long_description || !empty($gallery)): ?>
-                <section class="wr-product-description">
+                <section class="gln-product-description">
 
-                    <div class="container wr-product-description__inner">
+                    <div class="container gln-product-description__inner">
 
                         <h2>
                             <?php echo esc_html($full_name); ?>
@@ -271,16 +271,16 @@ if (have_posts()) {
                             </div>
                         <?php endif; ?>
                         <?php if (!empty($gallery)): ?>
-                            <div class="wr-product-gallery__grid">
+                            <div class="gln-product-gallery__grid">
                                 <?php foreach ($gallery as $image_id): ?>
                                     <?php $full_url = wp_get_attachment_image_url($image_id, 'large'); ?>
                                     <?php if (!$full_url): ?>
                                         <?php continue; ?>
                                     <?php endif; ?>
-                                    <a class="wr-product-gallery__item" href="<?php echo esc_url($full_url); ?>"
+                                    <a class="gln-product-gallery__item" href="<?php echo esc_url($full_url); ?>"
                                         data-elementor-open-lightbox="yes"
                                         data-elementor-lightbox-slideshow="product-gallery-<?php echo esc_attr($product_id); ?>">
-                                        <?php echo wp_get_attachment_image($image_id, 'medium', false, ['class' => 'wr-product-gallery__image', 'alt' => '']); ?>
+                                        <?php echo wp_get_attachment_image($image_id, 'medium', false, ['class' => 'gln-product-gallery__image', 'alt' => '']); ?>
                                     </a>
                                 <?php endforeach; ?>
                             </div>
@@ -290,27 +290,27 @@ if (have_posts()) {
             <?php endif; ?>
 
             <?php if (!empty($icons)): ?>
-                <section class="wr-product-icons radiant-bg">
-                    <div class="container wr-product-icons__grid">
+                <section class="gln-product-icons radiant-bg">
+                    <div class="container gln-product-icons__grid">
                         <?php foreach ($icons as $icon): ?>
                             <?php $image_id = $icon['image'] ?? 0;
                             $label = $icon['label'] ?? '';
                             $description = $icon['description'] ?? ''; ?>
                             <?php if ($image_id || $label || $description): ?>
-                                <div class="wr-product-icon">
+                                <div class="gln-product-icon">
                                     <?php if ($image_id): ?>
-                                        <div class="wr-product-icon__image">
+                                        <div class="gln-product-icon__image">
                                             <?php echo wp_get_attachment_image($image_id, 'medium', false, ['alt' => '']); ?>
                                         </div>
                                     <?php endif; ?>
-                                    <div class="wr-product-icon__content">
+                                    <div class="gln-product-icon__content">
                                         <?php if ($label): ?>
-                                            <p class="wr-product-icon__label">
+                                            <p class="gln-product-icon__label">
                                                 <?php echo esc_html($label); ?>
                                             </p>
                                         <?php endif; ?>
                                         <?php if ($description): ?>
-                                            <p class="wr-product-icon__description">
+                                            <p class="gln-product-icon__description">
                                                 <?php echo nl2br(esc_html($description)); ?>
                                             </p>
                                         <?php endif; ?>
@@ -322,10 +322,10 @@ if (have_posts()) {
                 </section>
             <?php endif; ?>
 
-            <section class="wr-product-details">
-                <div class="container wr-product-details__inner">
-                    <h3 class="wr-product-eyebrow">Detail produktu</h3>
-                    <div class="wr-product-specification">
+            <section class="gln-product-details">
+                <div class="container gln-product-details__inner">
+                    <h3 class="gln-product-eyebrow">Detail produktu</h3>
+                    <div class="gln-product-specification">
                         <?php foreach ([
                             ['label' => 'Indikace', 'value' => $indication, 'show_label' => true],
                             ['label' => 'Účinné látky', 'value' => $active_ingredients, 'show_label' => true],
@@ -336,13 +336,13 @@ if (have_posts()) {
 
                         ] as $spec): ?>
                             <?php if ($spec['value']): ?>
-                                <div class="wr-product-specification__row">
+                                <div class="gln-product-specification__row">
                                     <?php if ($spec['show_label']): ?>
-                                        <strong class="wr-product-specification__label">
+                                        <strong class="gln-product-specification__label">
                                             <?php echo esc_html($spec['label']); ?>
                                         </strong>
                                     <?php endif; ?>
-                                    <div class="wr-product-specification__value">
+                                    <div class="gln-product-specification__value">
                                         <?php echo !empty($spec['html']) ? wp_kses_post($spec['value']) : nl2br(esc_html($spec['value'])); ?>
                                     </div>
                                 </div>
@@ -350,10 +350,10 @@ if (have_posts()) {
                         <?php endforeach; ?>
                     </div>
                     <?php if (!empty($registered_packages)): ?>
-                        <div class="wr-product-packages">
-                            <h4 class="wr-product-packages__title">Dostupná balení</h4>
-                            <div class="wr-product-packages__table-wrap">
-                                <table class="wr-product-packages__table">
+                        <div class="gln-product-packages">
+                            <h4 class="gln-product-packages__title">Dostupná balení</h4>
+                            <div class="gln-product-packages__table-wrap">
+                                <table class="gln-product-packages__table">
                                     <thead>
                                         <tr>
                                             <th>Síla</th>
@@ -394,7 +394,7 @@ if (have_posts()) {
                                 </table>
                             </div>
                             <?php if ($registered_packages_url): ?>
-                                <a class="wr-product-packages__link" href="<?php echo esc_url($registered_packages_url); ?>"
+                                <a class="gln-product-packages__link" href="<?php echo esc_url($registered_packages_url); ?>"
                                     target="_blank" rel="noopener noreferrer">Seznam všech registrovaných balení</a>
                             <?php endif; ?>
                         </div>
@@ -403,19 +403,19 @@ if (have_posts()) {
             </section>
 
             <?php if ($legal || $spc): ?>
-                <section class="wr-product-legal">
-                    <div class="container wr-product-legal__inner">
-                        <div class="wr-product-legal__actions">
+                <section class="gln-product-legal">
+                    <div class="container gln-product-legal__inner">
+                        <div class="gln-product-legal__actions">
                             <?php if ($legal): ?>
-                                <button type="button" class="wr-product-legal__toggle" aria-expanded="false">Upozornění</button>
+                                <button type="button" class="gln-product-legal__toggle" aria-expanded="false">Upozornění</button>
                             <?php endif; ?>
                             <?php if ($spc): ?>
-                                <a class="wr-product-legal__toggle" href="<?php echo esc_url($spc); ?>" target="_blank"
+                                <a class="gln-product-legal__toggle" href="<?php echo esc_url($spc); ?>" target="_blank"
                                     rel="noopener noreferrer">Příbalová informace</a>
                             <?php endif; ?>
                         </div>
                         <?php if ($legal): ?>
-                            <div class="wr-product-legal__content" hidden>
+                            <div class="gln-product-legal__content" hidden>
                                 <?php echo wp_kses_post($legal); ?>
                             </div>
                         <?php endif; ?>
@@ -424,13 +424,13 @@ if (have_posts()) {
             <?php endif; ?>
 
             <?php if ($pharmacies): ?>
-                <section class="wr-product-pharmacies">
+                <section class="gln-product-pharmacies">
                     <div class="container">
                         <h2 class="text-center">Kde koupit</h2>
-                        <div class="wr-product-pharmacies__grid">
+                        <div class="gln-product-pharmacies__grid">
                             <?php foreach ($pharmacies as $pharmacy): ?>
-                                <article class="wr-product-pharmacy">
-                                    <div class="wr-product-pharmacy__logo">
+                                <article class="gln-product-pharmacy">
+                                    <div class="gln-product-pharmacy__logo">
                                         <?php if ($pharmacy['logo']): ?>
                                             <img src="<?php echo esc_url($pharmacy['logo']); ?>"
                                                 alt="<?php echo esc_attr($pharmacy['label']); ?>">
@@ -440,7 +440,7 @@ if (have_posts()) {
                                             </span>
                                         <?php endif; ?>
                                     </div>
-                                    <a class="wr-button wr-button--primary" href="<?php echo esc_url($pharmacy['url']); ?>"
+                                    <a class="gln-button gln-button--primary" href="<?php echo esc_url($pharmacy['url']); ?>"
                                         target="_blank" rel="noopener noreferrer">E-shop
                                         <?php echo esc_html($pharmacy['label']); ?>
                                     </a>

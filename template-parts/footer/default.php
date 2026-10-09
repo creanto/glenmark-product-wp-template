@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
             <div><?php dynamic_sidebar('footer_col_3'); ?></div>
         </div>
 
-        <nav aria-label="<?php esc_attr_e('Footer navigation', 'wr-pharma-product'); ?>">
+        <nav aria-label="<?php esc_attr_e('Footer navigation', 'gln-pharma-product'); ?>">
             <?php
             wp_nav_menu([
                 'theme_location' => 'footer',

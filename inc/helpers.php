@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_get_theme_file_path($relative_path)
+function glenmark_get_theme_file_path($relative_path)
 {
     $relative_path = ltrim((string) $relative_path, '/');
     $stylesheet_path = trailingslashit(get_stylesheet_directory()) . $relative_path;
@@ -18,7 +18,7 @@ function webrev_get_theme_file_path($relative_path)
     return file_exists($template_path) ? $template_path : '';
 }
 
-function webrev_get_theme_file_uri($relative_path)
+function glenmark_get_theme_file_uri($relative_path)
 {
     $relative_path = ltrim((string) $relative_path, '/');
     $stylesheet_path = trailingslashit(get_stylesheet_directory()) . $relative_path;
@@ -32,7 +32,7 @@ function webrev_get_theme_file_uri($relative_path)
     return file_exists($template_path) ? trailingslashit(get_template_directory_uri()) . $relative_path : '';
 }
 
-function webrev_attachment_is_svg($attachment_id)
+function glenmark_attachment_is_svg($attachment_id)
 {
     $attachment_id = (int) $attachment_id;
 
@@ -77,9 +77,9 @@ function webrev_attachment_is_svg($attachment_id)
     return false;
 }
 
-function webrev_scope_inline_svg_markup($svg_markup, $unique_key)
+function glenmark_scope_inline_svg_markup($svg_markup, $unique_key)
 {
-    $prefix = 'wrsvg' . preg_replace('/[^a-zA-Z0-9_-]/', '', (string) $unique_key) . '-';
+    $prefix = 'glnsvg' . preg_replace('/[^a-zA-Z0-9_-]/', '', (string) $unique_key) . '-';
 
     // Illustrator exports reuse generic ids (SVGID_1_...) and classes (.st0...) across files;
     // when several logos are inlined on the same page these collide, so make them unique.
@@ -128,7 +128,7 @@ function webrev_scope_inline_svg_markup($svg_markup, $unique_key)
     return $svg_markup;
 }
 
-function webrev_get_inline_svg_logo_html($attachment_id, $class_name = '', $alt_text = '')
+function glenmark_get_inline_svg_logo_html($attachment_id, $class_name = '', $alt_text = '')
 {
     $attachment_id = (int) $attachment_id;
 
@@ -206,7 +206,7 @@ function webrev_get_inline_svg_logo_html($attachment_id, $class_name = '', $alt_
         return '';
     }
 
-    $svg_markup = webrev_scope_inline_svg_markup($svg_markup, $attachment_id);
+    $svg_markup = glenmark_scope_inline_svg_markup($svg_markup, $attachment_id);
 
     $classes = trim('custom-logo ' . $class_name);
     $aria_label = trim((string) $alt_text);
@@ -245,7 +245,7 @@ function webrev_get_inline_svg_logo_html($attachment_id, $class_name = '', $alt_
     return is_string($svg_markup) ? trim($svg_markup) : '';
 }
 
-function webrev_get_logo_image_html($attachment_id, $class_name = '')
+function glenmark_get_logo_image_html($attachment_id, $class_name = '')
 {
     $attachment_id = (int) $attachment_id;
 
@@ -255,7 +255,7 @@ function webrev_get_logo_image_html($attachment_id, $class_name = '')
 
     $class_name = trim((string) $class_name);
 
-    if (webrev_attachment_is_svg($attachment_id)) {
+    if (glenmark_attachment_is_svg($attachment_id)) {
 
         $alt = trim((string) get_post_meta($attachment_id, '_wp_attachment_image_alt', true));
 
@@ -263,7 +263,7 @@ function webrev_get_logo_image_html($attachment_id, $class_name = '')
             $alt = get_bloginfo('name');
         }
 
-        $inline_svg = webrev_get_inline_svg_logo_html($attachment_id, $class_name, $alt);
+        $inline_svg = glenmark_get_inline_svg_logo_html($attachment_id, $class_name, $alt);
 
         if ('' !== $inline_svg) {
             return $inline_svg;
@@ -291,11 +291,11 @@ function webrev_get_logo_image_html($attachment_id, $class_name = '')
     ]);
 }
 
-function webrev_get_logo_attachment_ids()
+function glenmark_get_logo_attachment_ids()
 {
     $ids = [
-        (int) webrev_get_logo_default_id(),
-        (int) webrev_get_logo_transparent_id(),
+        (int) glenmark_get_logo_default_id(),
+        (int) glenmark_get_logo_transparent_id(),
         (int) get_theme_mod('custom_logo'),
     ];
 
@@ -305,7 +305,7 @@ function webrev_get_logo_attachment_ids()
     return array_values(array_unique($ids));
 }
 
-function webrev_maybe_inline_svg_attachment_image($html, $attachment_id, $size, $icon, $attr)
+function glenmark_maybe_inline_svg_attachment_image($html, $attachment_id, $size, $icon, $attr)
 {
     if (is_admin()) {
         return $html;
@@ -313,11 +313,11 @@ function webrev_maybe_inline_svg_attachment_image($html, $attachment_id, $size, 
 
     $attachment_id = (int) $attachment_id;
 
-    if ($attachment_id <= 0 || !webrev_attachment_is_svg($attachment_id)) {
+    if ($attachment_id <= 0 || !glenmark_attachment_is_svg($attachment_id)) {
         return $html;
     }
 
-    if (!in_array($attachment_id, webrev_get_logo_attachment_ids(), true)) {
+    if (!in_array($attachment_id, glenmark_get_logo_attachment_ids(), true)) {
         return $html;
     }
 
@@ -337,25 +337,25 @@ function webrev_maybe_inline_svg_attachment_image($html, $attachment_id, $size, 
         $alt = get_bloginfo('name');
     }
 
-    $inline_svg = webrev_get_inline_svg_logo_html($attachment_id, $class_name, $alt);
+    $inline_svg = glenmark_get_inline_svg_logo_html($attachment_id, $class_name, $alt);
 
     return '' !== $inline_svg ? $inline_svg : $html;
 }
-add_filter('wp_get_attachment_image', 'webrev_maybe_inline_svg_attachment_image', 10, 5);
+add_filter('wp_get_attachment_image', 'glenmark_maybe_inline_svg_attachment_image', 10, 5);
 
-function webrev_get_template_part($slug, $name = null, $args = [])
+function glenmark_get_template_part($slug, $name = null, $args = [])
 {
     get_template_part($slug, $name, $args);
 }
 
-function webrev_primary_menu_fallback()
+function glenmark_primary_menu_fallback()
 {
     echo '<ul class="nav-menu">';
-    echo '<li><a href="' . esc_url(home_url('/')) . '">' . esc_html__('Uvod', 'wr-pharma-product') . '</a></li>';
+    echo '<li><a href="' . esc_url(home_url('/')) . '">' . esc_html__('Uvod', 'gln-pharma-product') . '</a></li>';
     echo '</ul>';
 }
 
-function webrev_is_built_with_elementor($post_id = null)
+function glenmark_is_built_with_elementor($post_id = null)
 {
     $post_id = $post_id ? (int) $post_id : get_the_ID();
 
@@ -385,9 +385,9 @@ function webrev_is_built_with_elementor($post_id = null)
     return !empty($elementor_data);
 }
 
-function webrev_get_favicon_custom_url()
+function glenmark_get_favicon_custom_url()
 {
-    $favicon_id = (int) webrev_get_setting('favicon', 0);
+    $favicon_id = (int) glenmark_get_setting('favicon', 0);
 
     if ($favicon_id <= 0) {
         return '';
@@ -398,18 +398,18 @@ function webrev_get_favicon_custom_url()
     return is_string($url) ? $url : '';
 }
 
-function webrev_locate_icon($filename)
+function glenmark_locate_icon($filename)
 {
-    return webrev_get_theme_file_uri('assets/icon/' . ltrim((string) $filename, '/'));
+    return glenmark_get_theme_file_uri('assets/icon/' . ltrim((string) $filename, '/'));
 }
 
-function webrev_print_icon_tags()
+function glenmark_print_icon_tags()
 {
-    $favicon_96 = webrev_locate_icon('favicon-96x96.png');
-    $favicon_svg = webrev_locate_icon('favicon.svg');
-    $favicon_ico = webrev_locate_icon('favicon.ico');
-    $apple_touch = webrev_locate_icon('apple-touch-icon.png');
-    $manifest = webrev_locate_icon('site.webmanifest');
+    $favicon_96 = glenmark_locate_icon('favicon-96x96.png');
+    $favicon_svg = glenmark_locate_icon('favicon.svg');
+    $favicon_ico = glenmark_locate_icon('favicon.ico');
+    $apple_touch = glenmark_locate_icon('apple-touch-icon.png');
+    $manifest = glenmark_locate_icon('site.webmanifest');
 
     if (!empty($favicon_96)) {
         echo '<link rel="icon" type="image/png" href="' . esc_url($favicon_96) . '" sizes="96x96" />' . "\n";
@@ -433,4 +433,4 @@ function webrev_print_icon_tags()
         echo '<link rel="manifest" href="' . esc_url($manifest) . '" />' . "\n";
     }
 }
-add_action('wp_head', 'webrev_print_icon_tags', 1);
+add_action('wp_head', 'glenmark_print_icon_tags', 1);

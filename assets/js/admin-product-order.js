@@ -4,7 +4,7 @@
     $(function () {
         var $tbody = $('#the-list');
 
-        if (!$tbody.length || typeof wrProductOrder === 'undefined') {
+        if (!$tbody.length || typeof glnProductOrder === 'undefined') {
             return;
         }
 
@@ -23,12 +23,12 @@
                     return $(this).attr('id').replace('post-', '');
                 }).get();
 
-                $.post(wrProductOrder.ajaxUrl, {
-                    action: 'wr_product_reorder',
-                    nonce: wrProductOrder.nonce,
+                $.post(glnProductOrder.ajaxUrl, {
+                    action: 'gln_product_reorder',
+                    nonce: glnProductOrder.nonce,
                     post_ids: postIds
                 }).done(function () {
-                    $tbody.find('.wr-product-order-handle').each(function (index) {
+                    $tbody.find('.gln-product-order-handle').each(function (index) {
                         $(this).text(index);
                     });
                 });

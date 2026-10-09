@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 use Elementor\Controls_Manager;
 use Elementor\Element_Base;
 
-class WR_Elementor_Animations_Controls
+class GLN_Elementor_Animations_Controls
 {
     private const ORDER_DELAY_STEP = 150;
 
@@ -35,7 +35,7 @@ class WR_Elementor_Animations_Controls
 
     public function init(): void
     {
-        // Register the WR Animation controls on existing Elementor element stacks.
+        // Register the GLN Animation controls on existing Elementor element stacks.
         add_action('elementor/element/common/_section_style/after_section_end', [$this, 'register_controls'], 10, 2);
         add_action('elementor/element/container/section_layout/after_section_end', [$this, 'register_controls'], 10, 2);
         add_action('elementor/element/section/section_advanced/after_section_end', [$this, 'register_controls'], 10, 2);
@@ -59,97 +59,97 @@ class WR_Elementor_Animations_Controls
         if (method_exists($element, 'get_controls')) {
             $controls = $element->get_controls();
 
-            if (isset($controls['wr_animation_enable'])) {
+            if (isset($controls['gln_animation_enable'])) {
                 return;
             }
         }
 
         $element->start_controls_section(
-            'wr_animation_section',
+            'gln_animation_section',
             [
-                'label' => esc_html__('Glenmark Animation', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Glenmark Animation', 'glenmark-elementor-animations'),
                 'tab' => Controls_Manager::TAB_ADVANCED,
             ]
         );
 
         $element->add_control(
-            'wr_animation_enable',
+            'gln_animation_enable',
             [
-                'label' => esc_html__('Enable animation', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Enable animation', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Yes', 'webrevolution-elementor-animations'),
-                'label_off' => esc_html__('No', 'webrevolution-elementor-animations'),
+                'label_on' => esc_html__('Yes', 'glenmark-elementor-animations'),
+                'label_off' => esc_html__('No', 'glenmark-elementor-animations'),
                 'return_value' => 'yes',
                 'default' => '',
             ]
         );
 
         $element->add_control(
-            'wr_animation_type',
+            'gln_animation_type',
             [
-                'label' => esc_html__('Animation type', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Animation type', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::SELECT,
                 'default' => 'none',
                 'options' => $this->get_animation_type_options(),
                 'condition' => [
-                    'wr_animation_enable' => 'yes',
+                    'gln_animation_enable' => 'yes',
                 ],
             ]
         );
 
         $element->add_responsive_control(
-            'wr_animation_duration',
+            'gln_animation_duration',
             [
-                'label' => esc_html__('Duration', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Duration', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 700,
                 'min' => 100,
                 'max' => 5000,
                 'step' => 50,
                 'selectors' => [
-                    '{{WRAPPER}}' => '--wr-animation-duration: {{VALUE}}ms;',
+                    '{{WRAPPER}}' => '--gln-animation-duration: {{VALUE}}ms;',
                 ],
                 'condition' => [
-                    'wr_animation_enable' => 'yes',
-                    'wr_animation_type!' => 'none',
+                    'gln_animation_enable' => 'yes',
+                    'gln_animation_type!' => 'none',
                 ],
             ]
         );
 
         $element->add_responsive_control(
-            'wr_animation_delay',
+            'gln_animation_delay',
             [
-                'label' => esc_html__('Delay', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Delay', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 0,
                 'min' => 0,
                 'max' => 5000,
                 'step' => 50,
                 'selectors' => [
-                    '{{WRAPPER}}' => '--wr-animation-delay: {{VALUE}}ms;',
+                    '{{WRAPPER}}' => '--gln-animation-delay: {{VALUE}}ms;',
                 ],
                 'condition' => [
-                    'wr_animation_enable' => 'yes',
-                    'wr_animation_type!' => 'none',
+                    'gln_animation_enable' => 'yes',
+                    'gln_animation_type!' => 'none',
                 ],
             ]
         );
 
         $element->add_responsive_control(
-            'wr_animation_distance',
+            'gln_animation_distance',
             [
-                'label' => esc_html__('Distance', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Distance', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 50,
                 'min' => 0,
                 'max' => 1000,
                 'step' => 1,
                 'selectors' => [
-                    '{{WRAPPER}}' => '--wr-animation-distance: {{VALUE}}px; --wr-animation-distance-negative: -{{VALUE}}px;',
+                    '{{WRAPPER}}' => '--gln-animation-distance: {{VALUE}}px; --gln-animation-distance-negative: -{{VALUE}}px;',
                 ],
                 'condition' => [
-                    'wr_animation_enable' => 'yes',
-                    'wr_animation_type' => [
+                    'gln_animation_enable' => 'yes',
+                    'gln_animation_type' => [
                         'fade-up',
                         'fade-down',
                         'fade-left',
@@ -164,118 +164,118 @@ class WR_Elementor_Animations_Controls
         );
 
         $element->add_control(
-            'wr_animation_initial_scale',
+            'gln_animation_initial_scale',
             [
-                'label' => esc_html__('Initial scale', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Initial scale', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => '',
                 'min' => 0.5,
                 'max' => 1.5,
                 'step' => 0.05,
                 'condition' => [
-                    'wr_animation_enable' => 'yes',
-                    'wr_animation_type' => ['scale-in', 'scale-out'],
+                    'gln_animation_enable' => 'yes',
+                    'gln_animation_type' => ['scale-in', 'scale-out'],
                 ],
             ]
         );
 
         $element->add_control(
-            'wr_animation_easing',
+            'gln_animation_easing',
             [
-                'label' => esc_html__('Easing', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Easing', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::SELECT,
                 'default' => 'ease-out',
                 'options' => [
-                    'ease' => esc_html__('ease', 'webrevolution-elementor-animations'),
-                    'ease-in' => esc_html__('ease-in', 'webrevolution-elementor-animations'),
-                    'ease-out' => esc_html__('ease-out', 'webrevolution-elementor-animations'),
-                    'ease-in-out' => esc_html__('ease-in-out', 'webrevolution-elementor-animations'),
-                    'linear' => esc_html__('linear', 'webrevolution-elementor-animations'),
-                    'custom' => esc_html__('custom cubic-bezier', 'webrevolution-elementor-animations'),
+                    'ease' => esc_html__('ease', 'glenmark-elementor-animations'),
+                    'ease-in' => esc_html__('ease-in', 'glenmark-elementor-animations'),
+                    'ease-out' => esc_html__('ease-out', 'glenmark-elementor-animations'),
+                    'ease-in-out' => esc_html__('ease-in-out', 'glenmark-elementor-animations'),
+                    'linear' => esc_html__('linear', 'glenmark-elementor-animations'),
+                    'custom' => esc_html__('custom cubic-bezier', 'glenmark-elementor-animations'),
                 ],
                 'condition' => [
-                    'wr_animation_enable' => 'yes',
-                    'wr_animation_type!' => 'none',
+                    'gln_animation_enable' => 'yes',
+                    'gln_animation_type!' => 'none',
                 ],
             ]
         );
 
         $element->add_control(
-            'wr_animation_custom_easing',
+            'gln_animation_custom_easing',
             [
-                'label' => esc_html__('Custom cubic-bezier', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Custom cubic-bezier', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::TEXT,
                 'placeholder' => 'cubic-bezier(0.22, 1, 0.36, 1)',
                 'condition' => [
-                    'wr_animation_enable' => 'yes',
-                    'wr_animation_type!' => 'none',
-                    'wr_animation_easing' => 'custom',
+                    'gln_animation_enable' => 'yes',
+                    'gln_animation_type!' => 'none',
+                    'gln_animation_easing' => 'custom',
                 ],
             ]
         );
 
         $element->add_control(
-            'wr_animation_trigger',
+            'gln_animation_trigger',
             [
-                'label' => esc_html__('Trigger', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Trigger', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::SELECT,
                 'default' => 'viewport',
                 'options' => [
-                    'load' => esc_html__('On page load', 'webrevolution-elementor-animations'),
-                    'viewport' => esc_html__('On enter viewport', 'webrevolution-elementor-animations'),
+                    'load' => esc_html__('On page load', 'glenmark-elementor-animations'),
+                    'viewport' => esc_html__('On enter viewport', 'glenmark-elementor-animations'),
                 ],
                 'condition' => [
-                    'wr_animation_enable' => 'yes',
-                    'wr_animation_type!' => 'none',
+                    'gln_animation_enable' => 'yes',
+                    'gln_animation_type!' => 'none',
                 ],
             ]
         );
 
         $element->add_control(
-            'wr_animation_threshold',
+            'gln_animation_threshold',
             [
-                'label' => esc_html__('Viewport threshold', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Viewport threshold', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 0.15,
                 'min' => 0,
                 'max' => 1,
                 'step' => 0.05,
                 'condition' => [
-                    'wr_animation_enable' => 'yes',
-                    'wr_animation_type!' => 'none',
-                    'wr_animation_trigger' => 'viewport',
+                    'gln_animation_enable' => 'yes',
+                    'gln_animation_type!' => 'none',
+                    'gln_animation_trigger' => 'viewport',
                 ],
             ]
         );
 
         $element->add_control(
-            'wr_animation_once',
+            'gln_animation_once',
             [
-                'label' => esc_html__('Trigger once', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Trigger once', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Yes', 'webrevolution-elementor-animations'),
-                'label_off' => esc_html__('No', 'webrevolution-elementor-animations'),
+                'label_on' => esc_html__('Yes', 'glenmark-elementor-animations'),
+                'label_off' => esc_html__('No', 'glenmark-elementor-animations'),
                 'return_value' => 'yes',
                 'default' => 'yes',
                 'condition' => [
-                    'wr_animation_enable' => 'yes',
-                    'wr_animation_type!' => 'none',
+                    'gln_animation_enable' => 'yes',
+                    'gln_animation_type!' => 'none',
                 ],
             ]
         );
 
         $element->add_control(
-            'wr_animation_order',
+            'gln_animation_order',
             [
-                'label' => esc_html__('Animation order', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Animation order', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 0,
                 'min' => 0,
                 'max' => 20,
                 'step' => 1,
                 'condition' => [
-                    'wr_animation_enable' => 'yes',
-                    'wr_animation_type!' => 'none',
+                    'gln_animation_enable' => 'yes',
+                    'gln_animation_type!' => 'none',
                 ],
             ]
         );
@@ -283,121 +283,121 @@ class WR_Elementor_Animations_Controls
         $element->end_controls_section();
 
         $element->start_controls_section(
-            'wr_transform_section',
+            'gln_transform_section',
             [
-                'label' => esc_html__('Glenmark Transform', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Glenmark Transform', 'glenmark-elementor-animations'),
                 'tab' => Controls_Manager::TAB_ADVANCED,
             ]
         );
 
         $element->add_control(
-            'wr_transform_enable',
+            'gln_transform_enable',
             [
-                'label' => esc_html__('Enable transform', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Enable transform', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::SWITCHER,
-                'label_on' => esc_html__('Yes', 'webrevolution-elementor-animations'),
-                'label_off' => esc_html__('No', 'webrevolution-elementor-animations'),
+                'label_on' => esc_html__('Yes', 'glenmark-elementor-animations'),
+                'label_off' => esc_html__('No', 'glenmark-elementor-animations'),
                 'return_value' => 'yes',
                 'default' => '',
             ]
         );
 
         $element->add_control(
-            'wr_transform_type',
+            'gln_transform_type',
             [
-                'label' => esc_html__('Hover transform', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Hover transform', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::SELECT,
                 'default' => 'none',
                 'options' => $this->get_transform_type_options(),
                 'condition' => [
-                    'wr_transform_enable' => 'yes',
+                    'gln_transform_enable' => 'yes',
                 ],
             ]
         );
 
         $element->add_control(
-            'wr_transform_rotate_degrees',
+            'gln_transform_rotate_degrees',
             [
-                'label' => esc_html__('Rotate degrees', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Rotate degrees', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 360,
                 'min' => -1080,
                 'max' => 1080,
                 'step' => 15,
                 'condition' => [
-                    'wr_transform_enable' => 'yes',
-                    'wr_transform_type' => ['rotate', 'rotate-scale'],
+                    'gln_transform_enable' => 'yes',
+                    'gln_transform_type' => ['rotate', 'rotate-scale'],
                 ],
             ]
         );
 
         $element->add_control(
-            'wr_transform_scale',
+            'gln_transform_scale',
             [
-                'label' => esc_html__('Scale', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Scale', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 1.05,
                 'min' => 0.1,
                 'max' => 3,
                 'step' => 0.01,
                 'condition' => [
-                    'wr_transform_enable' => 'yes',
-                    'wr_transform_type' => ['scale', 'rotate-scale'],
+                    'gln_transform_enable' => 'yes',
+                    'gln_transform_type' => ['scale', 'rotate-scale'],
                 ],
             ]
         );
 
         $element->add_responsive_control(
-            'wr_transform_button_hover_padding',
+            'gln_transform_button_hover_padding',
             [
-                'label' => esc_html__('Button hover padding', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Button hover padding', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => ['px', 'em', 'rem', '%'],
                 'selectors' => [
-                    '{{WRAPPER}}' => '--wr-transform-button-padding-top: {{TOP}}{{UNIT}}; --wr-transform-button-padding-right: {{RIGHT}}{{UNIT}}; --wr-transform-button-padding-bottom: {{BOTTOM}}{{UNIT}}; --wr-transform-button-padding-left: {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}}' => '--gln-transform-button-padding-top: {{TOP}}{{UNIT}}; --gln-transform-button-padding-right: {{RIGHT}}{{UNIT}}; --gln-transform-button-padding-bottom: {{BOTTOM}}{{UNIT}}; --gln-transform-button-padding-left: {{LEFT}}{{UNIT}};',
                 ],
                 'condition' => [
-                    'wr_transform_enable' => 'yes',
+                    'gln_transform_enable' => 'yes',
                 ],
             ]
         );
 
         $element->add_responsive_control(
-            'wr_transform_duration',
+            'gln_transform_duration',
             [
-                'label' => esc_html__('Duration', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Duration', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::NUMBER,
                 'default' => 300,
                 'min' => 0,
                 'max' => 5000,
                 'step' => 50,
                 'selectors' => [
-                    '{{WRAPPER}}' => '--wr-transform-duration: {{VALUE}}ms;',
+                    '{{WRAPPER}}' => '--gln-transform-duration: {{VALUE}}ms;',
                 ],
                 'condition' => [
-                    'wr_transform_enable' => 'yes',
+                    'gln_transform_enable' => 'yes',
                 ],
             ]
         );
 
         $element->add_control(
-            'wr_transform_easing',
+            'gln_transform_easing',
             [
-                'label' => esc_html__('Easing', 'webrevolution-elementor-animations'),
+                'label' => esc_html__('Easing', 'glenmark-elementor-animations'),
                 'type' => Controls_Manager::SELECT,
                 'default' => 'ease',
                 'options' => [
-                    'ease' => esc_html__('ease', 'webrevolution-elementor-animations'),
-                    'ease-in' => esc_html__('ease-in', 'webrevolution-elementor-animations'),
-                    'ease-out' => esc_html__('ease-out', 'webrevolution-elementor-animations'),
-                    'ease-in-out' => esc_html__('ease-in-out', 'webrevolution-elementor-animations'),
-                    'linear' => esc_html__('linear', 'webrevolution-elementor-animations'),
+                    'ease' => esc_html__('ease', 'glenmark-elementor-animations'),
+                    'ease-in' => esc_html__('ease-in', 'glenmark-elementor-animations'),
+                    'ease-out' => esc_html__('ease-out', 'glenmark-elementor-animations'),
+                    'ease-in-out' => esc_html__('ease-in-out', 'glenmark-elementor-animations'),
+                    'linear' => esc_html__('linear', 'glenmark-elementor-animations'),
                 ],
                 'selectors' => [
-                    '{{WRAPPER}}' => '--wr-transform-easing: {{VALUE}};',
+                    '{{WRAPPER}}' => '--gln-transform-easing: {{VALUE}};',
                 ],
                 'condition' => [
-                    'wr_transform_enable' => 'yes',
+                    'gln_transform_enable' => 'yes',
                 ],
             ]
         );
@@ -416,70 +416,70 @@ class WR_Elementor_Animations_Controls
     private function add_animation_render_attributes(Element_Base $element, array $settings): void
     {
 
-        if (empty($settings['wr_animation_enable']) || 'yes' !== $settings['wr_animation_enable']) {
+        if (empty($settings['gln_animation_enable']) || 'yes' !== $settings['gln_animation_enable']) {
             return;
         }
 
-        $animation_type = $this->sanitize_animation_type($settings['wr_animation_type'] ?? 'none');
+        $animation_type = $this->sanitize_animation_type($settings['gln_animation_type'] ?? 'none');
 
         if ('none' === $animation_type) {
             return;
         }
 
-        $trigger = $this->sanitize_trigger($settings['wr_animation_trigger'] ?? 'viewport');
-        $threshold = $this->sanitize_float($settings['wr_animation_threshold'] ?? 0.15, 0, 1, 0.15);
-        $trigger_once = !empty($settings['wr_animation_once']) && 'yes' === $settings['wr_animation_once'];
-        $animation_order = $this->sanitize_int($settings['wr_animation_order'] ?? 0, 0, 20, 0);
+        $trigger = $this->sanitize_trigger($settings['gln_animation_trigger'] ?? 'viewport');
+        $threshold = $this->sanitize_float($settings['gln_animation_threshold'] ?? 0.15, 0, 1, 0.15);
+        $trigger_once = !empty($settings['gln_animation_once']) && 'yes' === $settings['gln_animation_once'];
+        $animation_order = $this->sanitize_int($settings['gln_animation_order'] ?? 0, 0, 20, 0);
         // Animation order adds a small constant step on top of the manually configured delay.
         $order_delay = $animation_order * self::ORDER_DELAY_STEP;
         $easing = $this->sanitize_easing($settings);
-        $initial_scale = $this->sanitize_initial_scale($settings['wr_animation_initial_scale'] ?? '', $animation_type);
+        $initial_scale = $this->sanitize_initial_scale($settings['gln_animation_initial_scale'] ?? '', $animation_type);
 
         $styles = [
-            '--wr-animation-easing: ' . $easing,
-            '--wr-animation-order-delay: ' . $order_delay . 'ms',
-            '--wr-animation-order-step: ' . self::ORDER_DELAY_STEP . 'ms',
+            '--gln-animation-easing: ' . $easing,
+            '--gln-animation-order-delay: ' . $order_delay . 'ms',
+            '--gln-animation-order-step: ' . self::ORDER_DELAY_STEP . 'ms',
         ];
 
         if (null !== $initial_scale) {
-            $styles[] = '--wr-animation-initial-scale: ' . $initial_scale;
+            $styles[] = '--gln-animation-initial-scale: ' . $initial_scale;
         }
 
         $element->add_render_attribute('_wrapper', [
             'class' => [
-                'wr-animate',
-                'wr-animation-' . $animation_type,
+                'gln-animate',
+                'gln-animation-' . $animation_type,
             ],
             'style' => implode('; ', array_map('esc_attr', $styles)) . ';',
-            'data-wr-animation-trigger' => esc_attr($trigger),
-            'data-wr-animation-threshold' => esc_attr((string) $threshold),
-            'data-wr-animation-once' => $trigger_once ? 'yes' : 'no',
+            'data-gln-animation-trigger' => esc_attr($trigger),
+            'data-gln-animation-threshold' => esc_attr((string) $threshold),
+            'data-gln-animation-once' => $trigger_once ? 'yes' : 'no',
         ]);
     }
 
     private function add_transform_render_attributes(Element_Base $element, array $settings): void
     {
-        if (empty($settings['wr_transform_enable']) || 'yes' !== $settings['wr_transform_enable']) {
+        if (empty($settings['gln_transform_enable']) || 'yes' !== $settings['gln_transform_enable']) {
             return;
         }
 
-        $transform_type = $this->sanitize_transform_type($settings['wr_transform_type'] ?? 'none');
+        $transform_type = $this->sanitize_transform_type($settings['gln_transform_type'] ?? 'none');
         $styles = [];
 
         if (in_array($transform_type, ['rotate', 'rotate-scale'], true)) {
-            $rotation = $this->sanitize_float($settings['wr_transform_rotate_degrees'] ?? 360, -1080, 1080, 360);
-            $styles[] = '--wr-transform-hover-rotate: ' . $rotation . 'deg';
+            $rotation = $this->sanitize_float($settings['gln_transform_rotate_degrees'] ?? 360, -1080, 1080, 360);
+            $styles[] = '--gln-transform-hover-rotate: ' . $rotation . 'deg';
         }
 
         if (in_array($transform_type, ['scale', 'rotate-scale'], true)) {
-            $scale = $this->sanitize_float($settings['wr_transform_scale'] ?? 1.05, 0.1, 3, 1.05);
-            $styles[] = '--wr-transform-hover-scale: ' . $scale;
+            $scale = $this->sanitize_float($settings['gln_transform_scale'] ?? 1.05, 0.1, 3, 1.05);
+            $styles[] = '--gln-transform-hover-scale: ' . $scale;
         }
 
         $render_attributes = [
             'class' => [
-                'wr-transform',
-                'wr-transform-' . $transform_type,
+                'gln-transform',
+                'gln-transform-' . $transform_type,
             ],
         ];
 
@@ -492,12 +492,12 @@ class WR_Elementor_Animations_Controls
 
     public function enqueue_styles(): void
     {
-        $path = WR_ELEMENTOR_ANIMATIONS_PATH . 'assets/css/animations.css';
-        $version = file_exists($path) ? (string) filemtime($path) : WR_ELEMENTOR_ANIMATIONS_VERSION;
+        $path = GLN_ELEMENTOR_ANIMATIONS_PATH . 'assets/css/animations.css';
+        $version = file_exists($path) ? (string) filemtime($path) : GLN_ELEMENTOR_ANIMATIONS_VERSION;
 
         wp_enqueue_style(
-            'wr-elementor-animations',
-            WR_ELEMENTOR_ANIMATIONS_URL . 'assets/css/animations.css',
+            'gln-elementor-animations',
+            GLN_ELEMENTOR_ANIMATIONS_URL . 'assets/css/animations.css',
             [],
             $version
         );
@@ -505,13 +505,13 @@ class WR_Elementor_Animations_Controls
 
     public function enqueue_scripts(): void
     {
-        $path = WR_ELEMENTOR_ANIMATIONS_PATH . 'assets/js/animations.js';
-        $version = file_exists($path) ? (string) filemtime($path) : WR_ELEMENTOR_ANIMATIONS_VERSION;
+        $path = GLN_ELEMENTOR_ANIMATIONS_PATH . 'assets/js/animations.js';
+        $version = file_exists($path) ? (string) filemtime($path) : GLN_ELEMENTOR_ANIMATIONS_VERSION;
         $dependencies = wp_script_is('elementor-frontend', 'registered') ? ['elementor-frontend'] : [];
 
         wp_enqueue_script(
-            'wr-elementor-animations',
-            WR_ELEMENTOR_ANIMATIONS_URL . 'assets/js/animations.js',
+            'gln-elementor-animations',
+            GLN_ELEMENTOR_ANIMATIONS_URL . 'assets/js/animations.js',
             $dependencies,
             $version,
             true
@@ -523,7 +523,7 @@ class WR_Elementor_Animations_Controls
         $options = [];
 
         foreach (self::ANIMATION_TYPES as $value => $label) {
-            $options[$value] = esc_html__($label, 'webrevolution-elementor-animations');
+            $options[$value] = esc_html__($label, 'glenmark-elementor-animations');
         }
 
         return $options;
@@ -534,7 +534,7 @@ class WR_Elementor_Animations_Controls
         $options = [];
 
         foreach (self::TRANSFORM_TYPES as $value => $label) {
-            $options[$value] = esc_html__($label, 'webrevolution-elementor-animations');
+            $options[$value] = esc_html__($label, 'glenmark-elementor-animations');
         }
 
         return $options;
@@ -557,7 +557,7 @@ class WR_Elementor_Animations_Controls
 
     private function sanitize_easing(array $settings): string
     {
-        $easing = sanitize_text_field((string) ($settings['wr_animation_easing'] ?? 'ease-out'));
+        $easing = sanitize_text_field((string) ($settings['gln_animation_easing'] ?? 'ease-out'));
         $allowed = ['ease', 'ease-in', 'ease-out', 'ease-in-out', 'linear'];
 
         if (in_array($easing, $allowed, true)) {
@@ -568,7 +568,7 @@ class WR_Elementor_Animations_Controls
             return 'ease-out';
         }
 
-        $custom_easing = sanitize_text_field((string) ($settings['wr_animation_custom_easing'] ?? ''));
+        $custom_easing = sanitize_text_field((string) ($settings['gln_animation_custom_easing'] ?? ''));
 
         if (preg_match('/^cubic-bezier\(\s*-?\d*\.?\d+\s*,\s*-?\d*\.?\d+\s*,\s*-?\d*\.?\d+\s*,\s*-?\d*\.?\d+\s*\)$/', $custom_easing)) {
             return $custom_easing;

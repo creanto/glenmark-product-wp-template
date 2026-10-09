@@ -67,10 +67,10 @@ Nova globalni komponenta patri do `components/`. Styl konkretni stranky patri do
 ### Obecne funkce
 
 - Kazdy PHP soubor zacina kontrolou `ABSPATH`.
-- Nazvy funkci, hooku, scriptu a stylu maji prefix `webrev_` nebo `webrev-` podle typu identifikatoru.
+- Nazvy funkci, hooku, scriptu a stylu maji prefix `glenmark_` nebo `glenmark-` podle typu identifikatoru.
 - Funkce maji jednu jasnou odpovednost a maji validovat vstupy.
 - Opakovane hodnoty a vychozi nastaveni nenechavej roztrousene v kodu; patri do konfigurace nebo do pojmenovane konstanty.
-- Univerzalni pristup ke konfiguraci pouzivej pres `webrev_config()` a `webrev_get_setting()`, ne pres prime cteni konkretniho souboru z libovolneho mista.
+- Univerzalni pristup ke konfiguraci pouzivej pres `glenmark_config()` a `glenmark_get_setting()`, ne pres prime cteni konkretniho souboru z libovolneho mista.
 - Pri vystupu pouzivej odpovidajici WordPress escaping (`esc_html`, `esc_attr`, `esc_url`, `wp_kses_post`).
 - Nove moduly se musi nacitat z jednoho predvidatelneho mista, typicky `inc/bootstrap.php`.
 
@@ -113,12 +113,12 @@ Priklad rozdeleni:
 ```scss
 // components/_product-card.scss
 .product-card {
-  border-radius: $wr-radius;
-  color: $wr-color-text;
+  border-radius: $gln-radius;
+  color: $gln-color-text;
 }
 
 // pages/_product.scss
-.single-wr_product .product-card {
+.single-gln_product .product-card {
   // Odchylka platna pouze pro produktovou stranku.
 }
 ```

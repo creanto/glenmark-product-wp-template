@@ -4,16 +4,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_elementor_register_category($elements_manager)
+function glenmark_elementor_register_category($elements_manager)
 {
-    $elements_manager->add_category('webrev', [
-        'title' => __('Glenmark', 'wr-pharma-product'),
+    $elements_manager->add_category('glenmark', [
+        'title' => __('Glenmark', 'gln-pharma-product'),
         'icon' => 'eicon-layout',
     ]);
 }
-add_action('elementor/elements/categories_registered', 'webrev_elementor_register_category');
+add_action('elementor/elements/categories_registered', 'glenmark_elementor_register_category');
 
-function webrev_register_wr_elementor_widgets()
+function glenmark_register_gln_elementor_widgets()
 {
     if (!class_exists('\Elementor\Plugin')) {
         return;
@@ -41,17 +41,17 @@ function webrev_register_wr_elementor_widgets()
     }
 
     $widgets = [
-        'Webrev_ProductCarousel_Widget',
-        'Webrev_ProductGrid_Widget',
-        'Webrev_ProductFilters_Widget',
-        'Webrev_ProductBox_Widget',
-        'Webrev_PostGrid_Widget',
-        'Webrev_Breadcrumbs_Widget',
-        'Webrev_Benefits_Widget',
-        'Webrev_CTA_Widget',
-        'Webrev_PharmacyGrid_Widget',
-        'Webrev_Rich_Heading_Widget',
-        'Webrev_Shared_Content_Widget',
+        'Glenmark_ProductCarousel_Widget',
+        'Glenmark_ProductGrid_Widget',
+        'Glenmark_ProductFilters_Widget',
+        'Glenmark_ProductBox_Widget',
+        'Glenmark_PostGrid_Widget',
+        'Glenmark_Breadcrumbs_Widget',
+        'Glenmark_Benefits_Widget',
+        'Glenmark_CTA_Widget',
+        'Glenmark_PharmacyGrid_Widget',
+        'Glenmark_Rich_Heading_Widget',
+        'Glenmark_Shared_Content_Widget',
     ];
 
     $widgets_manager = \Elementor\Plugin::instance()->widgets_manager;
@@ -62,4 +62,4 @@ function webrev_register_wr_elementor_widgets()
         }
     }
 }
-add_action('elementor/widgets/register', 'webrev_register_wr_elementor_widgets');
+add_action('elementor/widgets/register', 'glenmark_register_gln_elementor_widgets');

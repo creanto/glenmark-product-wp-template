@@ -4,10 +4,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-if (!class_exists('Webrev_Elementor_Json_Editor')) {
-    class Webrev_Elementor_Json_Editor
+if (!class_exists('Glenmark_Elementor_Json_Editor')) {
+    class Glenmark_Elementor_Json_Editor
     {
-        const BACKUP_META_KEY = '_webrev_elementor_backups';
+        const BACKUP_META_KEY = '_glenmark_elementor_backups';
 
         public static function init()
         {
@@ -23,17 +23,17 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
             }
 
             add_management_page(
-                __('Elementor JSON Editor', 'wr-pharma-product'),
-                __('Elementor JSON Editor', 'wr-pharma-product'),
+                __('Elementor JSON Editor', 'gln-pharma-product'),
+                __('Elementor JSON Editor', 'gln-pharma-product'),
                 'manage_options',
-                'webrev-elementor-json-editor',
+                'glenmark-elementor-json-editor',
                 [__CLASS__, 'render_page']
             );
         }
 
         public static function enqueue_assets($hook_suffix)
         {
-            if ('tools_page_webrev-elementor-json-editor' !== $hook_suffix) {
+            if ('tools_page_glenmark-elementor-json-editor' !== $hook_suffix) {
                 return;
             }
 
@@ -63,7 +63,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
             $js_uri = trailingslashit($theme_uri) . 'assets/js/elementor-json-editor.js';
             if (file_exists($js_path)) {
                 wp_enqueue_script(
-                    'webrev-elementor-json-editor',
+                    'glenmark-elementor-json-editor',
                     $js_uri,
                     ['wp-codemirror', 'jquery'],
                     filemtime($js_path),
@@ -75,7 +75,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
             $css_uri = trailingslashit($theme_uri) . 'assets/css/elementor-json-editor.css';
             if (file_exists($css_path)) {
                 wp_enqueue_style(
-                    'webrev-elementor-json-editor',
+                    'glenmark-elementor-json-editor',
                     $css_uri,
                     ['wp-codemirror'],
                     filemtime($css_path)
@@ -83,15 +83,15 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
             }
 
             wp_localize_script(
-                'webrev-elementor-json-editor',
-                'webrevElementorJsonEditor',
+                'glenmark-elementor-json-editor',
+                'glenmarkElementorJsonEditor',
                 [
-                    'restRoot' => esc_url_raw(rest_url('wr-pharma-product/v1')),
+                    'restRoot' => esc_url_raw(rest_url('gln-pharma-product/v1')),
                     'nonce' => wp_create_nonce('wp_rest'),
                     'labels' => [
-                        'loading' => __('Načítám…', 'wr-pharma-product'),
-                        'empty' => __('Nenalezena žádná data.', 'wr-pharma-product'),
-                        'save' => __('Uložit', 'wr-pharma-product'),
+                        'loading' => __('Načítám…', 'gln-pharma-product'),
+                        'empty' => __('Nenalezena žádná data.', 'gln-pharma-product'),
+                        'save' => __('Uložit', 'gln-pharma-product'),
                     ],
                 ]
             );
@@ -99,7 +99,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
 
         public static function register_rest_routes()
         {
-            register_rest_route('wr-pharma-product/v1', '/elementor-documents', [
+            register_rest_route('gln-pharma-product/v1', '/elementor-documents', [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => [__CLASS__, 'rest_get_documents'],
                 'permission_callback' => function () {
@@ -107,7 +107,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
                 },
             ]);
 
-            register_rest_route('wr-pharma-product/v1', '/elementor-documents/(?P<id>\d+)', [
+            register_rest_route('gln-pharma-product/v1', '/elementor-documents/(?P<id>\d+)', [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => [__CLASS__, 'rest_get_document'],
                 'permission_callback' => function () {
@@ -115,7 +115,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
                 },
             ]);
 
-            register_rest_route('wr-pharma-product/v1', '/elementor-documents/(?P<id>\d+)/save', [
+            register_rest_route('gln-pharma-product/v1', '/elementor-documents/(?P<id>\d+)/save', [
                 'methods' => WP_REST_Server::EDITABLE,
                 'callback' => [__CLASS__, 'rest_save_document'],
                 'permission_callback' => function () {
@@ -123,7 +123,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
                 },
             ]);
 
-            register_rest_route('wr-pharma-product/v1', '/elementor-documents/(?P<id>\d+)/restore', [
+            register_rest_route('gln-pharma-product/v1', '/elementor-documents/(?P<id>\d+)/restore', [
                 'methods' => WP_REST_Server::EDITABLE,
                 'callback' => [__CLASS__, 'rest_restore_document'],
                 'permission_callback' => function () {
@@ -131,7 +131,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
                 },
             ]);
 
-            register_rest_route('wr-pharma-product/v1', '/elementor-documents/(?P<id>\d+)/backups', [
+            register_rest_route('gln-pharma-product/v1', '/elementor-documents/(?P<id>\d+)/backups', [
                 'methods' => WP_REST_Server::READABLE,
                 'callback' => [__CLASS__, 'rest_get_backups'],
                 'permission_callback' => function () {
@@ -143,7 +143,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
         public static function render_page()
         {
             if (!current_user_can('manage_options')) {
-                wp_die(__('Nemáte oprávnění pro přístup k tomuto nástroji.', 'wr-pharma-product'));
+                wp_die(__('Nemáte oprávnění pro přístup k tomuto nástroji.', 'gln-pharma-product'));
             }
 
             $selected_post_id = 0;
@@ -158,76 +158,76 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
                 }
             }
             ?>
-            <div class="wrap webrev-elementor-json-editor-wrap">
-                <h1><?php echo esc_html__('Elementor JSON Editor', 'wr-pharma-product'); ?></h1>
+            <div class="wrap glenmark-elementor-json-editor-wrap">
+                <h1><?php echo esc_html__('Elementor JSON Editor', 'gln-pharma-product'); ?></h1>
 
-                <div class="webrev-editor-toolbar">
-                    <div class="webrev-post-picker">
+                <div class="glenmark-editor-toolbar">
+                    <div class="glenmark-post-picker">
                         <label
-                            for="webrev-elementor-post-search"><?php echo esc_html__('Vybrat stránku', 'wr-pharma-product'); ?></label>
-                        <input id="webrev-elementor-post-search" type="search"
-                            placeholder="<?php echo esc_attr__('Hledat podle názvu...', 'wr-pharma-product'); ?>" autocomplete="off" />
-                        <select id="webrev-elementor-post-select" size="1">
-                            <option value=""><?php echo esc_html__('Vyberte příspěvek', 'wr-pharma-product'); ?></option>
+                            for="glenmark-elementor-post-search"><?php echo esc_html__('Vybrat stránku', 'gln-pharma-product'); ?></label>
+                        <input id="glenmark-elementor-post-search" type="search"
+                            placeholder="<?php echo esc_attr__('Hledat podle názvu...', 'gln-pharma-product'); ?>" autocomplete="off" />
+                        <select id="glenmark-elementor-post-select" size="1">
+                            <option value=""><?php echo esc_html__('Vyberte příspěvek', 'gln-pharma-product'); ?></option>
                         </select>
                     </div>
 
-                    <div class="webrev-document-meta">
-                        <div><strong><?php echo esc_html__('Page:', 'wr-pharma-product'); ?></strong> <span
-                                id="webrev-document-title">—</span></div>
-                        <div><strong><?php echo esc_html__('ID:', 'wr-pharma-product'); ?></strong> <span
-                                id="webrev-document-id">—</span></div>
-                        <div><strong><?php echo esc_html__('Post type:', 'wr-pharma-product'); ?></strong> <span
-                                id="webrev-document-type">—</span></div>
-                        <div><strong><?php echo esc_html__('Elementor document:', 'wr-pharma-product'); ?></strong> <span
-                                id="webrev-document-elementor">—</span></div>
-                        <div><strong><?php echo esc_html__('Status:', 'wr-pharma-product'); ?></strong> <span
-                                id="webrev-document-status">—</span></div>
+                    <div class="glenmark-document-meta">
+                        <div><strong><?php echo esc_html__('Page:', 'gln-pharma-product'); ?></strong> <span
+                                id="glenmark-document-title">—</span></div>
+                        <div><strong><?php echo esc_html__('ID:', 'gln-pharma-product'); ?></strong> <span
+                                id="glenmark-document-id">—</span></div>
+                        <div><strong><?php echo esc_html__('Post type:', 'gln-pharma-product'); ?></strong> <span
+                                id="glenmark-document-type">—</span></div>
+                        <div><strong><?php echo esc_html__('Elementor document:', 'gln-pharma-product'); ?></strong> <span
+                                id="glenmark-document-elementor">—</span></div>
+                        <div><strong><?php echo esc_html__('Status:', 'gln-pharma-product'); ?></strong> <span
+                                id="glenmark-document-status">—</span></div>
                     </div>
                 </div>
 
-                <div class="webrev-editor-actions">
+                <div class="glenmark-editor-actions">
                     <button type="button" class="button button-primary"
-                        id="webrev-save-json"><?php echo esc_html__('Uložit', 'wr-pharma-product'); ?></button>
+                        id="glenmark-save-json"><?php echo esc_html__('Uložit', 'gln-pharma-product'); ?></button>
                     <button type="button" class="button"
-                        id="webrev-format-json"><?php echo esc_html__('Formátovat JSON', 'wr-pharma-product'); ?></button>
+                        id="glenmark-format-json"><?php echo esc_html__('Formátovat JSON', 'gln-pharma-product'); ?></button>
                     <button type="button" class="button"
-                        id="webrev-minify-json"><?php echo esc_html__('Minify', 'wr-pharma-product'); ?></button>
+                        id="glenmark-minify-json"><?php echo esc_html__('Minify', 'gln-pharma-product'); ?></button>
                     <button type="button" class="button"
-                        id="webrev-reload-json"><?php echo esc_html__('Reload', 'wr-pharma-product'); ?></button>
+                        id="glenmark-reload-json"><?php echo esc_html__('Reload', 'gln-pharma-product'); ?></button>
                     <button type="button" class="button"
-                        id="webrev-search-json"><?php echo esc_html__('Search', 'wr-pharma-product'); ?></button>
+                        id="glenmark-search-json"><?php echo esc_html__('Search', 'gln-pharma-product'); ?></button>
                     <button type="button" class="button"
-                        id="webrev-search-replace-json"><?php echo esc_html__('Search & Replace', 'wr-pharma-product'); ?></button>
+                        id="glenmark-search-replace-json"><?php echo esc_html__('Search & Replace', 'gln-pharma-product'); ?></button>
                     <button type="button" class="button"
-                        id="webrev-restore-last-version"><?php echo esc_html__('Obnovit předchozí verzi', 'wr-pharma-product'); ?></button>
-                    <a class="button" id="webrev-open-page" target="_blank"
-                        rel="noopener noreferrer"><?php echo esc_html__('Otevřít stránku', 'wr-pharma-product'); ?></a>
-                    <a class="button" id="webrev-open-elementor" target="_blank"
-                        rel="noopener noreferrer"><?php echo esc_html__('Upravit v Elementoru', 'wr-pharma-product'); ?></a>
+                        id="glenmark-restore-last-version"><?php echo esc_html__('Obnovit předchozí verzi', 'gln-pharma-product'); ?></button>
+                    <a class="button" id="glenmark-open-page" target="_blank"
+                        rel="noopener noreferrer"><?php echo esc_html__('Otevřít stránku', 'gln-pharma-product'); ?></a>
+                    <a class="button" id="glenmark-open-elementor" target="_blank"
+                        rel="noopener noreferrer"><?php echo esc_html__('Upravit v Elementoru', 'gln-pharma-product'); ?></a>
                 </div>
 
-                <div class="webrev-editor-status" id="webrev-editor-status" aria-live="polite">
-                    <?php echo esc_html__('Vyberte stránku pro načtení Elementor JSON.', 'wr-pharma-product'); ?>
+                <div class="glenmark-editor-status" id="glenmark-editor-status" aria-live="polite">
+                    <?php echo esc_html__('Vyberte stránku pro načtení Elementor JSON.', 'gln-pharma-product'); ?>
                 </div>
 
-                <div class="webrev-editor-layout">
-                    <aside class="webrev-structure-panel">
-                        <h2><?php echo esc_html__('Struktura', 'wr-pharma-product'); ?></h2>
-                        <div id="webrev-structure-tree" class="webrev-structure-tree">
-                            <p><?php echo esc_html__('Žádná data načtena.', 'wr-pharma-product'); ?></p>
+                <div class="glenmark-editor-layout">
+                    <aside class="glenmark-structure-panel">
+                        <h2><?php echo esc_html__('Struktura', 'gln-pharma-product'); ?></h2>
+                        <div id="glenmark-structure-tree" class="glenmark-structure-tree">
+                            <p><?php echo esc_html__('Žádná data načtena.', 'gln-pharma-product'); ?></p>
                         </div>
-                        <div class="webrev-element-id-search">
+                        <div class="glenmark-element-id-search">
                             <label
-                                for="webrev-element-id-input"><?php echo esc_html__('Element ID', 'wr-pharma-product'); ?></label>
-                            <input type="text" id="webrev-element-id-input" placeholder="např. 72ac91" />
+                                for="glenmark-element-id-input"><?php echo esc_html__('Element ID', 'gln-pharma-product'); ?></label>
+                            <input type="text" id="glenmark-element-id-input" placeholder="např. 72ac91" />
                             <button type="button" class="button"
-                                id="webrev-find-element-id"><?php echo esc_html__('Najít', 'wr-pharma-product'); ?></button>
+                                id="glenmark-find-element-id"><?php echo esc_html__('Najít', 'gln-pharma-product'); ?></button>
                         </div>
                     </aside>
 
-                    <div class="webrev-code-panel">
-                        <textarea id="webrev-elementor-json-editor" aria-label="Elementor JSON editor"></textarea>
+                    <div class="glenmark-code-panel">
+                        <textarea id="glenmark-elementor-json-editor" aria-label="Elementor JSON editor"></textarea>
                     </div>
                 </div>
             </div>
@@ -264,7 +264,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
             $post = get_post($post_id);
 
             if (!$post || !current_user_can('manage_options')) {
-                return new WP_Error('invalid_post', __('Příspěvek neexistuje nebo nemáte oprávnění.', 'wr-pharma-product'), ['status' => 404]);
+                return new WP_Error('invalid_post', __('Příspěvek neexistuje nebo nemáte oprávnění.', 'gln-pharma-product'), ['status' => 404]);
             }
 
             $document = null;
@@ -294,7 +294,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
             $post = get_post($post_id);
 
             if (!$post) {
-                return new WP_Error('invalid_post', __('Příspěvek neexistuje.', 'wr-pharma-product'), ['status' => 404]);
+                return new WP_Error('invalid_post', __('Příspěvek neexistuje.', 'gln-pharma-product'), ['status' => 404]);
             }
 
             return rest_ensure_response(['backups' => self::get_backups($post_id)]);
@@ -306,16 +306,16 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
             $json = $request->get_param('json');
 
             if ($post_id <= 0) {
-                return new WP_Error('invalid_post_id', __('Nesprávné ID příspěvku.', 'wr-pharma-product'), ['status' => 400]);
+                return new WP_Error('invalid_post_id', __('Nesprávné ID příspěvku.', 'gln-pharma-product'), ['status' => 400]);
             }
 
             $post = get_post($post_id);
             if (!$post) {
-                return new WP_Error('invalid_post', __('Příspěvek neexistuje.', 'wr-pharma-product'), ['status' => 404]);
+                return new WP_Error('invalid_post', __('Příspěvek neexistuje.', 'gln-pharma-product'), ['status' => 404]);
             }
 
             if (!is_string($json) || '' === trim($json)) {
-                return new WP_Error('empty_json', __('JSON nesmí být prázdný.', 'wr-pharma-product'), ['status' => 400]);
+                return new WP_Error('empty_json', __('JSON nesmí být prázdný.', 'gln-pharma-product'), ['status' => 400]);
             }
 
             $parsed = json_decode($json, true);
@@ -334,7 +334,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
 
             return rest_ensure_response([
                 'success' => true,
-                'message' => __('Elementor JSON byl úspěšně uložen.', 'wr-pharma-product'),
+                'message' => __('Elementor JSON byl úspěšně uložen.', 'gln-pharma-product'),
                 'backups' => self::get_backups($post_id),
             ]);
         }
@@ -345,17 +345,17 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
             $index = absint($request->get_param('backup_index'));
 
             if ($post_id <= 0) {
-                return new WP_Error('invalid_post_id', __('Nesprávné ID příspěvku.', 'wr-pharma-product'), ['status' => 400]);
+                return new WP_Error('invalid_post_id', __('Nesprávné ID příspěvku.', 'gln-pharma-product'), ['status' => 400]);
             }
 
             $post = get_post($post_id);
             if (!$post) {
-                return new WP_Error('invalid_post', __('Příspěvek neexistuje.', 'wr-pharma-product'), ['status' => 404]);
+                return new WP_Error('invalid_post', __('Příspěvek neexistuje.', 'gln-pharma-product'), ['status' => 404]);
             }
 
             $backups = self::get_backups($post_id);
             if (!isset($backups[$index]) || !is_array($backups[$index])) {
-                return new WP_Error('invalid_backup', __('Záloha neexistuje.', 'wr-pharma-product'), ['status' => 404]);
+                return new WP_Error('invalid_backup', __('Záloha neexistuje.', 'gln-pharma-product'), ['status' => 404]);
             }
 
             $current_data = self::decode_elementor_data(get_post_meta($post_id, '_elementor_data', true));
@@ -369,7 +369,7 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
 
             return rest_ensure_response([
                 'success' => true,
-                'message' => __('Předchozí verze byla obnovena.', 'wr-pharma-product'),
+                'message' => __('Předchozí verze byla obnovena.', 'gln-pharma-product'),
                 'backups' => self::get_backups($post_id),
             ]);
         }
@@ -400,12 +400,12 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
         private static function get_status_label($status)
         {
             $labels = [
-                'publish' => __('Publikováno', 'wr-pharma-product'),
-                'draft' => __('Koncept', 'wr-pharma-product'),
-                'pending' => __('Čeká na kontrolu', 'wr-pharma-product'),
-                'private' => __('Soukromé', 'wr-pharma-product'),
-                'future' => __('Plánováno', 'wr-pharma-product'),
-                'trash' => __('Koš', 'wr-pharma-product'),
+                'publish' => __('Publikováno', 'gln-pharma-product'),
+                'draft' => __('Koncept', 'gln-pharma-product'),
+                'pending' => __('Čeká na kontrolu', 'gln-pharma-product'),
+                'private' => __('Soukromé', 'gln-pharma-product'),
+                'future' => __('Plánováno', 'gln-pharma-product'),
+                'trash' => __('Koš', 'gln-pharma-product'),
             ];
 
             return $labels[$status] ?? ucfirst((string) $status);
@@ -499,12 +499,12 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
 
             $json_string = wp_json_encode($new_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
             if (false === $json_string) {
-                return new WP_Error('json_encoding_failed', __('Nepodařilo se serializovat JSON pro Elementor data.', 'wr-pharma-product'), ['status' => 500]);
+                return new WP_Error('json_encoding_failed', __('Nepodařilo se serializovat JSON pro Elementor data.', 'gln-pharma-product'), ['status' => 500]);
             }
 
             $updated = update_post_meta($post_id, '_elementor_data', wp_slash($json_string));
             if (false === $updated) {
-                return new WP_Error('meta_update_failed', __('Uložení Elementor JSON do post meta selhalo.', 'wr-pharma-product'), ['status' => 500]);
+                return new WP_Error('meta_update_failed', __('Uložení Elementor JSON do post meta selhalo.', 'gln-pharma-product'), ['status' => 500]);
             }
 
             self::invalidate_elementor_cache($post_id);
@@ -552,12 +552,12 @@ if (!class_exists('Webrev_Elementor_Json_Editor')) {
                     $column = false === $last_newline ? $position + 1 : ($position - $last_newline);
                 }
 
-                return sprintf(__('Neplatný JSON: %s (řádek %d, sloupec %d)', 'wr-pharma-product'), $message, $line, $column);
+                return sprintf(__('Neplatný JSON: %s (řádek %d, sloupec %d)', 'gln-pharma-product'), $message, $line, $column);
             }
 
-            return __('Neplatný JSON.', 'wr-pharma-product');
+            return __('Neplatný JSON.', 'gln-pharma-product');
         }
     }
 
-    Webrev_Elementor_Json_Editor::init();
+    Glenmark_Elementor_Json_Editor::init();
 }

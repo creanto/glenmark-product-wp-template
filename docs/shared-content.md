@@ -24,14 +24,14 @@ Tyto tokeny se nahrazují pouze v HTML obsahu z centrálního zdroje. Výslednou
 Shortcode načítá aktuální publikovanou hodnotu z centrálního zdroje:
 
 ```text
-[wr_shared_content key="contact.distributor" field="phone" link="1"]
-[wr_shared_content key="contact.distributor" field="email_primary" link="1"]
-[wr_shared_contact key="contact.distributor" format="address"]
-[wr_shared_contact key="contact.distributor" format="contact"]
-[wr_shared_content key="legal.privacy" format="content"]
+[gln_shared_content key="contact.distributor" field="phone" link="1"]
+[gln_shared_content key="contact.distributor" field="email_primary" link="1"]
+[gln_shared_contact key="contact.distributor" format="address"]
+[gln_shared_contact key="contact.distributor" format="contact"]
+[gln_shared_content key="legal.privacy" format="content"]
 ```
 
-`wr_shared_content` přijímá `key`, volitelné `field`, `format` a `link`. U telefonu vytvoří `link="1"` odkaz `tel:`, u e-mailu `mailto:`. `wr_shared_contact` podporuje formáty `address` a `contact` (také alias `footer`). Formát `auto` vybere výstup podle typu položky: kontakt, HTML obsah nebo odkaz.
+`gln_shared_content` přijímá `key`, volitelné `field`, `format` a `link`. U telefonu vytvoří `link="1"` odkaz `tel:`, u e-mailu `mailto:`. `gln_shared_contact` podporuje formáty `address` a `contact` (také alias `footer`). Formát `auto` vybere výstup podle typu položky: kontakt, HTML obsah nebo odkaz.
 
 V Elementoru je k dispozici widget **Glenmark → Sdílený obsah Glenmark**. Umožňuje vybrat publikovanou položku, způsob zobrazení a případné konkrétní pole. Oba způsoby jsou živé; změna v Content Hubu se po obnovení cache projeví bez editace stránky.
 

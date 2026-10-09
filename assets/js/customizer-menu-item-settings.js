@@ -13,7 +13,7 @@
 
     function updateHeroMenuItem(menuItemId, isHero) {
         $.post(settings.ajaxUrl, {
-            action: 'webrev_update_menu_item_hero',
+            action: 'glenmark_update_menu_item_hero',
             nonce: settings.nonce,
             menu_item_id: menuItemId,
             is_hero: isHero ? '1' : '0'
@@ -23,7 +23,7 @@
     function addHeroMenuItemField(menuItemSettings) {
         var $menuItemSettings = $(menuItemSettings);
 
-        if ($menuItemSettings.find('.field-webrev-hero').length) {
+        if ($menuItemSettings.find('.field-glenmark-hero').length) {
             return;
         }
 
@@ -33,9 +33,9 @@
             return;
         }
 
-        var fieldId = 'edit-menu-item-webrev-hero-' + menuItemId;
+        var fieldId = 'edit-menu-item-glenmark-hero-' + menuItemId;
         var $field = $('<p>', {
-            'class': 'field-webrev-hero description description-wide'
+            'class': 'field-glenmark-hero description description-wide'
         });
         var $label = $('<label>', {
             'for': fieldId,
@@ -81,4 +81,4 @@
             subtree: true
         });
     });
-}(jQuery, window.wp && window.wp.customize, window.webrevCustomizerMenuItemSettings));
+}(jQuery, window.wp && window.wp.customize, window.glenmarkCustomizerMenuItemSettings));

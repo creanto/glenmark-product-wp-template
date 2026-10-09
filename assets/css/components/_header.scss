@@ -3,15 +3,15 @@
     top: 0;
     z-index: 1000;
     border-bottom: 1px solid rgba(14, 52, 121, 0.1);
-    background-color: var(--wr-header-custom-bg-color, rgba(255, 255, 255, 0.94));
-    background-image: var(--wr-header-custom-bg-image, none);
-    background-size: var(--wr-header-custom-bg-size, cover);
-    background-position: var(--wr-header-custom-bg-position, center center);
-    background-repeat: var(--wr-header-custom-bg-repeat, no-repeat);
+    background-color: var(--gln-header-custom-bg-color, rgba(255, 255, 255, 0.94));
+    background-image: var(--gln-header-custom-bg-image, none);
+    background-size: var(--gln-header-custom-bg-size, cover);
+    background-position: var(--gln-header-custom-bg-position, center center);
+    background-repeat: var(--gln-header-custom-bg-repeat, no-repeat);
     backdrop-filter: blur(10px);
     overflow-anchor: none;
     transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
-    --wr-header-logo-height: calc(var(--wr-header-height, 88px) - 38px);
+    --gln-header-logo-height: calc(var(--gln-header-height, 88px) - 38px);
 }
 
 .site-header::before {
@@ -19,10 +19,10 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background-image: var(--wr-header-custom-bg-image, none);
-    background-size: var(--wr-header-custom-bg-size, cover);
-    background-position: var(--wr-header-custom-bg-position, center center);
-    background-repeat: var(--wr-header-custom-bg-repeat, no-repeat);
+    background-image: var(--gln-header-custom-bg-image, none);
+    background-size: var(--gln-header-custom-bg-size, cover);
+    background-position: var(--gln-header-custom-bg-position, center center);
+    background-repeat: var(--gln-header-custom-bg-repeat, no-repeat);
     opacity: 1;
     pointer-events: none;
     transition: opacity 0.28s ease;
@@ -87,7 +87,7 @@ body.admin-bar .site-header.is-sticky {
 .site-header.is-sticky.is-transparent-start+.site-main,
 .site-header.is-sticky.is-glassy-start+.site-main,
 .site-header.is-sticky.is-glassy-dark-start+.site-main {
-    margin-top: calc(-1 * var(--wr-header-height, 88px));
+    margin-top: calc(-1 * var(--gln-header-height, 88px));
 }
 
 .site-header.is-glassy-start {
@@ -103,10 +103,10 @@ body.admin-bar .site-header.is-sticky {
             rgba(255, 255, 255, 0.08) 36%,
             rgba(255, 255, 255, 0.03) 72%,
             rgba(255, 255, 255, 0) 100%),
-        var(--wr-header-custom-bg-image, none);
-    background-size: var(--wr-header-custom-bg-size, cover), var(--wr-header-custom-bg-size, cover);
-    background-position: var(--wr-header-custom-bg-position, center center), var(--wr-header-custom-bg-position, center center);
-    background-repeat: var(--wr-header-custom-bg-repeat, no-repeat), var(--wr-header-custom-bg-repeat, no-repeat);
+        var(--gln-header-custom-bg-image, none);
+    background-size: var(--gln-header-custom-bg-size, cover), var(--gln-header-custom-bg-size, cover);
+    background-position: var(--gln-header-custom-bg-position, center center), var(--gln-header-custom-bg-position, center center);
+    background-repeat: var(--gln-header-custom-bg-repeat, no-repeat), var(--gln-header-custom-bg-repeat, no-repeat);
 }
 
 .site-header.is-glassy-dark-start {
@@ -118,10 +118,10 @@ body.admin-bar .site-header.is-sticky {
 
 .site-header.is-glassy-dark-start::before {
     background-image: linear-gradient(180deg, rgba(12, 45, 105, 1) 0%, rgba(12, 45, 105, 0) 100%),
-        var(--wr-header-custom-bg-image, none);
-    background-size: var(--wr-header-custom-bg-size, cover), var(--wr-header-custom-bg-size, cover);
-    background-position: var(--wr-header-custom-bg-position, center center), var(--wr-header-custom-bg-position, center center);
-    background-repeat: var(--wr-header-custom-bg-repeat, no-repeat), var(--wr-header-custom-bg-repeat, no-repeat);
+        var(--gln-header-custom-bg-image, none);
+    background-size: var(--gln-header-custom-bg-size, cover), var(--gln-header-custom-bg-size, cover);
+    background-position: var(--gln-header-custom-bg-position, center center), var(--gln-header-custom-bg-position, center center);
+    background-repeat: var(--gln-header-custom-bg-repeat, no-repeat), var(--gln-header-custom-bg-repeat, no-repeat);
 }
 
 body.admin-bar .site-header.is-sticky.is-transparent-start,
@@ -157,11 +157,11 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-header.is-scrolled.is-glassy-start::before,
 .site-header.is-scrolled.is-glassy-dark-start::before {
     opacity: 1;
-    background-color: var(--wr-header-custom-bg-color, rgba(255, 255, 255, 0.94));
-    background-image: var(--wr-header-custom-bg-image, none);
-    background-size: var(--wr-header-custom-bg-size, cover);
-    background-position: var(--wr-header-custom-bg-position, center center);
-    background-repeat: var(--wr-header-custom-bg-repeat, no-repeat);
+    background-color: var(--gln-header-custom-bg-color, rgba(255, 255, 255, 0.94));
+    background-image: var(--gln-header-custom-bg-image, none);
+    background-size: var(--gln-header-custom-bg-size, cover);
+    background-position: var(--gln-header-custom-bg-position, center center);
+    background-repeat: var(--gln-header-custom-bg-repeat, no-repeat);
 }
 
 .site-header[data-hide-on-scroll="1"] {
@@ -192,12 +192,12 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 }
 
 .site-header.can-shrink.is-scrolled {
-    --wr-header-logo-height: calc(var(--wr-header-height-shrunk, 68px) - 18px);
+    --gln-header-logo-height: calc(var(--gln-header-height-shrunk, 68px) - 18px);
 }
 
 .site-header.can-shrink.is-scrolled .site-header-inner {
-    height: var(--wr-header-height-shrunk, 68px);
-    min-height: var(--wr-header-height-shrunk, 68px);
+    height: var(--gln-header-height-shrunk, 68px);
+    min-height: var(--gln-header-height-shrunk, 68px);
 }
 
 .site-header.can-shrink.is-scrolled .custom-logo-link,
@@ -206,16 +206,16 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-header.can-shrink.is-scrolled .custom-logo-link .custom-logo,
 .site-header.can-shrink.is-scrolled .site-logo-default,
 .site-header.can-shrink.is-scrolled .site-logo-transparent {
-    max-height: calc(var(--wr-header-height-shrunk, 68px) - 18px);
-    height: calc(var(--wr-header-height-shrunk, 68px) - 18px);
+    max-height: calc(var(--gln-header-height-shrunk, 68px) - 18px);
+    height: calc(var(--gln-header-height-shrunk, 68px) - 18px);
 }
 
 .site-header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: var(--wr-header-height, 88px);
-    min-height: var(--wr-header-height, 88px);
+    height: var(--gln-header-height, 88px);
+    min-height: var(--gln-header-height, 88px);
     padding-block: 9px;
     gap: 2rem;
     transition: height 0.28s ease, min-height 0.28s ease, padding 0.28s ease;
@@ -280,8 +280,8 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
     align-items: center;
     justify-content: center;
     height: 100%;
-    max-width: var(--wr-header-logo-max-width, 260px);
-    max-height: var(--wr-header-logo-height);
+    max-width: var(--gln-header-logo-max-width, 260px);
+    max-height: var(--gln-header-logo-height);
     text-decoration: none;
     transition: height 0.28s ease, max-height 0.28s ease, max-width 0.28s ease;
 }
@@ -293,9 +293,9 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-logo-transparent {
     display: block;
     width: auto;
-    max-width: var(--wr-header-logo-max-width, 260px);
-    height: var(--wr-header-logo-height);
-    max-height: var(--wr-header-logo-height);
+    max-width: var(--gln-header-logo-max-width, 260px);
+    height: var(--gln-header-logo-height);
+    max-height: var(--gln-header-logo-height);
     object-fit: contain;
     transition: height 0.28s ease, max-height 0.28s ease, width 0.28s ease, max-width 0.28s ease, opacity 0.28s ease;
 }
@@ -314,8 +314,8 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 }
 
 .site-title {
-    color: $wr-color-primary;
-    font-family: $wr-font-primary;
+    color: $gln-color-primary;
+    font-family: $gln-font-primary;
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.04em;
@@ -347,7 +347,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-navigation a,
 .site-navigation-split .menu-item a,
 .site-navigation-split a {
-    color: var(--wr-header-navigation-link-color, $white);
+    color: var(--gln-header-navigation-link-color, $white);
     font-size: 18px;
     font-weight: 400;
     letter-spacing: 0;
@@ -371,7 +371,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-header.is-glassy-dark-start .site-navigation a,
 .site-header.is-glassy-dark-start .site-navigation-split .menu-item a,
 .site-header.is-glassy-dark-start .site-navigation-split a {
-    color: var(--wr-header-navigation-link-color, $white);
+    color: var(--gln-header-navigation-link-color, $white);
 }
 
 .site-header.is-transparent-start .site-title,
@@ -388,9 +388,9 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-navigation-split .menu-item a:focus,
 .site-navigation-split a:hover,
 .site-navigation-split a:focus {
-    color: var(--wr-header-navigation-link-color, $white);
+    color: var(--gln-header-navigation-link-color, $white);
     text-decoration: underline;
-    text-decoration-color: $wr-color-accent;
+    text-decoration-color: $gln-color-accent;
     text-decoration-thickness: 2px;
     text-underline-offset: 0.45rem;
 }
@@ -401,9 +401,9 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-navigation-split .menu-item.current-menu-item>a,
 .site-navigation-split .menu-item.current-menu-ancestor>a,
 .site-navigation-split .menu-item.is-active>a {
-    color: var(--wr-header-navigation-link-color, $white);
+    color: var(--gln-header-navigation-link-color, $white);
     text-decoration: underline;
-    text-decoration-color: $wr-color-accent;
+    text-decoration-color: $gln-color-accent;
     text-decoration-thickness: 2px;
     text-underline-offset: 0.45rem;
 }
@@ -426,7 +426,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-header.is-glassy-dark-start .site-navigation-split .menu-item.current-menu-item>a,
 .site-header.is-glassy-dark-start .site-navigation-split .menu-item.current-menu-ancestor>a,
 .site-header.is-glassy-dark-start .site-navigation-split .menu-item.is-active>a {
-    color: var(--wr-header-navigation-link-color, $white);
+    color: var(--gln-header-navigation-link-color, $white);
 }
 
 .site-header.is-transparent-start .site-navigation a:hover,
@@ -441,8 +441,8 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-header.is-glassy-dark-start .site-navigation a:focus,
 .site-header.is-glassy-dark-start .site-navigation-split a:hover,
 .site-header.is-glassy-dark-start .site-navigation-split a:focus {
-    color: var(--wr-header-navigation-link-color, $white);
-    text-decoration-color: $wr-color-accent;
+    color: var(--gln-header-navigation-link-color, $white);
+    text-decoration-color: $gln-color-accent;
 }
 
 // transparent header only: revert menu text to the normal (blue) color once scrolled; glassy variants stay white
@@ -450,7 +450,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-header.is-transparent-start.is-scrolled .site-navigation a,
 .site-header.is-transparent-start.is-scrolled .site-navigation-split .menu-item a,
 .site-header.is-transparent-start.is-scrolled .site-navigation-split a {
-    color: var(--wr-header-navigation-link-color, $blue);
+    color: var(--gln-header-navigation-link-color, $blue);
 }
 
 .site-header.is-transparent-start.is-scrolled .site-navigation .menu-item.current-menu-item>a,
@@ -459,15 +459,15 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-header.is-transparent-start.is-scrolled .site-navigation-split .menu-item.current-menu-item>a,
 .site-header.is-transparent-start.is-scrolled .site-navigation-split .menu-item.current-menu-ancestor>a,
 .site-header.is-transparent-start.is-scrolled .site-navigation-split .menu-item.is-active>a {
-    color: var(--wr-header-navigation-link-color, $blue);
+    color: var(--gln-header-navigation-link-color, $blue);
 }
 
 .site-header.is-transparent-start.is-scrolled .site-navigation a:hover,
 .site-header.is-transparent-start.is-scrolled .site-navigation a:focus,
 .site-header.is-transparent-start.is-scrolled .site-navigation-split a:hover,
 .site-header.is-transparent-start.is-scrolled .site-navigation-split a:focus {
-    color: var(--wr-header-navigation-link-color, $blue);
-    text-decoration-color: $wr-color-accent;
+    color: var(--gln-header-navigation-link-color, $blue);
+    text-decoration-color: $gln-color-accent;
 }
 
 @media (min-width: 1025px) {
@@ -508,15 +508,15 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
     border: 1px solid rgba(14, 52, 121, 0.12);
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.8);
-    color: $wr-color-primary;
+    color: $gln-color-primary;
     transition: all 0.2s ease;
 }
 
 .site-header-social__link:hover,
 .site-header-social__link:focus {
-    background: $wr-color-accent;
-    border-color: $wr-color-accent;
-    color: $wr-color-white;
+    background: $gln-color-accent;
+    border-color: $gln-color-accent;
+    color: $gln-color-white;
 }
 
 .site-header-social__icon {
@@ -526,7 +526,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 
 .site-footer {
     background: var(--blue-dark, #1a2d4d);
-    color: $wr-color-white;
+    color: $gln-color-white;
 }
 
 .site-footer .container {
@@ -540,12 +540,12 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-footer .widget,
 .site-footer .widget-title,
 .site-footer .site-info {
-    color: $wr-color-white;
+    color: $gln-color-white;
 }
 
 .site-footer .widget-title {
     margin-bottom: 0.75rem;
-    color: $wr-color-white;
+    color: $gln-color-white;
 }
 
 .site-footer .nav-menu {
@@ -558,7 +558,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 }
 
 .site-footer .nav-menu a {
-    color: $wr-color-white;
+    color: $gln-color-white;
     text-decoration: none;
 }
 
@@ -585,7 +585,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
         position: relative;
         inset-inline: auto;
         top: auto;
-        background-color: var(--wr-header-custom-bg-color, $white);
+        background-color: var(--gln-header-custom-bg-color, $white);
         background-image: none;
         border-bottom: 1px solid rgba(14, 52, 121, 0.1);
         backdrop-filter: none;
@@ -675,7 +675,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
         overflow-y: auto;
         padding: max(6rem, calc(env(safe-area-inset-top) + 5rem)) 2rem 2rem;
         background: $white;
-        box-shadow: $wr-shadow-soft;
+        box-shadow: $gln-shadow-soft;
         opacity: 0;
         pointer-events: none;
         transform: translateX(100%);
@@ -732,7 +732,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
         display: block;
         width: 100%;
         padding: 0.9rem 0;
-        color: var(--wr-header-navigation-link-color, $blue);
+        color: var(--gln-header-navigation-link-color, $blue);
         font-size: 1.25rem;
         font-weight: 600;
         text-align: center;
@@ -744,17 +744,17 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
     .site-header.is-glassy-start .site-navigation a,
     .site-header.is-glassy-dark-start .site-navigation .menu-item a,
     .site-header.is-glassy-dark-start .site-navigation a {
-        color: var(--wr-header-navigation-link-color, $blue);
+        color: var(--gln-header-navigation-link-color, $blue);
     }
 
     .site-header .site-navigation .menu-item.current-menu-item>a,
     .site-header .site-navigation .menu-item.current-menu-ancestor>a,
     .site-header .site-navigation .menu-item.is-active>a {
-        color: var(--wr-header-navigation-link-color, $blue);
+        color: var(--gln-header-navigation-link-color, $blue);
     }
 
     .site-header:is(.is-transparent-start, .is-glassy-start, .is-glassy-dark-start) .site-navigation .menu-item:is(.current-menu-item, .current-menu-ancestor, .is-active)>a {
-        color: var(--wr-header-navigation-link-color, $blue);
+        color: var(--gln-header-navigation-link-color, $blue);
     }
 
     .site-header--centered-layout .site-header-inner {

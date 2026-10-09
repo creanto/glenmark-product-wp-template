@@ -4,14 +4,14 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_register_wr_post_acf_fields()
+function glenmark_register_gln_post_acf_fields()
 {
     if (!function_exists('acf_add_local_field_group')) {
         return;
     }
 
     acf_add_local_field_group([
-        'key' => 'group_wr_post_fields',
+        'key' => 'group_gln_post_fields',
         'title' => 'Příspěvek',
         'fields' => [
             [
@@ -38,16 +38,16 @@ function webrev_register_wr_post_acf_fields()
         'instruction_placement' => 'label',
     ]);
 }
-add_action('init', 'webrev_register_wr_post_acf_fields', 20);
+add_action('init', 'glenmark_register_gln_post_acf_fields', 20);
 
-function webrev_register_wr_category_acf_fields()
+function glenmark_register_gln_category_acf_fields()
 {
     if (!function_exists('acf_add_local_field_group')) {
         return;
     }
 
     acf_add_local_field_group([
-        'key' => 'group_wr_category_fields',
+        'key' => 'group_gln_category_fields',
         'title' => 'Kategorie příspěvků',
         'fields' => [
             [
@@ -74,4 +74,4 @@ function webrev_register_wr_category_acf_fields()
         'label_placement' => 'top',
     ]);
 }
-add_action('init', 'webrev_register_wr_category_acf_fields', 20);
+add_action('init', 'glenmark_register_gln_category_acf_fields', 20);

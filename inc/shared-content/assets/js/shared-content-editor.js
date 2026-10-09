@@ -1,5 +1,5 @@
 (function (wp) {
-    if (!wp || !window.webrevSharedContent) {
+    if (!wp || !window.glenmarkSharedContent) {
         return;
     }
 
@@ -8,8 +8,8 @@
     const { Button, Notice, SelectControl } = wp.components;
     const { PluginDocumentSettingPanel } = wp.editPost;
     const { registerPlugin } = wp.plugins;
-    const blockName = 'webrev/shared-content-snapshot';
-    const config = window.webrevSharedContent;
+    const blockName = 'glenmark/shared-content-snapshot';
+    const config = window.glenmarkSharedContent;
     const labels = config.labels;
 
     wp.blocks.registerBlockType(blockName, {
@@ -26,7 +26,7 @@
         edit: function (props) {
             const title = props.attributes.sourceTitle || props.attributes.sourceKey || 'Glenmark';
             return el('div', { className: props.className }, [
-                el('div', { key: 'label', className: 'wr-shared-content-editor-label' }, title),
+                el('div', { key: 'label', className: 'gln-shared-content-editor-label' }, title),
                 el(InnerBlocks, { key: 'inner-blocks' }),
             ]);
         },
@@ -135,9 +135,9 @@
         });
 
         return el(PluginDocumentSettingPanel, {
-            name: 'webrev-shared-content-panel',
+            name: 'glenmark-shared-content-panel',
             title: labels.panelTitle,
-            className: 'webrev-shared-content-panel',
+            className: 'glenmark-shared-content-panel',
         }, [
             el(SelectControl, {
                 key: 'select',
@@ -160,7 +160,7 @@
                 onClick: refreshItems,
                 style: { marginTop: '8px' },
             }, labels.refresh),
-            statusRows.length ? el('div', { key: 'statuses', className: 'wr-shared-content-statuses' }, statusRows) : null,
+            statusRows.length ? el('div', { key: 'statuses', className: 'gln-shared-content-statuses' }, statusRows) : null,
             notice ? el(Notice, {
                 key: 'notice',
                 status: notice.status,
@@ -170,7 +170,7 @@
         ]);
     }
 
-    registerPlugin('webrev-shared-content', {
+    registerPlugin('glenmark-shared-content', {
         render: SharedContentPanel,
         icon: 'admin-site-alt3',
     });

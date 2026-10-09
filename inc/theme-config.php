@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function webrev_get_theme_config()
+function glenmark_get_theme_config()
 {
     static $config = null;
 
@@ -26,10 +26,10 @@ function webrev_get_theme_config()
     return $config;
 }
 
-// Reads a dot-notated path, e.g. webrev_config('layout.header_variants.default.label').
-function webrev_config($dot_path, $default = null)
+// Reads a dot-notated path, e.g. glenmark_config('layout.header_variants.default.label').
+function glenmark_config($dot_path, $default = null)
 {
-    $value = webrev_get_theme_config();
+    $value = glenmark_get_theme_config();
 
     foreach (explode('.', $dot_path) as $segment) {
         if (!is_array($value) || !array_key_exists($segment, $value)) {

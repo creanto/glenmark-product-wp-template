@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    var selector = '.wr-animate';
-    var activeClass = 'wr-animation-active';
-    var previewClass = 'wr-animation-preview-pending';
+    var selector = '.gln-animate';
+    var activeClass = 'gln-animation-active';
+    var previewClass = 'gln-animation-preview-pending';
     var states = new WeakMap();
 
     function isEditMode() {
@@ -89,9 +89,9 @@
         }, 80);
 
         var styles = window.getComputedStyle(element);
-        var totalTime = parseTime(styles.getPropertyValue('--wr-animation-duration')) +
-            parseTime(styles.getPropertyValue('--wr-animation-delay')) +
-            parseTime(styles.getPropertyValue('--wr-animation-order-delay')) +
+        var totalTime = parseTime(styles.getPropertyValue('--gln-animation-duration')) +
+            parseTime(styles.getPropertyValue('--gln-animation-delay')) +
+            parseTime(styles.getPropertyValue('--gln-animation-order-delay')) +
             200;
 
         var cleanupTimer = window.setTimeout(function () {
@@ -115,7 +115,7 @@
             return;
         }
 
-        if (element.dataset.wrAnimationTrigger === 'load') {
+        if (element.dataset.glnAnimationTrigger === 'load') {
             activateAfterPaint(element);
             return;
         }
@@ -126,7 +126,7 @@
             return;
         }
 
-        var triggerOnce = parseBoolean(element.dataset.wrAnimationOnce);
+        var triggerOnce = parseBoolean(element.dataset.glnAnimationOnce);
         var observer = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
@@ -140,7 +140,7 @@
                 }
             });
         }, {
-            threshold: parseThreshold(element.dataset.wrAnimationThreshold)
+            threshold: parseThreshold(element.dataset.glnAnimationThreshold)
         });
 
         observer.observe(element);

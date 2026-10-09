@@ -4,16 +4,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Webrev_Benefits_Widget extends \Elementor\Widget_Base
+class Glenmark_Benefits_Widget extends \Elementor\Widget_Base
 {
     public function get_name()
     {
-        return 'wr-benefits';
+        return 'gln-benefits';
     }
 
     public function get_title()
     {
-        return __('Benefits', 'wr-pharma-product');
+        return __('Benefits', 'gln-pharma-product');
     }
 
     public function get_icon()
@@ -23,7 +23,7 @@ class Webrev_Benefits_Widget extends \Elementor\Widget_Base
 
     public function get_categories()
     {
-        return ['webrev'];
+        return ['glenmark'];
     }
 
     protected function register_controls()
@@ -31,7 +31,7 @@ class Webrev_Benefits_Widget extends \Elementor\Widget_Base
         $this->start_controls_section(
             'content_section',
             [
-                'label' => __('Items', 'wr-pharma-product'),
+                'label' => __('Items', 'gln-pharma-product'),
                 'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -41,7 +41,7 @@ class Webrev_Benefits_Widget extends \Elementor\Widget_Base
         $repeater->add_control(
             'icon',
             [
-                'label' => __('Icon / index', 'wr-pharma-product'),
+                'label' => __('Icon / index', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::TEXT,
                 'default' => '01',
             ]
@@ -50,25 +50,25 @@ class Webrev_Benefits_Widget extends \Elementor\Widget_Base
         $repeater->add_control(
             'title',
             [
-                'label' => __('Title', 'wr-pharma-product'),
+                'label' => __('Title', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::TEXT,
-                'default' => __('Benefit title', 'wr-pharma-product'),
+                'default' => __('Benefit title', 'gln-pharma-product'),
             ]
         );
 
         $repeater->add_control(
             'text',
             [
-                'label' => __('Text', 'wr-pharma-product'),
+                'label' => __('Text', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::TEXTAREA,
-                'default' => __('Describe the benefit.', 'wr-pharma-product'),
+                'default' => __('Describe the benefit.', 'gln-pharma-product'),
             ]
         );
 
         $this->add_control(
             'items',
             [
-                'label' => __('Items', 'wr-pharma-product'),
+                'label' => __('Items', 'gln-pharma-product'),
                 'type' => \Elementor\Controls_Manager::REPEATER,
                 'fields' => $repeater->get_controls(),
                 'default' => [
@@ -90,20 +90,20 @@ class Webrev_Benefits_Widget extends \Elementor\Widget_Base
             return;
         }
 
-        echo '<div class="wr-grid wr-grid--benefits">';
+        echo '<div class="gln-grid gln-grid--benefits">';
 
         foreach ($items as $item) {
             $icon = !empty($item['icon']) ? esc_html($item['icon']) : '•';
             $title = !empty($item['title']) ? esc_html($item['title']) : '';
             $text = !empty($item['text']) ? esc_html($item['text']) : '';
 
-            echo '<div class="wr-benefit">';
-            echo '<div class="wr-benefit__icon">' . $icon . '</div>';
+            echo '<div class="gln-benefit">';
+            echo '<div class="gln-benefit__icon">' . $icon . '</div>';
             if ($title) {
-                echo '<h3 class="wr-benefit__title">' . $title . '</h3>';
+                echo '<h3 class="gln-benefit__title">' . $title . '</h3>';
             }
             if ($text) {
-                echo '<p class="wr-benefit__text">' . $text . '</p>';
+                echo '<p class="gln-benefit__text">' . $text . '</p>';
             }
             echo '</div>';
         }

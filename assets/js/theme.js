@@ -43,7 +43,7 @@
             toggle.setAttribute('aria-expanded', 'false');
         }
 
-        window.webrevCloseMobileMenu = closeMenu;
+        window.glenmarkCloseMobileMenu = closeMenu;
 
         toggle.addEventListener('click', function () {
             if (header.classList.contains('nav-open')) {
@@ -80,7 +80,7 @@
     }
 
     function setupBackToTop() {
-        var button = document.querySelector('.webrev-back-to-top');
+        var button = document.querySelector('.glenmark-back-to-top');
 
         if (!button) {
             return;
@@ -102,14 +102,14 @@
     }
 
     function setupBottomNotice() {
-        var notice = document.querySelector('.webrev-bottom-notice');
+        var notice = document.querySelector('.glenmark-bottom-notice');
 
         if (!notice) {
             return;
         }
 
         function updateContentOffset() {
-            document.documentElement.style.setProperty('--wr-bottom-notice-height', notice.offsetHeight + 'px');
+            document.documentElement.style.setProperty('--gln-bottom-notice-height', notice.offsetHeight + 'px');
         }
 
         updateContentOffset();
@@ -550,9 +550,9 @@
                     window.innerWidth <= 1024 &&
                     header &&
                     header.classList.contains('nav-open') &&
-                    typeof window.webrevCloseMobileMenu === 'function'
+                    typeof window.glenmarkCloseMobileMenu === 'function'
                 ) {
-                    window.webrevCloseMobileMenu({ restoreScroll: false });
+                    window.glenmarkCloseMobileMenu({ restoreScroll: false });
                 }
 
                 history.pushState(null, '', parsedUrl.hash);
@@ -564,7 +564,7 @@
 
         menuLinks.forEach(bindSamePageHashLink);
 
-        document.querySelectorAll('a[href*="#"]:not(.nav-menu a):not(.wr-product-buy-modal-trigger):not(.wr-product-info-modal-trigger)').forEach(function (contentLink) {
+        document.querySelectorAll('a[href*="#"]:not(.nav-menu a):not(.gln-product-buy-modal-trigger):not(.gln-product-info-modal-trigger)').forEach(function (contentLink) {
             bindSamePageHashLink(contentLink);
         });
 
@@ -586,10 +586,10 @@
 
         var $ = window.jQuery;
         var $scope = scope && scope.length ? scope : $(document);
-        var $tracks = $scope.find('.wr-product-carousel__track');
+        var $tracks = $scope.find('.gln-product-carousel__track');
 
         if (!productBuyModalEventsBound) {
-            $(document).on('click', '.wr-product-buy-modal-trigger, .wr-product-info-modal-trigger', function (event) {
+            $(document).on('click', '.gln-product-buy-modal-trigger, .gln-product-info-modal-trigger', function (event) {
                 var modalSelector = $(this).attr('href');
 
                 if (!modalSelector || !$(modalSelector).length || !$.magnificPopup) {
@@ -608,13 +608,13 @@
             productBuyModalEventsBound = true;
         }
 
-        if ($scope.hasClass && $scope.hasClass('wr-product-carousel__track')) {
+        if ($scope.hasClass && $scope.hasClass('gln-product-carousel__track')) {
             $tracks = $tracks.add($scope);
         }
 
         $tracks.each(function () {
             var $track = $(this);
-            var $carousel = $track.closest('.wr-product-carousel');
+            var $carousel = $track.closest('.gln-product-carousel');
             var autoplay = String($carousel.data('autoplay')) === 'true';
             var speed = parseInt($carousel.data('speed'), 10) || 5000;
             var slidesToShow = parseInt($carousel.data('slides-to-show'), 10) || 3;
@@ -677,13 +677,13 @@
 
         var $ = window.jQuery;
 
-        window.elementorFrontend.hooks.addAction('frontend/element_ready/wr-product-carousel.default', function ($scope) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/gln-product-carousel.default', function ($scope) {
             setupProductCarouselAndPopups($scope);
         });
 
         // Fallback for environments where widget-specific hook naming differs.
         window.elementorFrontend.hooks.addAction('frontend/element_ready/widget', function ($scope) {
-            if (!$scope || !$scope.find || !$scope.find('.wr-product-carousel__track').length) {
+            if (!$scope || !$scope.find || !$scope.find('.gln-product-carousel__track').length) {
                 return;
             }
 
@@ -691,11 +691,11 @@
         });
 
         // Run once on already-rendered editor content.
-        setupProductCarouselAndPopups($('.elementor-editor-active .elementor-widget, .elementor-widget-wr-product-carousel'));
+        setupProductCarouselAndPopups($('.elementor-editor-active .elementor-widget, .elementor-widget-gln-product-carousel'));
     }
 
     function setupProductPurposeFilter() {
-        var filterRoot = document.querySelector('.wr-product-filter');
+        var filterRoot = document.querySelector('.gln-product-filter');
 
         if (!filterRoot) {
             var legacyButtons = document.querySelectorAll('.purpose-filter');
@@ -714,7 +714,7 @@
                     legacyButtons.forEach(function (legacyButton) {
                         legacyButton.classList.toggle('is-active', !wasActive && legacyButton === button);
                     });
-                    document.querySelectorAll('.wr-grid--products .wr-card--product').forEach(function (product) {
+                    document.querySelectorAll('.gln-grid--products .gln-card--product').forEach(function (product) {
                         var purposes = (product.getAttribute('data-product-purpose') || '').split('|');
                         product.classList.toggle('is-purpose-filtered-out', !wasActive && purposes.indexOf(purpose) === -1);
                     });
@@ -724,10 +724,10 @@
         }
 
         var filterButtons = filterRoot.querySelectorAll('[data-filter-field]');
-        var toggle = filterRoot.querySelector('.wr-product-filter__toggle');
-        var panel = filterRoot.querySelector('.wr-product-filter__panel');
+        var toggle = filterRoot.querySelector('.gln-product-filter__toggle');
+        var panel = filterRoot.querySelector('.gln-product-filter__panel');
         var count = filterRoot.querySelector('[data-filter-count]');
-        var countBadge = filterRoot.querySelector('.wr-product-filter__count');
+        var countBadge = filterRoot.querySelector('.gln-product-filter__count');
         var clearButton = filterRoot.querySelector('[data-filter-clear]');
 
         toggle.addEventListener('click', function () {
@@ -737,7 +737,7 @@
         });
 
         function updateProductGrid(updateProducts) {
-            var products = Array.prototype.slice.call(document.querySelectorAll('.wr-grid--products .wr-card--product'));
+            var products = Array.prototype.slice.call(document.querySelectorAll('.gln-grid--products .gln-card--product'));
             var firstPositions = new Map();
 
             products.forEach(function (product) {
@@ -787,7 +787,7 @@
                     return total + selectedValues[field].length;
                 }, 0);
 
-                document.querySelectorAll('.wr-grid--products .wr-card--product').forEach(function (product) {
+                document.querySelectorAll('.gln-grid--products .gln-card--product').forEach(function (product) {
                     var matches = !selectedCount;
                     Object.keys(selectedValues).some(function (field) {
                         var productValues = (product.getAttribute('data-' + field.replace(/_/g, '-')) || '').split('|');
@@ -824,16 +824,16 @@
     }
 
     function setupProductVariantSwitch() {
-        document.querySelectorAll('.wr-variant-switch').forEach(function (switcher) {
-            var article = switcher.closest('.wr-product-template');
+        document.querySelectorAll('.gln-variant-switch').forEach(function (switcher) {
+            var article = switcher.closest('.gln-product-template');
 
             if (!article) {
                 return;
             }
 
-            var image = article.querySelector('.wr-product-packshot');
-            var modalLinks = article.querySelectorAll('.wr-product-buy-modal__logo-link[data-pharmacy-key]');
-            var buttons = switcher.querySelectorAll('.wr-variant-switch__item');
+            var image = article.querySelector('.gln-product-packshot');
+            var modalLinks = article.querySelectorAll('.gln-product-buy-modal__logo-link[data-pharmacy-key]');
+            var buttons = switcher.querySelectorAll('.gln-variant-switch__item');
 
             buttons.forEach(function (button) {
                 button.addEventListener('click', function () {
@@ -871,7 +871,7 @@
     }
 
     function setupProductLegalToggle() {
-        document.querySelectorAll('.wr-product-legal__toggle').forEach(function (button) {
+        document.querySelectorAll('.gln-product-legal__toggle').forEach(function (button) {
             var content = button.nextElementSibling;
 
             if (!content) {

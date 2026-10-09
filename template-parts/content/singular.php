@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$built_with_elementor = webrev_is_built_with_elementor(get_the_ID());
+$built_with_elementor = glenmark_is_built_with_elementor(get_the_ID());
 $article_classes = $built_with_elementor ? 'entry-shell entry-shell--elementor' : 'entry-shell entry-shell--standard';
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class($article_classes); ?>>

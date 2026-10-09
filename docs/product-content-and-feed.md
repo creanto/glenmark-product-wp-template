@@ -1,6 +1,6 @@
 # Produkty, ACF a produktový feed
 
-Rodičovská šablona registruje vlastní typ obsahu `wr_product` (v administraci **Produkty**) a taxonomii kategorií produktů. Stránka produktu čerpá obsah z ACF. Pro kompletní pole včetně repeaterů a galerie je potřeba ACF PRO.
+Rodičovská šablona registruje vlastní typ obsahu `gln_product` (v administraci **Produkty**) a taxonomii kategorií produktů. Stránka produktu čerpá obsah z ACF. Pro kompletní pole včetně repeaterů a galerie je potřeba ACF PRO.
 
 ## 1. Jak připravit produkt
 
@@ -24,13 +24,13 @@ Rodičovská šablona registruje vlastní typ obsahu `wr_product` (v administrac
 | Registrovaná balení | Síla, množství, kód SÚKL, SPC, PIL | Přehled registrovaných balení a dokumentace |
 | Ikony | Obrázek, text, popis | Vizuální vlastnosti produktu |
 
-Přesné názvy polí a klíče jsou definované v `inc/acf/product-fields.php`. Při jejich změně zkontrolujte také `single-wr_product.php`, widgety a výstup schema/feedu. Pole ACF jsou stabilní datové rozhraní; nepřejmenovávejte je jen kvůli textovému labelu.
+Přesné názvy polí a klíče jsou definované v `inc/acf/product-fields.php`. Při jejich změně zkontrolujte také `single-gln_product.php`, widgety a výstup schema/feedu. Pole ACF jsou stabilní datové rozhraní; nepřejmenovávejte je jen kvůli textovému labelu.
 
 ## 2. Výchozí detail a jeho přepsání
 
-Rodičovská šablona vykresluje detail přes `single-wr_product.php`. Obsahuje hlavní produktový vizuál, popisy, benefity, galerii, odkazy na lékárny a varianty balení. Pokud je dlouhý obsah produktu sestaven v Elementoru, šablona vykreslí i Elementor obsah produktu.
+Rodičovská šablona vykresluje detail přes `single-gln_product.php`. Obsahuje hlavní produktový vizuál, popisy, benefity, galerii, odkazy na lékárny a varianty balení. Pokud je dlouhý obsah produktu sestaven v Elementoru, šablona vykreslí i Elementor obsah produktu.
 
-Child může dodat vlastní `single-wr_product.php`; WordPress/filtr `template_include` vybere child verzi před parent verzí. Doporučený postup je nejprve prozkoumat původní template, přepsat jej pouze pro skutečně site-specific markup a zachovat napojení na ACF. Pro menší změny preferujte child CSS/SCSS nebo hooky před kopírováním celé šablony.
+Child může dodat vlastní `single-gln_product.php`; WordPress/filtr `template_include` vybere child verzi před parent verzí. Doporučený postup je nejprve prozkoumat původní template, přepsat jej pouze pro skutečně site-specific markup a zachovat napojení na ACF. Pro menší změny preferujte child CSS/SCSS nebo hooky před kopírováním celé šablony.
 
 ## 3. Strukturovaná data na stránce
 
@@ -43,10 +43,10 @@ Vyplňujte identifikátory jen ověřenými hodnotami. Nevyplňujte smyšlené S
 REST endpoint je veřejný a dostupný na:
 
 ```text
-/wp-json/wr-pharma-product/v1/product-feed
+/wp-json/gln-pharma-product/v1/product-feed
 ```
 
-Vrací JSON-LD objekt s `@context` a `@graph`, v němž je každý publikovaný `wr_product` záznam jako Schema.org `Product`. Odpověď má typ `application/ld+json` a veřejné cachování na jednu hodinu. HTML stránek obsahuje také `link rel="alternate"`, který feed zpřístupní crawlerům.
+Vrací JSON-LD objekt s `@context` a `@graph`, v němž je každý publikovaný `gln_product` záznam jako Schema.org `Product`. Odpověď má typ `application/ld+json` a veřejné cachování na jednu hodinu. HTML stránek obsahuje také `link rel="alternate"`, který feed zpřístupní crawlerům.
 
 Feed znovu používá společnou funkci sestavení Product schema a přidává hodnoty z ACF: rozšířené popisy a upozornění, stav prodeje/VPOIS, SPC/PIL, web produktu, více obrázků, lékárenské odkazy, registrovaná balení, ikony a varianty balení.
 
@@ -54,7 +54,7 @@ Feed není Google Merchant Center XML feed: neobsahuje cenu, měnu ani skladovou
 
 ### Důležité: obsah určený odborníkům
 
-Produktový feed aktuálně zahrnuje všechny publikované produkty, včetně těch, které mají na webu zapnutý expertní gate. Gate je prezentační potvrzovací vrstva, nikoli autentizace ani ochrana REST feedu. Pokud produktový obsah nesmí být dostupný veřejně, nezveřejňujte jej jako veřejný `wr_product` bez změny přístupového modelu a právního posouzení. Stejně tak je nutné ověřit, zda zobrazení citlivých údajů ve zdrojovém kódu stránky splňuje pravidla projektu.
+Produktový feed aktuálně zahrnuje všechny publikované produkty, včetně těch, které mají na webu zapnutý expertní gate. Gate je prezentační potvrzovací vrstva, nikoli autentizace ani ochrana REST feedu. Pokud produktový obsah nesmí být dostupný veřejně, nezveřejňujte jej jako veřejný `gln_product` bez změny přístupového modelu a právního posouzení. Stejně tak je nutné ověřit, zda zobrazení citlivých údajů ve zdrojovém kódu stránky splňuje pravidla projektu.
 
 ## 5. Kontrola feedu
 

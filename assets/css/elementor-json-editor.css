@@ -1,8 +1,8 @@
-.webrev-elementor-json-editor-wrap {
+.glenmark-elementor-json-editor-wrap {
     max-width: 1600px;
 }
 
-.webrev-editor-toolbar {
+.glenmark-editor-toolbar {
     display: flex;
     gap: 24px;
     align-items: flex-start;
@@ -14,7 +14,7 @@
     border-radius: 8px;
 }
 
-.webrev-post-picker {
+.glenmark-post-picker {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -22,14 +22,14 @@
     flex: 1;
 }
 
-.webrev-post-picker input,
-.webrev-post-picker select,
-.webrev-element-id-search input {
+.glenmark-post-picker input,
+.glenmark-post-picker select,
+.glenmark-element-id-search input {
     width: 100%;
     max-width: 100%;
 }
 
-.webrev-document-meta {
+.glenmark-document-meta {
     display: grid;
     grid-template-columns: repeat(2, minmax(180px, 1fr));
     gap: 6px 16px;
@@ -37,14 +37,14 @@
     color: #1d2327;
 }
 
-.webrev-editor-actions {
+.glenmark-editor-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 16px;
 }
 
-.webrev-editor-status {
+.glenmark-editor-status {
     padding: 8px 12px;
     margin-bottom: 16px;
     border-left: 4px solid #2271b1;
@@ -53,48 +53,48 @@
     font-weight: 600;
 }
 
-.webrev-editor-status.success {
+.glenmark-editor-status.success {
     border-left-color: #46b450;
 }
 
-.webrev-editor-status.error {
+.glenmark-editor-status.error {
     border-left-color: #d63638;
 }
 
-.webrev-editor-status.warning {
+.glenmark-editor-status.warning {
     border-left-color: #dba617;
 }
 
-.webrev-editor-layout {
+.glenmark-editor-layout {
     display: grid;
     grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
     gap: 16px;
     min-height: 72vh;
 }
 
-.webrev-structure-panel,
-.webrev-code-panel {
+.glenmark-structure-panel,
+.glenmark-code-panel {
     background: #fff;
     border: 1px solid #dcdcde;
     border-radius: 8px;
     padding: 16px;
 }
 
-.webrev-structure-panel {
+.glenmark-structure-panel {
     overflow: auto;
 }
 
-.webrev-structure-tree ul {
+.glenmark-structure-tree ul {
     list-style: none;
     margin: 0;
     padding-left: 14px;
 }
 
-.webrev-structure-tree li {
+.glenmark-structure-tree li {
     margin: 4px 0;
 }
 
-.wr-tree-node {
+.gln-tree-node {
     border: none;
     background: transparent;
     padding: 4px 0;
@@ -104,15 +104,15 @@
     text-align: left;
 }
 
-.wr-tree-node:hover {
+.gln-tree-node:hover {
     color: #2271b1;
 }
 
-.webrev-code-panel {
+.glenmark-code-panel {
     min-height: 72vh;
 }
 
-#webrev-elementor-json-editor {
+#glenmark-elementor-json-editor {
     width: 100%;
     min-height: 70vh;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
@@ -125,7 +125,7 @@
     line-height: 1.5;
 }
 
-.webrev-element-id-search {
+.glenmark-element-id-search {
     margin-top: 24px;
     display: flex;
     flex-direction: column;
@@ -133,13 +133,13 @@
 }
 
 @media (max-width: 980px) {
-    .webrev-editor-toolbar,
-    .webrev-editor-layout {
+    .glenmark-editor-toolbar,
+    .glenmark-editor-layout {
         grid-template-columns: 1fr;
         display: block;
     }
 
-    .webrev-document-meta {
+    .glenmark-document-meta {
         grid-template-columns: 1fr;
         min-width: auto;
     }

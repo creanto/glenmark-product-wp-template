@@ -13,20 +13,21 @@ Základem je WordPress, bezplatný Elementor a rodičovská šablona Glenmark Pr
 - Pharmacy Grid: přehled lékáren.
 - Post Grid: výpis článků.
 - Benefits, CTA, Rich Heading a Breadcrumbs.
+- Shared Content: vložení a správa centrálně sdílených právních a kontaktních údajů.
 - Product Filters: widget je zaregistrovaný, ale napojený shortcode nyní vrací prázdný obsah. Pro produkční filtr jej nepoužívejte, dokud nebude jeho funkce doplněna.
 
 Samostatný prvek Hero/Scalable Canvas vyžaduje Elementor s podporou Container. Dostupnost této funkce se řídí verzí Elementoru; ověřte ji na cílovém webu.
 
 ## 2. Požadavky a pluginy
 
-Šablona v administraci doporučuje pluginy přes TGM Plugin Activation. Seznam je definovaný v `inc/plugin-activation.php`; WPConsent Pro se instaluje samostatně ze zákaznického účtu WPConsent.
+Šablona v administraci doporučuje pluginy přes TGM Plugin Activation. Seznam je definovaný v `inc/plugin-activation.php`; CookieYes je povinný a WPConsent Pro je případná licencovaná alternativa, kterou nelze zapnout souběžně bez ověření integrace.
 
 | Plugin | Úloha | Stav podle šablony |
 | --- | --- | --- |
 | Elementor | Tvorba a editace obsahu; šablona registruje vlastní widgety. | Povinný |
-| Advanced Custom Fields | Správa polí produktů, lékáren a článků. | Povinný v seznamu |
-| ACF PRO | Správa produktových polí včetně repeaterů a galerie. | Nutný pro kompletní sadu polí; instaluje se samostatně |
-| WPConsent Pro | Banner souhlasu, blokování externích skriptů a vložených médií; placené funkce podle licence. | Používat na produkčních webech; instalovat samostatně z účtu WPConsent |
+| CookieYes | Souhlas s cookies a blokování videí do udělení souhlasu. | Povinný |
+| ACF PRO | Správa produktových polí včetně repeaterů a galerie. | Nutný pro kompletní sadu polí; instaluje se samostatně z licencovaného zdroje |
+| WPConsent Pro | Samostatně licencovaná alternativa pro správu souhlasu; nepoužívat souběžně s CookieYes bez ověření integrace. | Volitelný, instalovat samostatně z účtu WPConsent |
 | All in One SEO | SEO nástroje a metadata. | Doporučený, volitelný |
 | Classic Editor | Klasický editor příspěvků. | Doporučený, volitelný |
 | WP Super Cache | Cachování. | Doporučený, volitelný |
@@ -37,9 +38,9 @@ Samostatný prvek Hero/Scalable Canvas vyžaduje Elementor s podporou Container.
 | User Switching | Přepnutí uživatelského účtu při podpoře. | Doporučený, volitelný |
 | Git Updater | Aktualizace rodičovské šablony z GitHubu. | Doporučený, volitelný; vyžaduje PHP 8.0+ |
 
-TGM označuje balíček `advanced-custom-fields` jako povinný, ale některá pole v šabloně používají funkce ACF PRO. Pro plnou editaci všech produktových dat musí být aktivní ACF PRO. Licence PRO se řeší samostatně; instalátor šablony ji nedodává.
+TGM nabízí povinné pluginy dostupné z WordPress.org: Elementor a CookieYes, a volitelný Git Updater z GitHubu. Pokud není aktivní ACF PRO, administrátorům se zobrazí samostatné upozornění. ACF Free není dostačující náhrada; ACF PRO je nutné nainstalovat z licencovaného zdroje. Šablona plugin ani licenci nedodává. Kód šablony integruje video-consent s CookieYes; případné použití WPConsent Pro koordinujte s Creanto, která spravuje licenci a její aktivaci. Klíč se klientovi ani provozovateli nepředává a nesmí být uložen v Gitu. Dva consent systémy nezapínejte současně bez ověření na stagingu.
 
-Instalační ZIP WPConsent Pro stáhne a předá k instalaci Creanto ze svého zákaznického účtu [WPConsent](https://wpconsent.com/my-account/). Licenci na každém schváleném webu aktivuje výhradně Creanto; licenční klíč se klientovi, provozovateli webu ani jiné třetí straně nepředává a nesmí být uložen v Gitu ani dokumentaci. Počet aktivovaných webů musí odpovídat podmínkám zakoupené licence. Ostatní správci webu ověří, že plugin zůstává aktivní a dostává aktualizace. Poté nastavte banner, kategorie souhlasu a blokování externích skriptů i vložených médií podle schválených právních požadavků.
+Pokud projekt používá WPConsent Pro, instalační ZIP stáhne a předá k instalaci Creanto ze svého zákaznického účtu [WPConsent](https://wpconsent.com/my-account/). Licenci na každém schváleném webu aktivuje výhradně Creanto; licenční klíč se klientovi, provozovateli webu ani jiné třetí straně nepředává a nesmí být uložen v Gitu ani dokumentaci. Počet aktivovaných webů musí odpovídat podmínkám zakoupené licence. Ostatní správci webu ověří, že plugin zůstává aktivní a dostává aktualizace. Nastavte banner a blokování podle schválených právních požadavků a na stagingu ověřte, že se nekříží s integrací CookieYes.
 
 Git Updater je potřeba aktivovat, aby WordPress mohl nabídnout aktualizace rodičovské šablony z GitHubu. Nabídku aktualizace najdete na stránce **Nástěnka → Aktualizace** nebo **Vzhled → Šablony**. Úpravy konkrétního webu ponechte v child šabloně; aktualizace rodiče přepisuje jeho soubory.
 
@@ -61,7 +62,7 @@ Pro spolehlivý provoz dále platí:
 ## 3. Doporučený postup založení webu
 
 1. Nainstalujte a aktivujte rodičovskou Glenmark Product a její child šablonu; jako aktivní téma používejte child.
-2. Nainstalujte Elementor a ACF PRO. Instalaci WPConsent Pro koordinujte s Creanto; licenci na tomto webu aktivuje Creanto a klíč se neposkytuje třetím osobám. Aktivujte další pluginy podle schváleného rozsahu projektu.
+2. Nainstalujte Elementor, CookieYes a ACF PRO. Pokud projekt místo CookieYes používá WPConsent Pro, instalaci koordinujte s Creanto; licenci na tomto webu aktivuje Creanto a klíč se neposkytuje třetím osobám. Aktivujte další pluginy podle schváleného rozsahu projektu.
 3. Importujte správný Elementor Site Settings Kit. V repozitáři jsou JSON nastavení v `elementor-site-settings/`; samostatně může být připraven i balíček pro child web. Import proveďte přes Elementor Import/Export Kit a zkontrolujte globální barvy, písma a nastavení webu.
 4. Vytvořte nebo importujte obsah a ACF záznamy. Produktová data zadávejte do CPT Produkty, ne pouze do volného textu stránky.
 5. Nastavte loga, navigaci, hlavičku, zápatí a sociální odkazy v administraci.
@@ -104,9 +105,9 @@ Lékárny jsou samostatný CPT. Každý záznam má logo a cílovou URL. Odkazy 
 
 ## 7. Souhlas s cookies a video
 
-WPConsent Pro je zvolený nástroj pro banner, správu souhlasu a blokování externích skriptů i vložených médií. Nastavení kategorií a pravidel blokování musí odpovídat schváleným právním požadavkům webu.
+Šablona integruje banner souhlasu a blokování videí přes CookieYes. Nastavení kategorií a pravidel blokování musí odpovídat schváleným právním požadavkům webu. WPConsent Pro používejte pouze jako schválenou alternativu a s ověřenou integrací.
 
-V anonymním okně ověřte Elementor videa YouTube/Vimeo: před souhlasem se nesmí načíst jejich externí obsah a po udělení příslušného souhlasu musí jít video spustit. Vlastní video placeholder šablony vyžaduje samostatný test kompatibility s WPConsent Pro; nepředpokládejte, že se automaticky propojí s jeho ovládáním. Pokud test neprojde, před spuštěním webu je potřeba doplnit odpovídající integraci nebo použít blokování videí přímo přes WPConsent Pro.
+V anonymním okně ověřte Elementor videa YouTube/Vimeo: před souhlasem se nesmí načíst jejich externí obsah a po udělení příslušného souhlasu musí jít video spustit. Vlastní video placeholder šablony vyžaduje samostatný test kompatibility s aktivním consent pluginem; automatické propojení nepředpokládejte.
 
 ## 8. Před předáním webu
 
