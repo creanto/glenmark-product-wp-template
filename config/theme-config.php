@@ -38,14 +38,15 @@ return [
     // (elementor-site-settings/site-settings.json) global colors, which must be imported per install
     // via Elementor's Import/Export Kit feature (no automatic sync exists).
     'colors' => [
-        'primary' => '#293072',
-        'secondary' => '#5eb3e5',
-        'text' => '#293072',
-        'accent' => '#f59d12',
+        'primary' => '#333333',
+        'secondary' => '#555555',
+        'text' => '#222222',
+        'accent' => '#006666',
         'white' => '#ffffff',
-        'bg' => '#EEF8FE',
+        'bg' => '#ffffff',
     ],
     'typography' => [
-        'font_family' => 'Open Sans',
+        'font_family' => 'Arial, Helvetica, sans-serif',
     ],
+    'pharmacies' => [],
 ];

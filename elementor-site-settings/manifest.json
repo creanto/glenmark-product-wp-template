@@ -1,8 +1,8 @@
 {
   "name": "gln-pharma-product",
   "title": "Glenmark Product",
-  "description": null,
-  "author": "spravceadmin",
+  "description": "Universal parent theme defaults; site-specific configuration belongs in a child theme.",
+  "author": "Creanto",
   "version": "3.0",
   "elementor_version": "4.2.2",
   "created": "2026-08-15 19:56:49",
@@ -41,130 +41,9 @@
     "themeStyleSettings": true,
     "generalSettings": true,
     "experiments": true,
-    "customCode": true,
-    "customIcons": true,
-    "customFonts": true
+    "customCode": false,
+    "customIcons": false,
+    "customFonts": false
   },
-  "plugins": [
-    {
-      "name": "Advanced Custom Fields",
-      "plugin": "advanced-custom-fields/acf",
-      "pluginUri": "https://www.advancedcustomfields.com",
-      "version": "6.8.7"
-    },
-    {
-      "name": "Advanced Custom Fields PRO",
-      "plugin": "advanced-custom-fields-pro/acf",
-      "pluginUri": "https://www.advancedcustomfields.com",
-      "version": "5.9.4"
-    },
-    {
-      "name": "Akismet Anti-spam: Spam Protection",
-      "plugin": "akismet/akismet",
-      "pluginUri": "https://akismet.com/",
-      "version": "5.7"
-    },
-    {
-      "name": "All-In-One Security (AIOS)",
-      "plugin": "all-in-one-wp-security-and-firewall/wp-security",
-      "pluginUri": "https://wordpress.org/plugins/all-in-one-wp-security-and-firewall/",
-      "version": "5.4.9"
-    },
-    {
-      "name": "All in One SEO",
-      "plugin": "all-in-one-seo-pack/all_in_one_seo_pack",
-      "pluginUri": "https://aioseo.com/",
-      "version": "5.0.0.1"
-    },
-    {
-      "name": "Classic Editor",
-      "plugin": "classic-editor/classic-editor",
-      "pluginUri": "https://wordpress.org/plugins/classic-editor/",
-      "version": "1.7.0"
-    },
-    {
-      "name": "Classic Widgets",
-      "plugin": "classic-widgets/classic-widgets",
-      "pluginUri": "https://wordpress.org/plugins/classic-widgets/",
-      "version": "0.3"
-    },
-    {
-      "name": "Compliance by Hu-manity.co",
-      "plugin": "cookie-notice/cookie-notice",
-      "pluginUri": "https://cookie-compliance.co/",
-      "version": "3.1.6"
-    },
-    {
-      "name": "CookieYes | GDPR Cookie Consent",
-      "plugin": "cookie-law-info/cookie-law-info",
-      "pluginUri": "https://www.cookieyes.com/",
-      "version": "3.5.4"
-    },
-    {
-      "name": "Elementor",
-      "plugin": "elementor/elementor",
-      "pluginUri": "https://elementor.com/?utm_source=wp-plugins&utm_campaign=plugin-uri&utm_medium=wp-dash",
-      "version": "4.2.2"
-    },
-    {
-      "name": "FileBird Lite",
-      "plugin": "filebird/filebird",
-      "pluginUri": "https://ninjateam.org/wordpress-media-library-folders/",
-      "version": "6.5.7"
-    },
-    {
-      "name": "Folderify - Media Library Folders",
-      "plugin": "folderify/folderify",
-      "pluginUri": "https://mo.oppoyo.com",
-      "version": "2.0"
-    },
-    {
-      "name": "Folders",
-      "plugin": "folders/folders",
-      "pluginUri": "",
-      "version": "3.1.9"
-    },
-    {
-      "name": "Hello Dolly",
-      "plugin": "hello",
-      "pluginUri": "http://wordpress.org/plugins/hello-dolly/",
-      "version": "1.7.2"
-    },
-    {
-      "name": "Loco Translate",
-      "plugin": "loco-translate/loco",
-      "pluginUri": "https://wordpress.org/plugins/loco-translate/",
-      "version": "2.8.8"
-    },
-    {
-      "name": "Maintenance",
-      "plugin": "maintenance/maintenance",
-      "pluginUri": "https://wpmaintenancemode.com/",
-      "version": "4.32"
-    },
-    {
-      "name": "Post Thumbnail Editor",
-      "plugin": "post-thumbnail-editor/post-thumbnail-editor",
-      "pluginUri": "http://sewpafly.github.io/post-thumbnail-editor/",
-      "version": "2.4.8"
-    },
-    {
-      "name": "Slider Revolution",
-      "plugin": "revslider/revslider",
-      "pluginUri": "https://www.sliderrevolution.com/?utm_source=admin&utm_medium=button&utm_campaign=srusers&utm_content=info",
-      "version": "7.1.6"
-    },
-    {
-      "name": "UpdraftPlus - Backup/Restore",
-      "plugin": "updraftplus/updraftplus",
-      "pluginUri": "https://updraftplus.com",
-      "version": "1.26.6"
-    },
-    {
-      "name": "User Switching",
-      "plugin": "user-switching/user-switching",
-      "pluginUri": "https://wordpress.org/plugins/user-switching/",
-      "version": "1.12.1"
-    }
-  ]
+  "plugins": []
 }

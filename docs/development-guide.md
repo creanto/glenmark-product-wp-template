@@ -56,9 +56,15 @@ Při psaní CSS/SCSS dodržujte tuto prioritu:
 
 Viz [referenci Elementor CSS proměnných](elementor-css-variables.md). Nevytvářejte vlastní aliasy pro Elementor barvy a písma, pokud už lze použít `--e-*` token. Hodnota fallback patří přímo do CSS vlastnosti.
 
-Parent source SCSS je v `assets/css/`; hlavní vstup je `theme.scss`, výstup je `theme.css`. U child je aktuální source `site-specific/assets/css/site.scss` a načítaný výstup `site-specific/assets/css/site.css`; písma mají `fonts.scss`/`fonts.css`. `site.css` je načten až po `glenmark-theme`. CSS neupravujte bez odpovídající úpravy SCSS. Child `functions.php` načítá CSS, nikoli SCSS; produkční web potřebuje aktuální zkompilovaný výstup.
+Parent source SCSS je v `assets/css/`; hlavní vstup je `theme.scss`, výstup je `theme.css`. U referenčního Cetalgenu je source `site-specific/assets/css/site.scss` a načítaný výstup `site-specific/assets/css/site.css`. `site.css` je načten až po `glenmark-theme`. CSS neupravujte bez odpovídající úpravy SCSS. Child `functions.php` načítá CSS, nikoli SCSS; produkční web potřebuje aktuální zkompilovaný výstup.
 
-Rodičovský `config/theme-config.php` také předává vybrané hodnoty do inline CSS a může načítat Google Font Open Sans podle `typography.font_family`. Nezaměňujte tuto konfiguraci za plnou synchronizaci s Elementor Kit.
+Rodičovský `config/theme-config.php` předává vybrané barvy do inline CSS. Rodič nenačítá vlastní ani externí fonty a používá systémové Arial/Helvetica. Typografii v CSS určují Elementor tokeny se systémovým fallbackem; konfigurační `typography.font_family` sám font nenačítá. Konfigurace a Elementor Kit se automaticky nesynchronizují. Existující web po změně upravte v Site Settings a přegenerujte Elementor CSS.
+
+### Konkrétní podklady a lékárny
+
+Rodič neobsahuje produktové obrázky, ale poskytuje univerzální výchozí sadu ikon Glenmark v `assets/icon/`. Pro vlastní ikony přidejte stejně pojmenované soubory do `assets/icon/` child šablony; každý soubor se hledá nejprve v child a potom v rodiči. Standardní ikona webu ve WordPressu má přednost. Cetalgen je aktuální referenční a vývojová child šablona.
+
+V child konfiguraci definujte `pharmacies` jako mapu stabilních klíčů na `label` a volitelnou cestu `logo` relativní ke kořeni child šablony. Například `['retailer' => ['label' => 'Lékárna', 'logo' => 'site-specific/assets/img/pharmacies/retailer.jpg']]`. Rodič z ní vytváří pole `product_pharmacy_<key>` a `variant_pharmacy_<key>`, produktové odkazy a feed. Klíče neměňte bez migrace existujících ACF dat. Výchozí mapa rodiče je prázdná; seznam a loga pro Cetalgen jsou v jeho `site-specific/`.
 
 ## 4. PHP a hooky
 

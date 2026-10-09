@@ -2,7 +2,7 @@
     position: relative;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid rgba(14, 52, 121, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     background-color: var(--gln-header-custom-bg-color, rgba(255, 255, 255, 0.94));
     background-image: var(--gln-header-custom-bg-image, none);
     background-size: var(--gln-header-custom-bg-size, cover);
@@ -117,7 +117,7 @@ body.admin-bar .site-header.is-sticky {
 }
 
 .site-header.is-glassy-dark-start::before {
-    background-image: linear-gradient(180deg, rgba(12, 45, 105, 1) 0%, rgba(12, 45, 105, 0) 100%),
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%),
         var(--gln-header-custom-bg-image, none);
     background-size: var(--gln-header-custom-bg-size, cover), var(--gln-header-custom-bg-size, cover);
     background-position: var(--gln-header-custom-bg-position, center center), var(--gln-header-custom-bg-position, center center);
@@ -149,7 +149,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 .site-header.is-scrolled.is-glassy-start,
 .site-header.is-scrolled.is-glassy-dark-start {
     background-color: transparent;
-    border-color: rgba(14, 52, 121, 0.1);
+    border-color: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
 }
 
@@ -505,7 +505,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
     @include flex-center;
     width: 30px;
     height: 30px;
-    border: 1px solid rgba(14, 52, 121, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.8);
     color: $gln-color-primary;
@@ -525,7 +525,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
 }
 
 .site-footer {
-    background: var(--blue-dark, #1a2d4d);
+    background: var(--blue-dark, #555555);
     color: $gln-color-white;
 }
 
@@ -587,7 +587,7 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
         top: auto;
         background-color: var(--gln-header-custom-bg-color, $white);
         background-image: none;
-        border-bottom: 1px solid rgba(14, 52, 121, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
     }

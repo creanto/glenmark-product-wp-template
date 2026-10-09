@@ -27,13 +27,13 @@
 
 .gln-home__button--secondary:hover,
 .gln-button--secondary:hover {
-    background: rgba(227, 6, 19, 0.06);
+    background: color-mix(in srgb, $gln-color-accent 6%, transparent);
     border-color: $gln-color-accent;
     color: $gln-color-primary;
 }
 
 .gln-button--buy {
-    background: linear-gradient(to bottom, #f15b5d, #d71620);
+    background: $gln-color-accent;
     border-color: $gln-color-accent;
     border-radius: $gln-button-radius;
     color: $gln-color-white;
@@ -41,7 +41,7 @@
 
 .gln-button--buy:hover,
 .gln-button--buy:focus {
-    background: linear-gradient(to bottom, #e44a4d, #bd1019);
+    background: color-mix(in srgb, $gln-color-accent, $gln-color-primary 20%);
     border-color: color-mix(in srgb, $gln-color-accent, $gln-color-primary 20%);
     color: $gln-color-white;
 }

@@ -1,20 +1,20 @@
-$gln-font-primary: var(--e-global-typography-primary-font-family, "Segoe UI", sans-serif);
-$gln-font-text: var(--e-global-typography-text-font-family, "Segoe UI", sans-serif);
+$gln-font-primary: var(--e-global-typography-primary-font-family, Arial), Helvetica, sans-serif;
+$gln-font-text: var(--e-global-typography-text-font-family, Arial), Helvetica, sans-serif;
 
 $gln-color-primary: var(--e-global-color-primary, $blue);
 $gln-color-secondary: var(--e-global-color-secondary, $blue-dark);
-$gln-color-text: var(--e-global-color-text, $blue);
+$gln-color-text: var(--e-global-color-text, #222222);
 $gln-color-accent: var(--e-global-color-accent, $red);
 $gln-color-white: var(--e-a-color-white, $white);
 $gln-color-bg: var(--e-a-bg-default, $bg);
-$gln-color-surface: #f5f7fb;
-$gln-color-surface-strong: #edf4ff;
-$gln-color-border: rgba(14, 52, 121, 0.12);
-$gln-color-muted: rgba(14, 52, 121, 0.72);
+$gln-color-surface: #f7f7f7;
+$gln-color-surface-strong: #eeeeee;
+$gln-color-border: rgba(0, 0, 0, 0.12);
+$gln-color-muted: rgba(0, 0, 0, 0.72);
 
 $gln-radius: 18px;
 $gln-button-radius: 15px;
-$gln-shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
-$gln-shadow-card: 0 16px 30px rgba(15, 23, 42, 0.04);
+$gln-shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.08);
+$gln-shadow-card: 0 16px 30px rgba(0, 0, 0, 0.04);
 
 $gln-container: min(var(--container-max-width, 1310px), calc(100vw - 2rem));

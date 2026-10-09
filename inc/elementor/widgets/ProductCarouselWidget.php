@@ -124,59 +124,7 @@ class Glenmark_ProductCarousel_Widget extends \Elementor\Widget_Base
         echo '<div class="gln-product-carousel__track">';
         $modal_markup = '';
 
-        $pharmacy_logo_base_url = trailingslashit(get_template_directory_uri()) . 'img/lekarny/';
-        $pharmacy_sources = [
-            [
-                'field' => 'product_pharmacy_benu',
-                'label' => 'Benu',
-                'logo' => $pharmacy_logo_base_url . 'benu.jpg',
-            ],
-            [
-                'field' => 'product_pharmacy_drmax',
-                'label' => 'Dr. Max',
-                'logo' => $pharmacy_logo_base_url . 'drmax.jpg',
-            ],
-            [
-                'field' => 'product_pharmacy_lekarna_cz',
-                'label' => 'Lékárna.cz',
-                'logo' => $pharmacy_logo_base_url . 'lakarna.jpg',
-            ],
-            [
-                'field' => 'product_pharmacy_magistra',
-                'label' => 'Magistra',
-                'logo' => $pharmacy_logo_base_url . 'magistra.jpg',
-            ],
-            [
-                'field' => 'product_pharmacy_mojelekarna',
-                'label' => 'Moje lékárna',
-                'logo' => $pharmacy_logo_base_url . 'moje-lekarna.jpg',
-            ],
-            [
-                'field' => 'product_pharmacy_euclekarna',
-                'label' => 'EUC lékárna',
-                'logo' => $pharmacy_logo_base_url . 'euc-lekarna.jpg',
-            ],
-            [
-                'field' => 'product_pharmacy_alza',
-                'label' => 'Alza',
-                'logo' => $pharmacy_logo_base_url . 'alza.jpg',
-            ],
-            [
-                'field' => 'product_pharmacy_alphega',
-                'label' => 'Alphega',
-                'logo' => '',
-            ],
-            [
-                'field' => 'product_pharmacy_pilulka',
-                'label' => 'Pilulka',
-                'logo' => '',
-            ],
-            [
-                'field' => 'product_pharmacy_ave',
-                'label' => 'Lékárna Ave',
-                'logo' => '',
-            ],
-        ];
+        $pharmacy_sources = glenmark_get_pharmacy_sources();
 
         while ($query->have_posts()) {
             $query->the_post();

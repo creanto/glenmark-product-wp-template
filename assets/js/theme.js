@@ -923,20 +923,3 @@
         }
     });
 })();
-
-document.addEventListener('click', function (event) {
-    const target = event.target;
-
-    if (!target || typeof target.closest !== 'function') return;
-
-    const trigger = target.closest('.cmplz-show-banner, .cmplz-show');
-
-    if (!trigger || trigger.closest('#cmplz-manage-consent')) return;
-
-  event.preventDefault();
-  const button = document.querySelector(
-        '#cmplz-manage-consent .cmplz-manage-consent, #cmplz-manage-consent .cmplz-show'
-  );
-
-    if (button && button !== trigger) button.click();
-});

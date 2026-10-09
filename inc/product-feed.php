@@ -220,24 +220,11 @@ function glenmark_get_product_feed_image_url($image)
 
 function glenmark_get_product_feed_pharmacies($product_id)
 {
-    $pharmacy_fields = [
-        'product_pharmacy_benu' => 'Benu',
-        'product_pharmacy_drmax' => 'Dr. Max',
-        'product_pharmacy_lekarna_cz' => 'lekarna.cz',
-        'product_pharmacy_magistra' => 'Magistra',
-        'product_pharmacy_mojelekarna' => 'Moje lékárna',
-        'product_pharmacy_euclekarna' => 'Euc lékárna',
-        'product_pharmacy_alza' => 'Alza',
-        'product_pharmacy_alphega' => 'Alphega',
-        'product_pharmacy_pilulka' => 'Pilulka',
-        'product_pharmacy_ave' => 'Lékárna Ave',
-    ];
-
     $pharmacies = [];
-    foreach ($pharmacy_fields as $field_name => $label) {
-        $url = esc_url_raw((string) get_field($field_name, $product_id));
+    foreach (glenmark_get_pharmacy_sources() as $source) {
+        $url = esc_url_raw((string) get_field($source['field'], $product_id));
         if ('' !== $url) {
-            $pharmacies[$label] = $url;
+            $pharmacies[$source['label']] = $url;
         }
     }
 
@@ -252,18 +239,7 @@ function glenmark_get_product_feed_variants($product_id)
     }
 
     $variants = [];
-    $pharmacy_fields = [
-        'variant_pharmacy_benu' => 'Benu',
-        'variant_pharmacy_drmax' => 'Dr. Max',
-        'variant_pharmacy_lekarna_cz' => 'lekarna.cz',
-        'variant_pharmacy_magistra' => 'Magistra',
-        'variant_pharmacy_mojelekarna' => 'Moje lékárna',
-        'variant_pharmacy_euclekarna' => 'Euc lékárna',
-        'variant_pharmacy_alza' => 'Alza',
-        'variant_pharmacy_alphega' => 'Alphega',
-        'variant_pharmacy_pilulka' => 'Pilulka',
-        'variant_pharmacy_ave' => 'Lékárna Ave',
-    ];
+    $pharmacy_sources = glenmark_get_pharmacy_sources();
 
     foreach ($rows as $row) {
         if (!is_array($row)) {
@@ -293,12 +269,13 @@ function glenmark_get_product_feed_variants($product_id)
             ? $row['variant_pharmacies']
             : [];
 
-        foreach ($pharmacy_fields as $field_name => $label) {
+        foreach ($pharmacy_sources as $source) {
+            $field_name = $source['variant_field'];
             $url = isset($variant_pharmacies[$field_name])
                 ? esc_url_raw((string) $variant_pharmacies[$field_name])
                 : '';
             if ('' !== $url) {
-                glenmark_product_feed_add_property($variant_properties, 'Koupit u ' . $label, $url);
+                glenmark_product_feed_add_property($variant_properties, 'Koupit u ' . $source['label'], $url);
             }
         }
 

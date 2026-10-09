@@ -20,6 +20,28 @@ function glenmark_register_gln_product_acf_fields()
         ],
     ];
 
+    $pharmacy_fields = [];
+    $variant_pharmacy_fields = [];
+
+    foreach (glenmark_get_pharmacy_sources() as $source) {
+        $pharmacy_fields[] = [
+            'key' => 'field_' . $source['field'],
+            'label' => $source['label'],
+            'name' => $source['field'],
+            'type' => 'url',
+            'placeholder' => 'https://',
+            'wrapper' => ['width' => '50'],
+        ];
+        $variant_pharmacy_fields[] = [
+            'key' => 'field_product_package_variant_pharmacy_' . $source['key'],
+            'label' => $source['label'],
+            'name' => $source['variant_field'],
+            'type' => 'url',
+            'placeholder' => 'https://',
+            'wrapper' => ['width' => '33.33'],
+        ];
+    }
+
     acf_add_local_field_group([
         'key' => 'group_gln_product_basic_information',
         'title' => 'Produkt - Základní informace',
@@ -236,7 +258,7 @@ function glenmark_register_gln_product_acf_fields()
                 'label' => 'Značka / brand',
                 'name' => 'product_schema_brand',
                 'type' => 'text',
-                'placeholder' => 'Glenmark',
+                'placeholder' => '',
                 'wrapper' => ['width' => '50'],
             ],
             [
@@ -244,7 +266,7 @@ function glenmark_register_gln_product_acf_fields()
                 'label' => 'Výrobce / manufacturer',
                 'name' => 'product_schema_manufacturer',
                 'type' => 'text',
-                'placeholder' => 'Glenmark Pharmaceuticals',
+                'placeholder' => '',
                 'wrapper' => ['width' => '50'],
             ],
             [
@@ -396,108 +418,7 @@ function glenmark_register_gln_product_acf_fields()
     acf_add_local_field_group([
         'key' => 'group_gln_product_pharmacies',
         'title' => 'Produkt - Lékárny',
-        'fields' => [
-            [
-                'key' => 'field_product_pharmacy_benu',
-                'label' => 'Benu',
-                'name' => 'product_pharmacy_benu',
-                'type' => 'url',
-                'placeholder' => 'https://',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'key' => 'field_product_pharmacy_drmax',
-                'label' => 'Dr. Max',
-                'name' => 'product_pharmacy_drmax',
-                'type' => 'url',
-                'placeholder' => 'https://',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'key' => 'field_product_pharmacy_lekarna_cz',
-                'label' => 'lekarna.cz',
-                'name' => 'product_pharmacy_lekarna_cz',
-                'type' => 'url',
-                'placeholder' => 'https://',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'key' => 'field_product_pharmacy_magistra',
-                'label' => 'Magistra',
-                'name' => 'product_pharmacy_magistra',
-                'type' => 'url',
-                'placeholder' => 'https://',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'key' => 'field_product_pharmacy_mojelekarna',
-                'label' => 'Moje lékárna',
-                'name' => 'product_pharmacy_mojelekarna',
-                'type' => 'url',
-                'placeholder' => 'https://',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'key' => 'field_product_pharmacy_euclekarna',
-                'label' => 'Euc lékárna',
-                'name' => 'product_pharmacy_euclekarna',
-                'type' => 'url',
-                'placeholder' => 'https://',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'key' => 'field_product_pharmacy_alza',
-                'label' => 'Alza',
-                'name' => 'product_pharmacy_alza',
-                'type' => 'url',
-                'placeholder' => 'https://',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'key' => 'field_product_pharmacy_alphega',
-                'label' => 'Alphega',
-                'name' => 'product_pharmacy_alphega',
-                'type' => 'url',
-                'placeholder' => 'https://',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'key' => 'field_product_pharmacy_pilulka',
-                'label' => 'Pilulka',
-                'name' => 'product_pharmacy_pilulka',
-                'type' => 'url',
-                'placeholder' => 'https://',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'key' => 'field_product_pharmacy_ave',
-                'label' => 'Lékárna Ave',
-                'name' => 'product_pharmacy_ave',
-                'type' => 'url',
-                'placeholder' => 'https://',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-        ],
+        'fields' => $pharmacy_fields,
         'location' => $location,
         'menu_order' => 4,
         'position' => 'normal',
@@ -558,108 +479,7 @@ function glenmark_register_gln_product_acf_fields()
                         'label' => 'Odkazy na lékárny',
                         'name' => 'variant_pharmacies',
                         'type' => 'group',
-                        'sub_fields' => [
-                            [
-                                'key' => 'field_product_package_variant_pharmacy_benu',
-                                'label' => 'Benu',
-                                'name' => 'variant_pharmacy_benu',
-                                'type' => 'url',
-                                'placeholder' => 'https://',
-                                'wrapper' => [
-                                    'width' => '33.33',
-                                ],
-                            ],
-                            [
-                                'key' => 'field_product_package_variant_pharmacy_drmax',
-                                'label' => 'Dr. Max',
-                                'name' => 'variant_pharmacy_drmax',
-                                'type' => 'url',
-                                'placeholder' => 'https://',
-                                'wrapper' => [
-                                    'width' => '33.33',
-                                ],
-                            ],
-                            [
-                                'key' => 'field_product_package_variant_pharmacy_lekarna_cz',
-                                'label' => 'lekarna.cz',
-                                'name' => 'variant_pharmacy_lekarna_cz',
-                                'type' => 'url',
-                                'placeholder' => 'https://',
-                                'wrapper' => [
-                                    'width' => '33.33',
-                                ],
-                            ],
-                            [
-                                'key' => 'field_product_package_variant_pharmacy_magistra',
-                                'label' => 'Magistra',
-                                'name' => 'variant_pharmacy_magistra',
-                                'type' => 'url',
-                                'placeholder' => 'https://',
-                                'wrapper' => [
-                                    'width' => '33.33',
-                                ],
-                            ],
-                            [
-                                'key' => 'field_product_package_variant_pharmacy_mojelekarna',
-                                'label' => 'Moje lékárna',
-                                'name' => 'variant_pharmacy_mojelekarna',
-                                'type' => 'url',
-                                'placeholder' => 'https://',
-                                'wrapper' => [
-                                    'width' => '33.33',
-                                ],
-                            ],
-                            [
-                                'key' => 'field_product_package_variant_pharmacy_euclekarna',
-                                'label' => 'Euc lékárna',
-                                'name' => 'variant_pharmacy_euclekarna',
-                                'type' => 'url',
-                                'placeholder' => 'https://',
-                                'wrapper' => [
-                                    'width' => '33.33',
-                                ],
-                            ],
-                            [
-                                'key' => 'field_product_package_variant_pharmacy_alza',
-                                'label' => 'Alza',
-                                'name' => 'variant_pharmacy_alza',
-                                'type' => 'url',
-                                'placeholder' => 'https://',
-                                'wrapper' => [
-                                    'width' => '33.33',
-                                ],
-                            ],
-                            [
-                                'key' => 'field_product_package_variant_pharmacy_alphega',
-                                'label' => 'Alphega',
-                                'name' => 'variant_pharmacy_alphega',
-                                'type' => 'url',
-                                'placeholder' => 'https://',
-                                'wrapper' => [
-                                    'width' => '33.33',
-                                ],
-                            ],
-                            [
-                                'key' => 'field_product_package_variant_pharmacy_pilulka',
-                                'label' => 'Pilulka',
-                                'name' => 'variant_pharmacy_pilulka',
-                                'type' => 'url',
-                                'placeholder' => 'https://',
-                                'wrapper' => [
-                                    'width' => '33.33',
-                                ],
-                            ],
-                            [
-                                'key' => 'field_product_package_variant_pharmacy_ave',
-                                'label' => 'Lékárna Ave',
-                                'name' => 'variant_pharmacy_ave',
-                                'type' => 'url',
-                                'placeholder' => 'https://',
-                                'wrapper' => [
-                                    'width' => '33.33',
-                                ],
-                            ],
-                        ],
+                        'sub_fields' => $variant_pharmacy_fields,
                     ],
                 ],
             ],

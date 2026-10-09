@@ -46,19 +46,7 @@ if (have_posts()) {
         $spc = get_field('product_spc', $product_id) ?: '';
         $registered_packages = get_field('product_registered_packages', $product_id) ?: [];
         $registered_packages_url = get_field('product_registered_packages_url', $product_id) ?: '';
-        $pharmacy_logo_base_url = trailingslashit(get_template_directory_uri()) . 'img/lekarny/';
-        $pharmacy_sources = [
-            ['key' => 'benu', 'field' => 'product_pharmacy_benu', 'label' => 'Benu', 'logo' => 'benu.jpg'],
-            ['key' => 'drmax', 'field' => 'product_pharmacy_drmax', 'label' => 'Dr. Max', 'logo' => 'drmax.jpg'],
-            ['key' => 'lekarna_cz', 'field' => 'product_pharmacy_lekarna_cz', 'label' => 'Lékárna.cz', 'logo' => 'lakarna.jpg'],
-            ['key' => 'magistra', 'field' => 'product_pharmacy_magistra', 'label' => 'Magistra', 'logo' => 'magistra.jpg'],
-            ['key' => 'mojelekarna', 'field' => 'product_pharmacy_mojelekarna', 'label' => 'Moje lékárna', 'logo' => 'moje-lekarna.jpg'],
-            ['key' => 'euclekarna', 'field' => 'product_pharmacy_euclekarna', 'label' => 'EUC lékárna', 'logo' => 'euc-lekarna.jpg'],
-            ['key' => 'alza', 'field' => 'product_pharmacy_alza', 'label' => 'Alza.cz', 'logo' => 'alza.jpg'],
-            ['key' => 'alphega', 'field' => 'product_pharmacy_alphega', 'label' => 'Alphega', 'logo' => ''],
-            ['key' => 'pilulka', 'field' => 'product_pharmacy_pilulka', 'label' => 'Pilulka', 'logo' => ''],
-            ['key' => 'ave', 'field' => 'product_pharmacy_ave', 'label' => 'Lékárna Ave', 'logo' => ''],
-        ];
+        $pharmacy_sources = glenmark_get_pharmacy_sources();
         $pharmacies = [];
 
         foreach ($pharmacy_sources as $source) {
@@ -68,7 +56,7 @@ if (have_posts()) {
                 $pharmacies[] = [
                     'key' => $source['key'],
                     'label' => $source['label'],
-                    'logo' => $source['logo'] ? $pharmacy_logo_base_url . $source['logo'] : '',
+                    'logo' => $source['logo'],
                     'url' => $url,
                 ];
             }
@@ -90,7 +78,7 @@ if (have_posts()) {
             $variant_pharmacy_urls = [];
 
             foreach ($pharmacy_sources as $source) {
-                $variant_url = (string) ($variant_pharmacy_data['variant_pharmacy_' . $source['key']] ?? '');
+                $variant_url = (string) ($variant_pharmacy_data[$source['variant_field']] ?? '');
 
                 if (!filter_var($variant_url, FILTER_VALIDATE_URL)) {
                     $variant_url = (string) (get_field($source['field'], $product_id) ?: '');
@@ -126,7 +114,7 @@ if (have_posts()) {
         $has_package_variants = count($package_variants) > 1;
         ?>
         <article id="product-<?php echo esc_attr($product_id); ?>" class="gln-product-template">
-            <section class="gln-product-hero radiant-bg">
+            <section class="gln-product-hero">
                 <div class="container gln-product-hero__inner">
                     <div class="gln-product-hero__text">
                         <?php if ($claim): ?>
@@ -290,7 +278,7 @@ if (have_posts()) {
             <?php endif; ?>
 
             <?php if (!empty($icons)): ?>
-                <section class="gln-product-icons radiant-bg">
+                <section class="gln-product-icons">
                     <div class="container gln-product-icons__grid">
                         <?php foreach ($icons as $icon): ?>
                             <?php $image_id = $icon['image'] ?? 0;

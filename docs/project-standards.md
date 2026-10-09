@@ -5,6 +5,8 @@ Tato sablona je zaklad pro vice farmaceutickych produktu. Kazda zmena musi proto
 - obecne funkce musi zustat znovu pouzitelne v dalsich instalacich;
 - konkretni produkt musi byt mozno stylovat a konfigurovat bez uprav obecneho jadra.
 
+Rodic obsahuje pouze obecne mechanismy, komponenty a univerzalni vychozi hodnoty vcetne vychozi sady ikon Glenmark. Referencni a vyvojova child sablona je Cetalgen. Produktove fonty, vlastni favicony, loga, obrazky, konkretni lekarny a dekorativni site styly patri do child. Rodic pouziva pouze systemove Arial/Helvetica a nesmi nacitat vlastni ani externi fonty.
+
 Dokument je vychozi dohoda pro dalsi rozvoj sablony. Pri pridani noveho opakovane pouzitelneho reseni se ma tato pravidla rozsirit, ne obchazet.
 
 ## 1. Zakladni pravidla
@@ -50,7 +52,6 @@ Kod, ktery se muze objevit na dalsim produktu, pis obecne. Produktove hodnoty pr
 - `assets/css/base/` - reset a zakladni pravidla dokumentu.
 - `assets/css/components/` - obecne komponenty pouzitelne napric webem, napr. header, tlacitka, cookies a animace.
 - `assets/css/pages/` - styly konkretniho typu stranky, napr. home, product a article.
-- `assets/css/fonts.scss` - nacitani fontu.
 - `assets/css/theme.scss` - hlavni SCSS vstup a poradi importu.
 - `assets/css/theme.css` - kompilovany vystup; rucne jej neupravuj.
 
@@ -60,7 +61,7 @@ Nova globalni komponenta patri do `components/`. Styl konkretni stranky patri do
 
 - `assets/js/` - obecne skripty sablony; vetsi funkcni celky maji vlastni soubor.
 - `assets/slick/` a `assets/magnific/` - knihovny a jejich lokalni konfigurace.
-- `img/` - obrazove podklady produktu; obecne assety nesmi byt svazane s jednim webem.
+- Produktove obrazky a loga patri do child `site-specific/assets/img/`. Vlastni ikony v child `assets/icon/` maji prednost pred stejne pojmenovanymi soubory z vychozi sady Glenmark v rodici; standardni WordPress Site Icon ma prednost pred obema sadami.
 
 ## 3. PHP standardy
 
@@ -76,7 +77,7 @@ Nova globalni komponenta patri do `components/`. Styl konkretni stranky patri do
 
 ### Konfigurace
 
-`inc/theme-config.php` obsahuje obecne funkce pro nacteni a cteni konfigurace. Hodnoty konkretni instalace patri do `config/theme-config.php`.
+`inc/theme-config.php` obsahuje obecne funkce pro nacteni a cteni konfigurace. Rodicovsky `config/theme-config.php` a `elementor-site-settings/` obsahuji univerzalni vychozi hodnoty; hodnoty konkretni instalace patri do child `site-specific/config/theme-config.php` a child Elementor Kitu. Konkretni lekarny se definuji mapou `pharmacies` se stabilnimi klici, popisky a volitelnymi cestami log.
 
 Do konfigurace patri zejmena:
 
@@ -101,7 +102,7 @@ Do konfigurace nepatri algoritmy. Ty patri do obecneho modulu, ktery konfiguraci
 
 - Vsechny nove styly se pisi do `.scss` souboru. Kompilovane `.css` soubory se neupravuji rucne.
 - Po zmene SCSS se kompiluje pouze lokalne podle workflow projektu; sablona nema kompilaci provadet za behu WordPressu.
-- `theme.scss` zustava vstupnim souborem. Poradi importu respektuje: `abstracts` -> fonty -> `base` -> `components` -> `pages`.
+- `theme.scss` zustava vstupnim souborem. Poradi importu respektuje: `abstracts` -> `base` -> `components` -> `pages`.
 - Promenne, mapy, mixiny a funkce patri do `abstracts/`. Nevytvarej je znovu v jednotlivych strankach.
 - Pouzivej nesting, dedicnost a mixiny jen tam, kde zlepsuji strukturu. Nadmerny nesting a `!important` jsou posledni moznost.
 - Produktove hodnoty drz v promennych a konfiguraci; opakovane barvy, mezery, radiusy a stiny nepiste jako nahodne literaly.

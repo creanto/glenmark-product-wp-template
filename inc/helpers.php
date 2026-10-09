@@ -348,6 +348,27 @@ function glenmark_get_template_part($slug, $name = null, $args = [])
     get_template_part($slug, $name, $args);
 }
 
+function glenmark_get_pharmacy_sources()
+{
+    $sources = [];
+
+    foreach ((array) glenmark_config('pharmacies', []) as $key => $pharmacy) {
+        if (!is_array($pharmacy) || empty($pharmacy['label']) || sanitize_key($key) !== (string) $key) {
+            continue;
+        }
+
+        $sources[] = [
+            'key' => $key,
+            'field' => 'product_pharmacy_' . $key,
+            'variant_field' => 'variant_pharmacy_' . $key,
+            'label' => (string) $pharmacy['label'],
+            'logo' => !empty($pharmacy['logo']) ? glenmark_get_theme_file_uri($pharmacy['logo']) : '',
+        ];
+    }
+
+    return $sources;
+}
+
 function glenmark_primary_menu_fallback()
 {
     echo '<ul class="nav-menu">';
@@ -400,16 +421,24 @@ function glenmark_get_favicon_custom_url()
 
 function glenmark_locate_icon($filename)
 {
-    return glenmark_get_theme_file_uri('assets/icon/' . ltrim((string) $filename, '/'));
+    return glenmark_get_theme_file_uri('assets/icon/' . basename((string) $filename));
 }
 
 function glenmark_print_icon_tags()
 {
+    if (has_site_icon()) {
+        return;
+    }
+
     $favicon_96 = glenmark_locate_icon('favicon-96x96.png');
     $favicon_svg = glenmark_locate_icon('favicon.svg');
     $favicon_ico = glenmark_locate_icon('favicon.ico');
     $apple_touch = glenmark_locate_icon('apple-touch-icon.png');
     $manifest = glenmark_locate_icon('site.webmanifest');
+
+    if (!$favicon_96 && !$favicon_svg && !$favicon_ico && !$apple_touch && !$manifest) {
+        return;
+    }
 
     if (!empty($favicon_96)) {
         echo '<link rel="icon" type="image/png" href="' . esc_url($favicon_96) . '" sizes="96x96" />' . "\n";

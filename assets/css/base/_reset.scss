@@ -103,53 +103,7 @@ p {
     min-height: 50vh;
 }
 
-.text-white,
-.text-yellow {
-    color: inherit;
-}
-
-.text-white {
-    color: $gln-color-white;
-
-    b,
-    strong,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    .elementor-heading-title {
-        color: $gln-color-accent;
-    }
-}
-
-.text-yellow {
-    color: $gln-color-accent;
-
-    b,
-    strong,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    .elementor-heading-title {
-        color: $gln-color-white;
-    }
-}
-
 #primary .elementor-widget-text-editor a {
-    text-decoration: underline !important;
-    text-decoration-thickness: 1.5px;
-    text-underline-offset: 0.18em;
-}
-
-.text-white a,
-.text-yellow a,
-.text-white .elementor-text-editor a,
-.text-yellow .elementor-text-editor a {
     text-decoration: underline !important;
     text-decoration-thickness: 1.5px;
     text-underline-offset: 0.18em;
@@ -158,13 +112,6 @@ p {
 img.alignleft {
     float: left;
     margin-right: 10px;
-}
-
-.radiant-bg {
-    background:
-        radial-gradient(circle 36rem at 42% 8%, rgba(44, 164, 229, 0.5) 0%, rgba(44, 164, 229, 0) 72%),
-        radial-gradient(circle 32rem at 85% 58%, rgba(44, 164, 229, 0.5) 0%, rgba(44, 164, 229, 0) 72%),
-        $gln-color-primary;
 }
 
 .menu-legal {
@@ -177,8 +124,4 @@ img.alignleft {
 
 .text-center {
     text-align: center;
-}
-
-#cmplz-manage-consent {
-    display: none;
 }

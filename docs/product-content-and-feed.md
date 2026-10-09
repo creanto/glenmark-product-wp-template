@@ -19,12 +19,14 @@ Rodičovská šablona registruje vlastní typ obsahu `gln_product` (v administra
 | Prodej a dokumenty | V prodeji, ukončení prodeje, VPOIS, SPC, domovská stránka | Informace a odkazy na detailu a ve feedu |
 | Product schema | Brand, výrobce, SKU, GTIN-13, velikost balení, léková forma | Schema.org Product |
 | Obrázky | Náhledový obrázek/packshot, galerie, obrázek varianty | Detail, widgety a feed |
-| Lékárny | URL Benu, Dr. Max, lekarna.cz a dalších podporovaných sítí | Odkazy „kde koupit“ |
+| Lékárny | URL lékáren definovaných konfigurací aktivní child šablony | Odkazy „kde koupit“ |
 | Varianty balení | Název, počet, obrázek, odkazy na lékárny | Varianty na detailu i ve strukturovaných datech |
 | Registrovaná balení | Síla, množství, kód SÚKL, SPC, PIL | Přehled registrovaných balení a dokumentace |
 | Ikony | Obrázek, text, popis | Vizuální vlastnosti produktu |
 
 Přesné názvy polí a klíče jsou definované v `inc/acf/product-fields.php`. Při jejich změně zkontrolujte také `single-gln_product.php`, widgety a výstup schema/feedu. Pole ACF jsou stabilní datové rozhraní; nepřejmenovávejte je jen kvůli textovému labelu.
+
+Konkrétní pole lékáren se generují z mapy `pharmacies` v child konfiguraci. Rodič ji má prázdnou; Cetalgen poskytuje referenční seznam a loga. Existující produktové a variantové ACF klíče zůstaly zachované. Při nasazení jiného child je potřeba dodat vlastní seznam se stabilními klíči, jinak tyto odkazy nebudou ve widgetech ani feedu.
 
 ## 2. Výchozí detail a jeho přepsání
 

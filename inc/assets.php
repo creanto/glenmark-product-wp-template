@@ -11,15 +11,6 @@ function glenmark_enqueue_theme_assets()
     $theme_css_path = glenmark_get_theme_file_path('assets/css/theme.css');
     $theme_css_uri = glenmark_get_theme_file_uri('assets/css/theme.css');
 
-    if ('open sans' === strtolower((string) glenmark_config('typography.font_family', ''))) {
-        wp_enqueue_style(
-            'glenmark-open-sans',
-            'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap',
-            [],
-            null
-        );
-    }
-
     if (!empty($theme_css_path)) {
         $file_mtime = filemtime($theme_css_path);
 
@@ -35,11 +26,6 @@ function glenmark_enqueue_theme_assets()
     $slick_css_uri = glenmark_get_theme_file_uri('assets/slick/slick.css');
     if (!empty($slick_css_uri)) {
         wp_enqueue_style('glenmark-slick', $slick_css_uri, [], $version);
-    }
-
-    $slick_theme_css_uri = glenmark_get_theme_file_uri('assets/slick/slick-theme.css');
-    if (!empty($slick_theme_css_uri)) {
-        wp_enqueue_style('glenmark-slick-theme', $slick_theme_css_uri, ['glenmark-slick'], $version);
     }
 
     $magnific_css_uri = glenmark_get_theme_file_uri('assets/magnific/magnific-popup.css');

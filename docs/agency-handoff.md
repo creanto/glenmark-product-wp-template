@@ -1,6 +1,6 @@
 # Glenmark Product: informace pro spolupracující agenturu
 
-Glenmark Product je společný základ pro produktové weby Glenmark v České republice. Rodičovská šablona obsahuje sdílené rozvržení, produktové funkce, Elementor widgety, ACF pole a české napojení na lékárny. Konkrétní web se staví a dolaďuje v child šabloně, nikoli úpravami společného základu.
+Glenmark Product je společný základ pro produktové weby. Rodičovská šablona obsahuje obecné rozvržení, produktové funkce, Elementor widgety a ACF pole. Konkrétní branding, ikony, obrázky a seznam lékáren dodává child šablona. Referenční a vývojová child šablona je Cetalgen; rodič používá systémové Arial/Helvetica a univerzální výchozí nastavení.
 
 ## Jak začít
 

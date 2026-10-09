@@ -1,6 +1,6 @@
 # Práce se šablonou Glenmark Product
 
-Návod popisuje běžné založení a správu webu agenturou. Šablona je určena pro weby Glenmark v České republice; rodič obsahuje společný branding a českou síť lékáren. Pro odlišnosti konkrétního webu použijte child šablonu.
+Návod popisuje běžné založení a správu webu agenturou. Rodič obsahuje obecné funkce, komponenty a univerzální výchozí nastavení. Branding, fonty, ikony a seznam lékáren patří do child šablony; referenční a vývojová šablona je Cetalgen.
 
 ## 1. Co šablona poskytuje
 
