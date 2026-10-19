@@ -90,3 +90,56 @@ function glenmark_shared_content_editor_route()
         'items' => glenmark_shared_content_prepare_editor_items(true),
     ]);
 }
+
+function glenmark_shared_content_add_text_editor_controls($element)
+{
+    $items = glenmark_shared_content_get_items();
+    $options = ['' => __('Vyberte sdílenou šablonu', 'gln-pharma-product')];
+
+    foreach ($items as $key => $item) {
+        if (empty($item['data']['content_html'])) {
+            continue;
+        }
+        $options[$key] = (string) ($item['title'] ?? $key) . ' (' . $key . ')';
+    }
+
+    $element->add_control('glenmark_shared_template_key', [
+        'label' => __('Načíst obsah z Glenmark Hubu', 'gln-pharma-product'),
+        'type' => \Elementor\Controls_Manager::SELECT2,
+        'options' => $options,
+        'label_block' => true,
+        'description' => __('Vyberte šablonu a vložte ji jako editovatelný HTML obsah.', 'gln-pharma-product'),
+    ]);
+    $element->add_control('glenmark_shared_template_import', [
+        'type' => \Elementor\Controls_Manager::RAW_HTML,
+        'raw' => '<button type="button" class="elementor-button elementor-button-default glenmark-shared-template-import">'
+            . esc_html__('Vložit jako editovatelnou kopii', 'gln-pharma-product') . '</button>'
+            . '<span class="glenmark-shared-template-import-status" role="status" aria-live="polite"></span>',
+        'content_classes' => 'elementor-control-field',
+    ]);
+}
+add_action(
+    'elementor/element/text-editor/section_editor/before_section_end',
+    'glenmark_shared_content_add_text_editor_controls'
+);
+
+function glenmark_shared_content_enqueue_elementor_editor_script()
+{
+    $script_path = get_template_directory() . '/inc/shared-content/assets/js/shared-content-elementor-editor.js';
+    $script_uri = get_template_directory_uri() . '/inc/shared-content/assets/js/shared-content-elementor-editor.js';
+    $version = file_exists($script_path) ? (string) filemtime($script_path) : wp_get_theme()->get('Version');
+
+    wp_enqueue_script('glenmark-shared-content-elementor-editor', $script_uri, ['jquery'], $version, true);
+    wp_localize_script('glenmark-shared-content-elementor-editor', 'glenmarkSharedContentElementor', [
+        'refreshUrl' => rest_url('gln-pharma-product/v1/shared-content-items'),
+        'nonce' => wp_create_nonce('wp_rest'),
+        'labels' => [
+            'selectTemplate' => __('Nejprve vyberte sdílenou šablonu.', 'gln-pharma-product'),
+            'loading' => __('Načítám obsah…', 'gln-pharma-product'),
+            'inserted' => __('Obsah je vložený a lze jej upravovat.', 'gln-pharma-product'),
+            'failed' => __('Obsah se nepodařilo načíst. Zkontrolujte připojení k Hubu.', 'gln-pharma-product'),
+            'confirmReplace' => __('Vložením se nahradí celý současný obsah Textového editoru. Pokračovat?', 'gln-pharma-product'),
+        ],
+    ]);
+}
+add_action('elementor/editor/after_enqueue_scripts', 'glenmark_shared_content_enqueue_elementor_editor_script');

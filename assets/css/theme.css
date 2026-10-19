@@ -2255,6 +2255,18 @@ body.admin-bar .site-header.is-glassy-dark-start:not(.is-sticky) {
   display: none !important;
 }
 
+.gln-shared-template__meta {
+  margin-top: 12px;
+  text-align: right;
+}
+.gln-shared-template__meta small {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px 14px;
+  font-size: 0.8em;
+}
+
 .gln-product-template {
   color: var(--e-global-color-text, #222222);
 }

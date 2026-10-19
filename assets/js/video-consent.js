@@ -1,32 +1,26 @@
 (function () {
     'use strict';
 
-    var CONSENT_COOKIE = 'cookieyes-consent';
+    var CONSENT_COOKIE = 'wpconsent_preferences';
     var PENDING_SELECTOR = '.gln-video-consent:not(.is-loaded)';
     var pollTimer = null;
 
-    function getConsentMap() {
-        var match = document.cookie.match(/(?:^|;\s*)cookieyes-consent=([^;]*)/);
+    function getConsentPreferences() {
+        var match = document.cookie.match(new RegExp('(?:^|;\\s*)' + CONSENT_COOKIE + '=([^;]*)'));
 
         if (!match) {
             return {};
         }
 
-        var map = {};
-
-        decodeURIComponent(match[1]).split(',').forEach(function (pair) {
-            var parts = pair.split(':');
-
-            if (2 === parts.length) {
-                map[parts[0].trim()] = parts[1].trim();
-            }
-        });
-
-        return map;
+        try {
+            return JSON.parse(match[1]);
+        } catch (error) {
+            return {};
+        }
     }
 
     function hasConsent(category) {
-        return 'yes' === getConsentMap()[category];
+        return true === getConsentPreferences()[category];
     }
 
     function loadVideo(placeholder) {
@@ -70,7 +64,13 @@
             return;
         }
 
-        var revisit = document.querySelector('.cky-btn-revisit-wrapper button, .cky-btn-revisit');
+        if (window.WPConsent && 'function' === typeof window.WPConsent.showPreferences) {
+            window.WPConsent.showPreferences();
+
+            return;
+        }
+
+        var revisit = document.querySelector('.wpconsent-open-preferences');
 
         if (revisit) {
             revisit.click();
@@ -96,7 +96,7 @@
 
         openConsentBanner();
 
-        // CookieYes has no reliable "consent given" event across versions, so poll the cookie.
+        // Poll the stored preference as a fallback for banner configurations without a save event.
         if (!pollTimer) {
             pollTimer = window.setInterval(resolvePending, 500);
         }
@@ -109,7 +109,8 @@
 
         resolvePending();
         document.addEventListener('click', onClick);
-        document.addEventListener('cookieyes_consent_update', resolvePending);
+        window.addEventListener('wpconsent_consent_saved', resolvePending);
+        window.addEventListener('wpconsent_consent_updated', resolvePending);
     }
 
     if ('loading' === document.readyState) {

@@ -18,7 +18,7 @@ class Glenmark_Breadcrumbs_Widget extends \Elementor\Widget_Base
 
     public function get_icon()
     {
-        return 'eicon-breadcrumbs';
+        return 'eicon-navigation-horizontal';
     }
 
     public function get_categories()

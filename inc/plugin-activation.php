@@ -61,8 +61,8 @@ function glenmark_register_required_plugins()
             'required' => false,
         ],
         [
-            'name' => 'CookieYes | GDPR Cookie Consent',
-            'slug' => 'cookie-law-info',
+            'name' => 'WPConsent',
+            'slug' => 'wpconsent-cookies-banner-privacy-suite',
             'required' => true,
         ],
         [
@@ -79,7 +79,7 @@ function glenmark_register_required_plugins()
         'menu' => 'tgmpa-install-plugins',
         'parent_slug' => 'themes.php',
         'capability' => 'edit_theme_options',
-        'has_notices' => true,
+        'has_notices' => false,
         'dismissable' => true,
         'is_automatic' => false,
         'message' => '',
@@ -100,7 +100,7 @@ function glenmark_notice_acf_pro_required()
     }
 
     echo '<div class="notice notice-warning"><p>'
-    . esc_html__('Tato šablona vyžaduje ACF PRO pro kompletní produktová pole (galerie a opakovatelná pole). Nainstalujte ACF PRO z licencovaného zdroje; bezplatná verze ACF nestačí.', 'gln-pharma-product')
+        . esc_html__('Tato šablona vyžaduje ACF PRO pro kompletní produktová pole (galerie a opakovatelná pole). Nainstalujte ACF PRO z licencovaného zdroje; bezplatná verze ACF nestačí.', 'gln-pharma-product')
         . '</p></div>';
 }
 add_action('admin_notices', 'glenmark_notice_acf_pro_required');

@@ -4,6 +4,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+if (!defined('GLENMARK_SHARED_CONTENT_CACHE_ENABLED')) {
+    define('GLENMARK_SHARED_CONTENT_CACHE_ENABLED', false);
+}
+
 function glenmark_shared_content_register_customizer_settings($wp_customize)
 {
     $wp_customize->add_section('glenmark_shared_content', [
@@ -100,14 +104,16 @@ function glenmark_shared_content_get_items($force_refresh = false)
 
     $cache_key = glenmark_shared_content_cache_key();
     $stale_items = get_transient(glenmark_shared_content_cache_key('stale'));
-    $cached_items = get_transient($cache_key);
+    $cached_items = GLENMARK_SHARED_CONTENT_CACHE_ENABLED ? get_transient($cache_key) : false;
 
     if (!$force_refresh && is_array($cached_items)) {
         return $cached_items;
     }
 
     $headers = ['Accept' => 'application/json'];
-    $etag = get_transient(glenmark_shared_content_cache_key('etag'));
+    $etag = GLENMARK_SHARED_CONTENT_CACHE_ENABLED
+        ? get_transient(glenmark_shared_content_cache_key('etag'))
+        : false;
     if (is_string($etag) && '' !== $etag) {
         $headers['If-None-Match'] = $etag;
     }
@@ -124,7 +130,9 @@ function glenmark_shared_content_get_items($force_refresh = false)
 
     $status = (int) wp_remote_retrieve_response_code($response);
     if (304 === $status && is_array($stale_items)) {
-        set_transient($cache_key, $stale_items, 5 * MINUTE_IN_SECONDS);
+        if (GLENMARK_SHARED_CONTENT_CACHE_ENABLED) {
+            set_transient($cache_key, $stale_items, 5 * MINUTE_IN_SECONDS);
+        }
         return $stale_items;
     }
 
@@ -152,11 +160,13 @@ function glenmark_shared_content_get_items($force_refresh = false)
     }
 
     $response_etag = wp_remote_retrieve_header($response, 'etag');
-    if (is_string($response_etag) && '' !== $response_etag) {
+    if (GLENMARK_SHARED_CONTENT_CACHE_ENABLED && is_string($response_etag) && '' !== $response_etag) {
         set_transient(glenmark_shared_content_cache_key('etag'), $response_etag, WEEK_IN_SECONDS);
     }
 
-    set_transient($cache_key, $items, 5 * MINUTE_IN_SECONDS);
+    if (GLENMARK_SHARED_CONTENT_CACHE_ENABLED) {
+        set_transient($cache_key, $items, 5 * MINUTE_IN_SECONDS);
+    }
     set_transient(glenmark_shared_content_cache_key('stale'), $items, WEEK_IN_SECONDS);
 
     return $items;

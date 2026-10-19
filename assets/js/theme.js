@@ -380,12 +380,12 @@
         window.addEventListener('hashchange', updateActiveMenuState);
     }
 
-    // href="#" on the CookieYes trigger would otherwise jump the page to the top.
+    // Prevent the preferences trigger link from jumping to the top of the page.
     function setupCookieSettingsLinks() {
         document.addEventListener('click', function (event) {
             var target = event.target;
 
-            if (target && typeof target.closest === 'function' && target.closest('.cky-banner-element')) {
+            if (target && typeof target.closest === 'function' && target.closest('.wpconsent-open-preferences')) {
                 event.preventDefault();
             }
         });

@@ -13,6 +13,23 @@ function glenmark_elementor_register_category($elements_manager)
 }
 add_action('elementor/elements/categories_registered', 'glenmark_elementor_register_category');
 
+function glenmark_elementor_enqueue_category_order_script()
+{
+    $script_path = get_template_directory() . '/assets/js/elementor-category-order.js';
+    if (!file_exists($script_path)) {
+        return;
+    }
+
+    wp_enqueue_script(
+        'glenmark-elementor-category-order',
+        get_template_directory_uri() . '/assets/js/elementor-category-order.js',
+        [],
+        (string) filemtime($script_path),
+        true
+    );
+}
+add_action('elementor/editor/after_enqueue_scripts', 'glenmark_elementor_enqueue_category_order_script');
+
 function glenmark_register_gln_elementor_widgets()
 {
     if (!class_exists('\Elementor\Plugin')) {
@@ -32,6 +49,8 @@ function glenmark_register_gln_elementor_widgets()
         $widget_dir . '/PharmacyGridWidget.php',
         $widget_dir . '/RichHeadingWidget.php',
         $widget_dir . '/SharedContentWidget.php',
+        $widget_dir . '/SharedTemplateWidget.php',
+        $widget_dir . '/SharedInfoWidget.php',
     ];
 
     foreach ($widget_files as $widget_file) {
@@ -52,6 +71,8 @@ function glenmark_register_gln_elementor_widgets()
         'Glenmark_PharmacyGrid_Widget',
         'Glenmark_Rich_Heading_Widget',
         'Glenmark_Shared_Content_Widget',
+        'Glenmark_Shared_Template_Widget',
+        'Glenmark_Shared_Info_Widget',
     ];
 
     $widgets_manager = \Elementor\Plugin::instance()->widgets_manager;

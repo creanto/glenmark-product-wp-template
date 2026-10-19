@@ -8,7 +8,7 @@ Zdrojové soubory rodičovské i child šablony jsou dostupné v Git repozitář
 
 Základem pro tvorbu stránek je bezplatná verze Elementoru. Rodičovská šablona do něj přidává widgety pro výpis a prezentaci produktů, lékáren, článků, benefitů, CTA a další obsah. Elementor Pro ani jiné placené rozšíření nejsou podmínkou; další pluginy lze přidat podle potřeb projektu po ověření kompatibility.
 
-Pro kompletní produktová data je potřeba ACF PRO, protože datový model využívá mimo jiné opakovatelná pole a galerii. TGM nabízí k instalaci Elementor a CookieYes a volitelně Git Updater; ACF PRO se instaluje odděleně z licencovaného zdroje a jeho ZIP ani licenční klíč nepatří do Git repozitáře. Šablona integruje souhlas s cookies a blokování videí přes CookieYes. Pokud projekt používá licencovaný WPConsent Pro, licenci na webu aktivuje Creanto; klíč se klientovi ani provozovateli nepředává a nepatří do Git repozitáře. Nepoužívejte oba consent systémy současně bez ověření jejich integrace. Před nasazením ověřte také chování vložených videí YouTube/Vimeo.
+Pro kompletní produktová data je potřeba ACF PRO, protože datový model využívá mimo jiné opakovatelná pole a galerii. TGM nabízí k instalaci Elementor a WPConsent a volitelně Git Updater; ACF PRO se instaluje odděleně z licencovaného zdroje a jeho ZIP ani licenční klíč nepatří do Git repozitáře. WPConsent spravuje souhlas s cookies a blokování skriptů; před nasazením ověřte také chování vložených videí YouTube/Vimeo.
 
 ## Co lze nastavit v administraci
 

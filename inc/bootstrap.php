@@ -21,7 +21,7 @@ require_once __DIR__ . '/expert-gate.php';
 require_once __DIR__ . '/menu-item-settings.php';
 require_once __DIR__ . '/assets.php';
 require_once __DIR__ . '/template-hooks.php';
-require_once __DIR__ . '/cookieyes.php';
+require_once __DIR__ . '/wpconsent.php';
 require_once __DIR__ . '/elementor-modify.php';
 require_once __DIR__ . '/glenmark-elementor-animations/glenmark-elementor-animations.php';
 require_once __DIR__ . '/elementor/theme-style-scope.php';

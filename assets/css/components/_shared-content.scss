@@ -1,0 +1,12 @@
+.gln-shared-template__meta {
+    margin-top: 12px;
+    text-align: right;
+
+    small {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 4px 14px;
+        font-size: 0.8em;
+    }
+}

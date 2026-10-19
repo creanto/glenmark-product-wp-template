@@ -85,6 +85,38 @@ function glenmark_shared_content_render_html($html)
     return wp_kses_post(glenmark_shared_content_replace_tokens((string) $html));
 }
 
+function glenmark_shared_content_render_template_item($item)
+{
+    $data = isset($item['data']) && is_array($item['data']) ? $item['data'] : [];
+    $content = glenmark_shared_content_render_html($data['content_html'] ?? '');
+    $metadata = [];
+
+    foreach ([
+        'document_version' => __('Verze', 'gln-pharma-product'),
+        'document_date' => __('Datum', 'gln-pharma-product'),
+        'approval_number' => __('Schvalovací číslo', 'gln-pharma-product'),
+    ] as $field => $label) {
+        if (empty($data[$field]) || !is_scalar($data[$field])) {
+            continue;
+        }
+
+        $value = sanitize_text_field((string) $data[$field]);
+        if ('document_date' === $field) {
+            $date = DateTimeImmutable::createFromFormat('!Y-m-d', $value, wp_timezone());
+            if ($date) {
+                $value = $date->format('j. n. Y');
+            }
+        }
+        $metadata[] = '<span><strong>' . esc_html($label) . ':</strong> ' . esc_html($value) . '</span>';
+    }
+
+    if (empty($metadata)) {
+        return $content;
+    }
+
+    return $content . '<footer class="gln-shared-template__meta"><small>' . implode(' ', $metadata) . '</small></footer>';
+}
+
 function glenmark_shared_content_render_address($data)
 {
     $lines = [];
@@ -162,7 +194,7 @@ function glenmark_shared_content_shortcode($attributes)
         return '';
     }
 
-    return glenmark_shared_content_render_key(
+    return glenmark_shared_content_render_live(
         $attributes['key'],
         sanitize_key($attributes['format']),
         sanitize_key($attributes['field']),
@@ -182,6 +214,6 @@ function glenmark_shared_contact_shortcode($attributes)
         return '';
     }
 
-    return glenmark_shared_content_render_key($attributes['key'], sanitize_key($attributes['format']));
+    return glenmark_shared_content_render_live($attributes['key'], sanitize_key($attributes['format']));
 }
 add_shortcode('gln_shared_contact', 'glenmark_shared_contact_shortcode');

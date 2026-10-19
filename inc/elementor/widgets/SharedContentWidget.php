@@ -13,7 +13,7 @@ class Glenmark_Shared_Content_Widget extends \Elementor\Widget_Base
 
     public function get_title()
     {
-        return __('Sdílený obsah Glenmark', 'gln-pharma-product');
+        return __('Sdílený obsah Glenmark (starší widget)', 'gln-pharma-product');
     }
 
     public function get_icon()
@@ -33,7 +33,8 @@ class Glenmark_Shared_Content_Widget extends \Elementor\Widget_Base
 
     protected function register_controls()
     {
-        $items = glenmark_shared_content_get_items();
+        $is_editor = \Elementor\Plugin::$instance->editor->is_edit_mode();
+        $items = glenmark_shared_content_get_items($is_editor);
         $item_options = ['' => __('Vyberte sdílený obsah', 'gln-pharma-product')];
         foreach ($items as $key => $item) {
             $item_options[$key] = (string) ($item['title'] ?? $key) . ' (' . $key . ')';
@@ -106,6 +107,6 @@ class Glenmark_Shared_Content_Widget extends \Elementor\Widget_Base
         $field = 'field' === $format && !empty($settings['field']) ? $settings['field'] : '';
         $linked = 'yes' === ($settings['link_field'] ?? '');
 
-        echo glenmark_shared_content_render_key($settings['item_key'], $format, $field, $linked);
+        echo glenmark_shared_content_render_live($settings['item_key'], $format, $field, $linked, 'gln-shared-content');
     }
 }
