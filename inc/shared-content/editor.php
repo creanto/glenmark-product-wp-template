@@ -91,6 +91,32 @@ function glenmark_shared_content_editor_route()
     ]);
 }
 
+function glenmark_shared_content_field_labels()
+{
+    return [
+        'company_name' => __('Název společnosti', 'gln-pharma-product'),
+        'building' => __('Budova', 'gln-pharma-product'),
+        'street' => __('Ulice a číslo', 'gln-pharma-product'),
+        'postal_code' => __('PSČ', 'gln-pharma-product'),
+        'city' => __('Město', 'gln-pharma-product'),
+        'country' => __('Země', 'gln-pharma-product'),
+        'phone' => __('Telefon', 'gln-pharma-product'),
+        'email_primary' => __('Hlavní e-mail', 'gln-pharma-product'),
+        'email_secondary' => __('Další e-mail', 'gln-pharma-product'),
+        'link_label' => __('Text odkazu', 'gln-pharma-product'),
+        'website_url' => __('URL', 'gln-pharma-product'),
+        'full_title' => __('Plný název', 'gln-pharma-product'),
+        'document_version' => __('Verze', 'gln-pharma-product'),
+        'document_date' => __('Datum', 'gln-pharma-product'),
+        'approval_number' => __('Schvalovací číslo', 'gln-pharma-product'),
+    ];
+}
+
+function glenmark_shared_content_link_field_names()
+{
+    return ['phone', 'email_primary', 'email_secondary', 'website_url'];
+}
+
 function glenmark_shared_content_add_text_editor_controls($element)
 {
     $items = glenmark_shared_content_get_items();
@@ -117,6 +143,37 @@ function glenmark_shared_content_add_text_editor_controls($element)
             . '<span class="glenmark-shared-template-import-status" role="status" aria-live="polite"></span>',
         'content_classes' => 'elementor-control-field',
     ]);
+
+    $field_labels = glenmark_shared_content_field_labels();
+    $field_options = ['' => __('Vyberte sdílený údaj', 'gln-pharma-product')];
+
+    foreach ($items as $key => $item) {
+        if ('contact' !== (string) ($item['type'] ?? '') || empty($item['data']) || !is_array($item['data'])) {
+            continue;
+        }
+        foreach ($item['data'] as $field_name => $value) {
+            if ('content_html' === $field_name || !is_scalar($value) || '' === (string) $value) {
+                continue;
+            }
+            $field_options[$key . '|' . $field_name] = (string) ($item['title'] ?? $key)
+                . ' – ' . (string) ($field_labels[$field_name] ?? $field_name);
+        }
+    }
+
+    $element->add_control('glenmark_shared_field_key', [
+        'label' => __('Vložit sdílený údaj', 'gln-pharma-product'),
+        'type' => \Elementor\Controls_Manager::SELECT2,
+        'options' => $field_options,
+        'label_block' => true,
+        'description' => __('Vyberte údaj a kliknutím vložte jeho shortcode na pozici kurzoru v editoru.', 'gln-pharma-product'),
+    ]);
+    $element->add_control('glenmark_shared_field_insert', [
+        'type' => \Elementor\Controls_Manager::RAW_HTML,
+        'raw' => '<button type="button" class="elementor-button elementor-button-default glenmark-shared-field-insert">'
+            . esc_html__('Vložit shortcode na pozici kurzoru', 'gln-pharma-product') . '</button>'
+            . '<span class="glenmark-shared-field-insert-status" role="status" aria-live="polite"></span>',
+        'content_classes' => 'elementor-control-field',
+    ]);
 }
 add_action(
     'elementor/element/text-editor/section_editor/before_section_end',
@@ -133,12 +190,15 @@ function glenmark_shared_content_enqueue_elementor_editor_script()
     wp_localize_script('glenmark-shared-content-elementor-editor', 'glenmarkSharedContentElementor', [
         'refreshUrl' => rest_url('gln-pharma-product/v1/shared-content-items'),
         'nonce' => wp_create_nonce('wp_rest'),
+        'linkFields' => glenmark_shared_content_link_field_names(),
         'labels' => [
             'selectTemplate' => __('Nejprve vyberte sdílenou šablonu.', 'gln-pharma-product'),
             'loading' => __('Načítám obsah…', 'gln-pharma-product'),
             'inserted' => __('Obsah je vložený a lze jej upravovat.', 'gln-pharma-product'),
             'failed' => __('Obsah se nepodařilo načíst. Zkontrolujte připojení k Hubu.', 'gln-pharma-product'),
             'confirmReplace' => __('Vložením se nahradí celý současný obsah Textového editoru. Pokračovat?', 'gln-pharma-product'),
+            'selectField' => __('Nejprve vyberte sdílený údaj.', 'gln-pharma-product'),
+            'fieldInserted' => __('Shortcode je vložený na pozici kurzoru.', 'gln-pharma-product'),
         ],
     ]);
 }

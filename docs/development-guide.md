@@ -56,6 +56,10 @@ Při psaní CSS/SCSS dodržujte tuto prioritu:
 
 Viz [referenci Elementor CSS proměnných](elementor-css-variables.md). Nevytvářejte vlastní aliasy pro Elementor barvy a písma, pokud už lze použít `--e-*` token. Hodnota fallback patří přímo do CSS vlastnosti.
 
+Barvy Elementoru se mění v **Elementor → Nastavení webu → Globální barvy**. Standardní Elementor widgety mohou mít navíc vlastní volby v záložce **Styl**. U vlastních widgetů jsou individuální ovladače dostupné pouze tam, kde je implementace výslovně registruje; jejich vzhled jinak určuje rodičovské CSS. Rodičovské styly používají `--e-global-color-*` a `--e-global-typography-*` tam, kde mají reagovat na Elementor Kit. Některé dekorativní hodnoty mohou být pevné a změna globální barvy se jich nemusí dotknout.
+
+V child šabloně lze upravit konkrétní vlastní prvek přes jeho vykreslené třídy, obvykle `.elementor-widget-gln-*` na obalu widgetu a `.gln-*` uvnitř HTML. Child stylesheet se načítá po rodičovském, proto může cíleným selektorem přepsat barvu, pozadí, rámeček, radius, stín, typografii i stavy hover/focus. Zachovejte úzkou specificitu a používejte Elementor tokeny přímo; vlastní aliasy pro globální barvy a písma nezavádějte.
+
 Parent source SCSS je v `assets/css/`; hlavní vstup je `theme.scss`, výstup je `theme.css`. U referenčního Cetalgenu je source `site-specific/assets/css/site.scss` a načítaný výstup `site-specific/assets/css/site.css`. `site.css` je načten až po `glenmark-theme`. CSS neupravujte bez odpovídající úpravy SCSS. Child `functions.php` načítá CSS, nikoli SCSS; produkční web potřebuje aktuální zkompilovaný výstup.
 
 Rodičovský `config/theme-config.php` předává vybrané barvy do inline CSS. Rodič nenačítá vlastní ani externí fonty a používá systémové Arial/Helvetica. Typografii v CSS určují Elementor tokeny se systémovým fallbackem; konfigurační `typography.font_family` sám font nenačítá. Konfigurace a Elementor Kit se automaticky nesynchronizují. Existující web po změně upravte v Site Settings a přegenerujte Elementor CSS.
@@ -64,9 +68,13 @@ Rodičovský `config/theme-config.php` předává vybrané barvy do inline CSS. 
 
 Rodič neobsahuje produktové obrázky, ale poskytuje univerzální výchozí sadu ikon Glenmark v `assets/icon/`. Pro vlastní ikony přidejte stejně pojmenované soubory do `assets/icon/` child šablony; každý soubor se hledá nejprve v child a potom v rodiči. Standardní ikona webu ve WordPressu má přednost. Cetalgen je aktuální referenční a vývojová child šablona.
 
-V child konfiguraci definujte `pharmacies` jako mapu stabilních klíčů na `label` a volitelnou cestu `logo` relativní ke kořeni child šablony. Například `['retailer' => ['label' => 'Lékárna', 'logo' => 'site-specific/assets/img/pharmacies/retailer.jpg']]`. Rodič z ní vytváří pole `product_pharmacy_<key>` a `variant_pharmacy_<key>`, produktové odkazy a feed. Klíče neměňte bez migrace existujících ACF dat. Výchozí mapa rodiče je prázdná; seznam a loga pro Cetalgen jsou v jeho `site-specific/`.
+Seznam lékáren včetně URL a cest k logům je v rodičovském `config/theme-config.php`. Aktivní položky pro konkrétní child vyberete v **Vzhled → Přizpůsobit → Lékárny**; výběr řídí ACF odkazy ve variantách, produktový detail, feed i widgety. Klíče seznamu neměňte bez migrace existujících ACF dat.
+
+Plovoucí tlačítko (modul `inc/floating-button.php`) zapnete v **Vzhled → Přizpůsobit → Plovoucí tlačítko**; nastavíte text, variantu vzhledu (celé tlačítko nebo záložka mírně zajetá za levý/pravý okraj obrazovky se svislým nápisem, která při hoveru vyjede celá k okraji), umístění (vlevo/vpravo, nahoře/uprostřed/dole — u záložky určuje svislou polohu podél boční hrany) a akci. Akcí je přechod na vlastní URL nebo modální okno s lékárnami hlavního produktu, které sdílí markup a styly `gln-product-buy-modal` s produktovým detailem. Hlavní produkt řeší helper `glenmark_get_main_product_id()` (ACF `product_main_product`, jinak první publikovaný produkt).
 
 ## 4. PHP a hooky
+
+Při aktivaci rodičovské nebo odvozené šablony hook `after_switch_theme` doplní do taxonomie `gln_product_category` pět výchozích kategorií: Kosmetika, Doplňky stravy, Léky na předpis, Volně prodejné léky a Zdravotnické prostředky. Existující kategorie rozpoznává podle slugu nebo názvu a nepřepisuje je ani nemaže další kategorie. Pole ACF `product_category` používá přímo tuto taxonomii. Na již aktivním webu samotná aktualizace souborů doplnění nespustí; je potřeba šablonu znovu aktivovat.
 
 - Každý PHP modul začíná ochranou `ABSPATH`.
 - Obecné funkce používají prefix `glenmark_`; child-only funkce mají jasný site prefix.
@@ -134,7 +142,7 @@ U nové instalace použijte aktuální rodičovskou i child šablonu společně.
 
 | Oblast | Aktuální identifikátory / požadovaná kontrola |
 | --- | --- |
-| Produkty a lékárny | `post_type` hodnoty `gln_product` a `gln_pharmacy`; zachovejte ID záznamů a jejich obsah. |
+| Produkty | `post_type` hodnota `gln_product`; zachovejte ID záznamů a jejich obsah. Lékárny jsou nyní statickou konfigurací, ne CPT. |
 | Produktové kategorie | Taxonomie `gln_product_category`; zachovejte term ID a vztahy k produktům. |
 | Customizer a metadata | Klíče `glenmark_*` v `theme_mods` a metadata `_glenmark_*`, včetně nastavení hlavičky a expert gate. |
 | Elementor | Názvy vlastních widgetů `gln-*`, prvek `gln-hero`, nastavení `gln_animation_*`, `gln_transform_*`, `gln_canvas_*` a `glenmark_*`; také seznam podporovaných CPT v nastavení pluginu. |

@@ -4,14 +4,24 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function glenmark_shared_content_live_endpoint($key, $format = 'auto', $field = '', $linked = false)
+function glenmark_shared_content_live_endpoint($key, $format = 'auto', $field = '', $linked = false, $template_args = [])
 {
     $url = rest_url('gln-pharma-product/v1/shared-content/' . rawurlencode((string) $key));
+    $template_args = wp_parse_args($template_args, [
+        'show_heading' => false,
+        'heading_tag' => 'h1',
+        'show_version' => true,
+        'show_date' => true,
+    ]);
 
     return add_query_arg([
         'format' => sanitize_key((string) $format),
         'field' => sanitize_key((string) $field),
         'link' => $linked ? '1' : '0',
+        'heading' => $template_args['show_heading'] ? '1' : '0',
+        'heading_tag' => glenmark_shared_content_sanitize_heading_tag($template_args['heading_tag']),
+        'version' => $template_args['show_version'] ? '1' : '0',
+        'date' => $template_args['show_date'] ? '1' : '0',
     ], $url);
 }
 
@@ -24,7 +34,7 @@ function glenmark_shared_content_enqueue_live_script()
     wp_enqueue_script('glenmark-shared-content-live', $script_url, [], $version, true);
 }
 
-function glenmark_shared_content_render_live($key, $format = 'auto', $field = '', $linked = false, $class_name = 'gln-shared-content')
+function glenmark_shared_content_render_live($key, $format = 'auto', $field = '', $linked = false, $class_name = 'gln-shared-content', $template_args = [])
 {
     $key = glenmark_shared_content_sanitize_key($key);
     if ('' === $key) {
@@ -37,7 +47,7 @@ function glenmark_shared_content_render_live($key, $format = 'auto', $field = ''
     }
 
     if ('template' === $format) {
-        $content = glenmark_shared_content_render_template_item($item);
+        $content = glenmark_shared_content_render_template_item($item, $template_args);
     } elseif ('' !== $field) {
         $content = glenmark_shared_content_render_field($item, $field, $linked);
     } else {
@@ -50,7 +60,7 @@ function glenmark_shared_content_render_live($key, $format = 'auto', $field = ''
 
     glenmark_shared_content_enqueue_live_script();
     $class_name = sanitize_html_class($class_name);
-    $endpoint = glenmark_shared_content_live_endpoint($key, $format, $field, $linked);
+    $endpoint = glenmark_shared_content_live_endpoint($key, $format, $field, $linked, $template_args);
     $tag = '' !== $field ? 'span' : 'div';
 
     return '<' . $tag . ' class="gln-shared-content-live ' . esc_attr($class_name) . '" data-shared-content-refresh="'
@@ -88,9 +98,15 @@ function glenmark_shared_content_live_route(WP_REST_Request $request)
     $format = sanitize_key((string) $request->get_param('format'));
     $field = sanitize_key((string) $request->get_param('field'));
     $linked = '1' === (string) $request->get_param('link');
+    $template_args = [
+        'show_heading' => '1' === (string) $request->get_param('heading'),
+        'heading_tag' => glenmark_shared_content_sanitize_heading_tag($request->get_param('heading_tag')),
+        'show_version' => '1' === (string) $request->get_param('version'),
+        'show_date' => '1' === (string) $request->get_param('date'),
+    ];
 
     if ('template' === $format) {
-        $content = glenmark_shared_content_render_template_item($item);
+        $content = glenmark_shared_content_render_template_item($item, $template_args);
     } elseif ('' !== $field) {
         $content = glenmark_shared_content_render_field($item, $field, $linked);
     } else {

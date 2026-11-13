@@ -9,8 +9,37 @@ if (!defined('ABSPATH')) {
  */
 function glenmark_wpconsent_video_mode()
 {
-    return (string) apply_filters('gln-pharma-product/wpconsent/video_mode', 'consent');
+    $default_mode = get_theme_mod('glenmark_video_consent_bypass', false) ? 'necessary' : 'consent';
+
+    return (string) apply_filters('gln-pharma-product/wpconsent/video_mode', $default_mode);
 }
+
+function glenmark_wpconsent_clear_elementor_cache_after_theme_mod_update($option, $old_value, $new_value = null)
+{
+    if ('theme_mods_' . get_stylesheet() !== $option) {
+        return;
+    }
+
+    if (null === $new_value) {
+        $new_value = $old_value;
+        $old_value = [];
+    }
+
+    $old_bypass = isset($old_value['glenmark_video_consent_bypass']) ? $old_value['glenmark_video_consent_bypass'] : false;
+    $new_bypass = isset($new_value['glenmark_video_consent_bypass']) ? $new_value['glenmark_video_consent_bypass'] : false;
+
+    if ($old_bypass === $new_bypass || !class_exists('\\Elementor\\Plugin')) {
+        return;
+    }
+
+    $elementor = \Elementor\Plugin::$instance;
+
+    if (isset($elementor->files_manager) && method_exists($elementor->files_manager, 'clear_cache')) {
+        $elementor->files_manager->clear_cache();
+    }
+}
+add_action('updated_option', 'glenmark_wpconsent_clear_elementor_cache_after_theme_mod_update', 10, 3);
+add_action('added_option', 'glenmark_wpconsent_clear_elementor_cache_after_theme_mod_update', 10, 2);
 
 function glenmark_wpconsent_get_video_embed_url($settings)
 {
@@ -61,7 +90,7 @@ function glenmark_wpconsent_render_video_placeholder($embed_url)
 {
     $text = apply_filters(
         'gln-pharma-product/wpconsent/video_notice',
-        __('Přehrání videa vyžaduje souhlas s marketingovými cookies služby YouTube.', 'gln-pharma-product')
+        __('Přehrání videa vyžaduje souhlas s marketingovými cookies.', 'gln-pharma-product')
     );
 
     $button = apply_filters(

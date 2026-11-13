@@ -54,6 +54,39 @@ class Glenmark_Shared_Template_Widget extends \Elementor\Widget_Base
             'options' => $options,
             'label_block' => true,
         ]);
+        $this->add_control('show_heading', [
+            'label' => __('Zobrazit nadpis', 'gln-pharma-product'),
+            'description' => __('Nad šablonou zobrazí plný název položky jako nadpis.', 'gln-pharma-product'),
+            'type' => \Elementor\Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default' => '',
+        ]);
+        $this->add_control('heading_tag', [
+            'label' => __('HTML tag nadpisu', 'gln-pharma-product'),
+            'type' => \Elementor\Controls_Manager::SELECT,
+            'options' => [
+                'h1' => 'H1',
+                'h2' => 'H2',
+                'h3' => 'H3',
+                'h4' => 'H4',
+                'h5' => 'H5',
+                'h6' => 'H6',
+            ],
+            'default' => 'h1',
+            'condition' => ['show_heading' => 'yes'],
+        ]);
+        $this->add_control('show_version', [
+            'label' => __('Zobrazit verzi', 'gln-pharma-product'),
+            'type' => \Elementor\Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default' => 'yes',
+        ]);
+        $this->add_control('show_date', [
+            'label' => __('Zobrazit datum', 'gln-pharma-product'),
+            'type' => \Elementor\Controls_Manager::SWITCHER,
+            'return_value' => 'yes',
+            'default' => 'yes',
+        ]);
         $this->end_controls_section();
 
         $this->start_controls_section('section_shared_template_style', [
@@ -82,6 +115,29 @@ class Glenmark_Shared_Template_Widget extends \Elementor\Widget_Base
             'type' => \Elementor\Controls_Manager::COLOR,
             'selectors' => [
                 '{{WRAPPER}} .gln-shared-template__content' => 'color: {{VALUE}};',
+                '{{WRAPPER}} .gln-shared-template__content a' => 'color: {{VALUE}};',
+                '{{WRAPPER}} .gln-shared-template__content h1, {{WRAPPER}} .gln-shared-template__content h2, {{WRAPPER}} .gln-shared-template__content h3, {{WRAPPER}} .gln-shared-template__content h4, {{WRAPPER}} .gln-shared-template__content h5, {{WRAPPER}} .gln-shared-template__content h6' => 'color: {{VALUE}};',
+            ],
+        ]);
+        $this->add_control('content_link_color', [
+            'label' => __('Barva odkazů', 'gln-pharma-product'),
+            'type' => \Elementor\Controls_Manager::COLOR,
+            'selectors' => [
+                '{{WRAPPER}} .gln-shared-template__content a' => 'color: {{VALUE}};',
+            ],
+        ]);
+        $this->add_control('content_link_decoration', [
+            'label' => __('Dekorace odkazů', 'gln-pharma-product'),
+            'type' => \Elementor\Controls_Manager::SELECT,
+            'options' => [
+                '' => __('Výchozí', 'gln-pharma-product'),
+                'underline' => __('Podtržení', 'gln-pharma-product'),
+                'none' => __('Žádná', 'gln-pharma-product'),
+                'overline' => __('Nadtržení', 'gln-pharma-product'),
+                'line-through' => __('Přeškrtnutí', 'gln-pharma-product'),
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .gln-shared-template__content a' => 'text-decoration: {{VALUE}};',
             ],
         ]);
         $this->add_group_control(\Elementor\Group_Control_Background::get_type(), [
@@ -112,8 +168,15 @@ class Glenmark_Shared_Template_Widget extends \Elementor\Widget_Base
             return;
         }
 
+        $template_args = [
+            'show_heading' => 'yes' === ($settings['show_heading'] ?? ''),
+            'heading_tag' => isset($settings['heading_tag']) ? (string) $settings['heading_tag'] : 'h1',
+            'show_version' => 'yes' === ($settings['show_version'] ?? ''),
+            'show_date' => 'yes' === ($settings['show_date'] ?? ''),
+        ];
+
         echo '<div class="gln-shared-template">';
-        echo glenmark_shared_content_render_live($key, 'template', '', false, 'gln-shared-template__content');
+        echo glenmark_shared_content_render_live($key, 'template', '', false, 'gln-shared-template__content', $template_args);
         echo '</div>';
     }
 }

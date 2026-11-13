@@ -109,6 +109,8 @@ Správa banneru souhlasu a blokování skriptů probíhá přes WPConsent. Nasta
 
 V anonymním okně ověřte Elementor videa YouTube/Vimeo: před souhlasem se nesmí načíst jejich externí obsah a po udělení příslušného souhlasu musí jít video spustit. Vlastní video placeholder šablony vyžaduje samostatný test kompatibility s aktivním consent pluginem; automatické propojení nepředpokládejte.
 
+Volba **Přizpůsobení → Site controls → Load YouTube and Vimeo videos without marketing cookie consent** umožní načítat videa těchto služeb ihned, bez čekání na souhlas. Zapínejte ji pouze tehdy, pokud je toto chování v souladu se schválenými právními požadavky webu; při zapnutí ověřte načtení videí i před udělením souhlasu.
+
 ## 8. Před předáním webu
 
 - Zkontrolujte desktop i mobil, navigaci, obě varianty loga a všechny stavy hlavičky.

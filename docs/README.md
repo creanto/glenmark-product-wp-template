@@ -24,6 +24,6 @@ Referenční a vývojová child šablona je nyní **Cetalgen**. Rodič neobsahuj
 - **Child šablona**: vzhled a funkce konkrétního webu, vlastní CSS/SCSS, PHP hooky, konfigurace a případné přepsání template souborů.
 - **WordPress a Elementor**: obsahové stránky, navigace, globální styly a data, která redakce mění bez úprav kódu.
 
-Seznam lékáren a cesty k jejich logům dodává child konfigurace `pharmacies`. Rodič tento seznam používá pro ACF pole, widgety, produktový detail a feed; bez child konfigurace je prázdný. Ikony se hledají podle názvu souboru nejprve v `assets/icon/` aktivní child šablony, potom v rodiči. Standardní ikona webu WordPressu má přednost před oběma sadami.
+Seznam lékáren, URL a cesty k logům jsou definovány v parent `config/theme-config.php`; jejich použití se pro aktivní child volí ve **Vzhled → Přizpůsobit → Lékárny**. Parent seznam používají ACF pole variant, widgety, produktový detail a feed. Ikony se hledají podle názvu souboru nejprve v `assets/icon/` aktivní child šablony, potom v rodiči. Standardní ikona webu WordPressu má přednost před oběma sadami.
 
 Konfigurační klíče `modules` jsou v rodičovském `config/theme-config.php` deklarované, ale bootstrap podle nich aktuálně moduly nezapíná ani nevypíná. Dokumentace je proto neprezentuje jako funkční přepínače.

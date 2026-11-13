@@ -357,16 +357,143 @@ function glenmark_get_pharmacy_sources()
             continue;
         }
 
+        if (!get_theme_mod('glenmark_pharmacy_' . $key . '_active', !empty($pharmacy['active']))) {
+            continue;
+        }
+
         $sources[] = [
             'key' => $key,
-            'field' => 'product_pharmacy_' . $key,
             'variant_field' => 'variant_pharmacy_' . $key,
             'label' => (string) $pharmacy['label'],
+            'url' => esc_url_raw((string) ($pharmacy['url'] ?? '')),
             'logo' => !empty($pharmacy['logo']) ? glenmark_get_theme_file_uri($pharmacy['logo']) : '',
         ];
     }
 
     return $sources;
+}
+
+function glenmark_get_product_package_variants($product_id)
+{
+    $variants = get_field('product_package_variants', $product_id);
+    if (!is_array($variants)) {
+        return [];
+    }
+
+    $primary_variant = null;
+    $ordered_variants = [];
+
+    foreach ($variants as $variant) {
+        if (!is_array($variant)) {
+            continue;
+        }
+
+        if (null === $primary_variant && !empty($variant['variant_is_primary'])) {
+            $primary_variant = $variant;
+        } else {
+            $ordered_variants[] = $variant;
+        }
+    }
+
+    if (null !== $primary_variant) {
+        array_unshift($ordered_variants, $primary_variant);
+    }
+
+    return $ordered_variants;
+}
+
+function glenmark_get_product_document_variants($product_id)
+{
+    $variants = glenmark_get_product_package_variants($product_id);
+    if (!empty($variants)) {
+        return $variants;
+    }
+
+    $variants = get_field('product_registered_packages', $product_id);
+    if (!is_array($variants)) {
+        return [];
+    }
+
+    $primary_variant = null;
+    $ordered_variants = [];
+    foreach ($variants as $variant) {
+        if (!is_array($variant)) {
+            continue;
+        }
+
+        if (null === $primary_variant && !empty($variant['variant_is_primary'])) {
+            $primary_variant = $variant;
+        } else {
+            $ordered_variants[] = $variant;
+        }
+    }
+
+    if (null !== $primary_variant) {
+        array_unshift($ordered_variants, $primary_variant);
+    }
+
+    return array_values($ordered_variants);
+}
+
+function glenmark_get_product_primary_variant_pharmacies($product_id)
+{
+    $variants = glenmark_get_product_package_variants($product_id);
+    $pharmacies = $variants[0]['variant_pharmacies'] ?? [];
+
+    return is_array($pharmacies) ? $pharmacies : [];
+}
+
+function glenmark_get_product_pharmacy_links($product_id)
+{
+    $product_id = (int) $product_id;
+
+    if ($product_id <= 0) {
+        return [];
+    }
+
+    $primary_variant_pharmacies = glenmark_get_product_primary_variant_pharmacies($product_id);
+    $pharmacies = [];
+
+    foreach (glenmark_get_pharmacy_sources() as $source) {
+        $url = (string) ($primary_variant_pharmacies[$source['variant_field']] ?? '');
+
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            continue;
+        }
+
+        $pharmacies[] = [
+            'key' => $source['key'],
+            'label' => $source['label'],
+            'logo' => $source['logo'],
+            'url' => $url,
+        ];
+    }
+
+    return $pharmacies;
+}
+
+function glenmark_get_main_product_id()
+{
+    $product_ids = get_posts([
+        'post_type' => 'gln_product',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'orderby' => 'menu_order title',
+        'order' => 'ASC',
+        'fields' => 'ids',
+    ]);
+
+    if (empty($product_ids)) {
+        return 0;
+    }
+
+    foreach ($product_ids as $product_id) {
+        if (get_field('product_main_product', $product_id)) {
+            return (int) $product_id;
+        }
+    }
+
+    return (int) $product_ids[0];
 }
 
 function glenmark_primary_menu_fallback()

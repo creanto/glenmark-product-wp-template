@@ -1152,6 +1152,18 @@ function glenmark_register_customizer_site_settings($wp_customize)
         'type' => 'checkbox',
     ]);
 
+    $wp_customize->add_setting('glenmark_video_consent_bypass', [
+        'default' => false,
+        'sanitize_callback' => 'glenmark_sanitize_checkbox',
+    ]);
+
+    $wp_customize->add_control('glenmark_video_consent_bypass', [
+        'label' => __('Load YouTube and Vimeo videos without marketing cookie consent', 'gln-pharma-product'),
+        'description' => __('YouTube and Vimeo videos will load immediately. Ensure this behavior complies with your consent policy.', 'gln-pharma-product'),
+        'section' => 'glenmark_site_controls',
+        'type' => 'checkbox',
+    ]);
+
     $wp_customize->add_section('glenmark_header', [
         'title' => __('Header', 'gln-pharma-product'),
         'priority' => 32,

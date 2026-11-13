@@ -23,16 +23,14 @@ if (have_posts()) {
 
         $product_name = get_field('product_name', $product_id) ?: get_the_title($product_id);
         $product_subtitle = get_field('product_subtitle', $product_id) ?: '';
-        $product_subtitle_more = get_field('product_subtitle_more', $product_id) ?: '';
         $full_name = get_field('product_full_name', $product_id) ?: trim($product_name . ' ' . $product_subtitle);
-        $short_description = get_field('product_short_description', $product_id) ?: get_the_excerpt($product_id);
-        $description = get_field('product_description', $product_id) ?: '';
+        $short_description = get_field('product_short_description', $product_id) ?: '';
+        $description = get_post_field('post_content', $product_id);
         $claim = get_field('product_claim', $product_id) ?: get_field('product_highlight', $product_id);
         $main_benefits = get_field('product_main_benefits', $product_id) ?: '';
         $indication = get_field('product_indication', $product_id) ?: '';
         $active_ingredients = get_field('product_active_ingredients', $product_id) ?: '';
         $contained_ingredients = get_field('product_contained_ingredients', $product_id) ?: '';
-        $packaging = get_field('product_packaging', $product_id) ?: '';
         $dosage = get_field('product_dosage', $product_id) ?: '';
         $category_label = get_field('product_category_label', $product_id) ?: '';
         $packshot_id = get_post_thumbnail_id($product_id) ?: get_field('product_packshot', $product_id);
@@ -41,35 +39,34 @@ if (have_posts()) {
         $composition = get_field('product_composition', $product_id) ?: '';
         // $short_text = get_field('product_short_text', $product_id) ?: '';
         $built_with_elementor = glenmark_is_built_with_elementor($product_id);
-        $has_long_description = $built_with_elementor || $description || '' !== trim((string) get_post_field('post_content', $product_id));
+        $has_long_description = $built_with_elementor || '' !== trim((string) $description);
         $legal = get_field('product_legal_notice', $product_id) ?: '';
-        $spc = get_field('product_spc', $product_id) ?: '';
-        $registered_packages = get_field('product_registered_packages', $product_id) ?: [];
-        $registered_packages_url = get_field('product_registered_packages_url', $product_id) ?: '';
+        $legacy_registered_packages = get_field('product_registered_packages', $product_id) ?: [];
+        $package_variants_raw = glenmark_get_product_package_variants($product_id);
         $pharmacy_sources = glenmark_get_pharmacy_sources();
-        $pharmacies = [];
-
-        foreach ($pharmacy_sources as $source) {
-            $url = (string) (get_field($source['field'], $product_id) ?: '');
-
-            if (filter_var($url, FILTER_VALIDATE_URL)) {
-                $pharmacies[] = [
-                    'key' => $source['key'],
-                    'label' => $source['label'],
-                    'logo' => $source['logo'],
-                    'url' => $url,
-                ];
-            }
-        }
+        $main_variant_pharmacy_data = glenmark_get_product_primary_variant_pharmacies($product_id);
+        $pharmacies = glenmark_get_product_pharmacy_links($product_id);
 
         $main_packshot_url = $packshot_id ? wp_get_attachment_image_url($packshot_id, 'large') : '';
-        $package_variants_raw = get_field('product_package_variants', $product_id) ?: [];
+        $registered_packages = [];
         $package_variants = [];
         $variant_box_max_height = 400;
         $variant_box_width = 0;
         $variant_box_height = 0;
 
         foreach ($package_variants_raw as $variant_index => $variant_data) {
+            if (
+                !empty($variant_data['strength'])
+                || !empty($variant_data['variant_count'])
+                || !empty($variant_data['sukl_code'])
+                || !empty($variant_data['spc'])
+                || !empty($variant_data['pil'])
+            ) {
+                $registered_package = $variant_data;
+                $registered_package['quantity'] = $variant_data['variant_count'] ?? '';
+                $registered_packages[] = $registered_package;
+            }
+
             $variant_name = trim((string) ($variant_data['variant_name'] ?? ''));
             $variant_count = trim((string) ($variant_data['variant_count'] ?? ''));
             $variant_image_id = $variant_data['variant_image'] ?? 0;
@@ -81,7 +78,7 @@ if (have_posts()) {
                 $variant_url = (string) ($variant_pharmacy_data[$source['variant_field']] ?? '');
 
                 if (!filter_var($variant_url, FILTER_VALIDATE_URL)) {
-                    $variant_url = (string) (get_field($source['field'], $product_id) ?: '');
+                    $variant_url = (string) ($main_variant_pharmacy_data[$source['variant_field']] ?? '');
                 }
 
                 if (filter_var($variant_url, FILTER_VALIDATE_URL)) {
@@ -111,6 +108,10 @@ if (have_posts()) {
             ];
         }
 
+        if (empty($registered_packages)) {
+            $registered_packages = $legacy_registered_packages;
+        }
+
         $has_package_variants = count($package_variants) > 1;
         ?>
         <article id="product-<?php echo esc_attr($product_id); ?>" class="gln-product-template">
@@ -122,11 +123,6 @@ if (have_posts()) {
                                 <h2 class="gln-product-highlight">
                                     <?php echo esc_html($claim); ?>
                                 </h2>
-                                <?php if ($product_subtitle_more): ?>
-                                    <p class="gln-product-subtitle">
-                                        <?php echo esc_html($product_subtitle_more); ?>
-                                    </p>
-                                <?php endif; ?>
                             </div>
                         <?php endif; ?>
                         <div class="gln-product-hero__row">
@@ -248,13 +244,7 @@ if (have_posts()) {
                             <div>
                                 <?php
                                 // Elementor content must always go through the_content so its editor can locate the preview region.
-                                if ($built_with_elementor) {
-                                    echo apply_filters('the_content', get_post_field('post_content', $product_id));
-                                } elseif ($description) {
-                                    echo wp_kses_post($description);
-                                } else {
-                                    echo apply_filters('the_content', get_post_field('post_content', $product_id));
-                                }
+                                echo apply_filters('the_content', $description);
                                 ?>
                             </div>
                         <?php endif; ?>
@@ -320,7 +310,6 @@ if (have_posts()) {
                             ['label' => 'Obsažené látky', 'value' => $contained_ingredients, 'show_label' => true],
                             ['label' => 'Složení', 'value' => $composition, 'show_label' => true, 'html' => true],
                             ['label' => 'Dávkování', 'value' => $dosage, 'show_label' => true],
-                            ['label' => 'Balení', 'value' => $packaging, 'show_label' => true],
 
                         ] as $spec): ?>
                             <?php if ($spec['value']): ?>
@@ -381,25 +370,17 @@ if (have_posts()) {
                                     </tbody>
                                 </table>
                             </div>
-                            <?php if ($registered_packages_url): ?>
-                                <a class="gln-product-packages__link" href="<?php echo esc_url($registered_packages_url); ?>"
-                                    target="_blank" rel="noopener noreferrer">Seznam všech registrovaných balení</a>
-                            <?php endif; ?>
                         </div>
                     <?php endif; ?>
                 </div>
             </section>
 
-            <?php if ($legal || $spc): ?>
+            <?php if ($legal): ?>
                 <section class="gln-product-legal">
                     <div class="container gln-product-legal__inner">
                         <div class="gln-product-legal__actions">
                             <?php if ($legal): ?>
                                 <button type="button" class="gln-product-legal__toggle" aria-expanded="false">Upozornění</button>
-                            <?php endif; ?>
-                            <?php if ($spc): ?>
-                                <a class="gln-product-legal__toggle" href="<?php echo esc_url($spc); ?>" target="_blank"
-                                    rel="noopener noreferrer">Příbalová informace</a>
                             <?php endif; ?>
                         </div>
                         <?php if ($legal): ?>

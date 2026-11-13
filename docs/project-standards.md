@@ -41,6 +41,7 @@ Kod, ktery se muze objevit na dalsim produktu, pis obecne. Produktove hodnoty pr
 - `inc/acf/` - ACF field groups podle domeny, napriklad produkty a lekarny.
 - `inc/post-types/` - registrace custom post types.
 - `inc/shortcodes/` - samostatne shortcode moduly.
+- `inc/plugin-customizations/` - upravy chovani pluginu tretich stran, jeden soubor pro kazdy plugin, explicitne nacitany z `inc/bootstrap.php`; zdrojove soubory pluginu se neupravuji.
 - `inc/elementor/` - Elementor widgety a upravy jeho chovani.
 - `template-parts/` - znovu pouzitelne casti sablony, napriklad varianty headeru a footeru.
 - `config/theme-config.php` - konfigurace konkretni instalace nebo produktu.
@@ -77,7 +78,7 @@ Nova globalni komponenta patri do `components/`. Styl konkretni stranky patri do
 
 ### Konfigurace
 
-`inc/theme-config.php` obsahuje obecne funkce pro nacteni a cteni konfigurace. Rodicovsky `config/theme-config.php` a `elementor-site-settings/` obsahuji univerzalni vychozi hodnoty; hodnoty konkretni instalace patri do child `site-specific/config/theme-config.php` a child Elementor Kitu. Konkretni lekarny se definuji mapou `pharmacies` se stabilnimi klici, popisky a volitelnymi cestami log.
+`inc/theme-config.php` obsahuje obecne funkce pro nacteni a cteni konfigurace. Rodicovsky `config/theme-config.php` a `elementor-site-settings/` obsahuji univerzalni vychozi hodnoty; hodnoty konkretni instalace patri do child `site-specific/config/theme-config.php` a child Elementor Kitu. Seznam lékáren s URL a logy je v parent `config/theme-config.php`; aktivní lékárny vybírá child přes Customizer.
 
 Do konfigurace patri zejmena:
 

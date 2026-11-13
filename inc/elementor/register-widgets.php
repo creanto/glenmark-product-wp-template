@@ -46,11 +46,13 @@ function glenmark_register_gln_elementor_widgets()
         $widget_dir . '/BreadcrumbsWidget.php',
         $widget_dir . '/BenefitsWidget.php',
         $widget_dir . '/CTAWidget.php',
+        $widget_dir . '/SpcButtonWidget.php',
         $widget_dir . '/PharmacyGridWidget.php',
         $widget_dir . '/RichHeadingWidget.php',
         $widget_dir . '/SharedContentWidget.php',
         $widget_dir . '/SharedTemplateWidget.php',
         $widget_dir . '/SharedInfoWidget.php',
+        $widget_dir . '/CookiesPreferencesWidget.php',
     ];
 
     foreach ($widget_files as $widget_file) {
@@ -68,11 +70,12 @@ function glenmark_register_gln_elementor_widgets()
         'Glenmark_Breadcrumbs_Widget',
         'Glenmark_Benefits_Widget',
         'Glenmark_CTA_Widget',
+        'Glenmark_Spc_Button_Widget',
         'Glenmark_PharmacyGrid_Widget',
         'Glenmark_Rich_Heading_Widget',
-        'Glenmark_Shared_Content_Widget',
         'Glenmark_Shared_Template_Widget',
         'Glenmark_Shared_Info_Widget',
+        'Glenmark_Cookies_Preferences_Widget',
     ];
 
     $widgets_manager = \Elementor\Plugin::instance()->widgets_manager;

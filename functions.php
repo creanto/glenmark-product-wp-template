@@ -17,7 +17,7 @@ function glenmark_get_gln_product_schema_additional_properties($product_id)
     $properties = [];
 
     $packaging_size = glenmark_prepare_schema_text_value(
-        get_field('product_schema_packaging_size', $product_id) ?: get_field('product_packaging', $product_id) ?: ''
+        get_field('product_schema_packaging_size', $product_id) ?: ''
     );
 
     if ('' !== $packaging_size) {
@@ -72,8 +72,8 @@ function glenmark_get_gln_product_schema_data($product_id)
     $product_full_name = glenmark_prepare_schema_text_value(get_field('product_full_name', $product_id) ?: trim($product_name . ' ' . $product_subtitle));
     $product_name_final = '' !== $product_full_name ? $product_full_name : $product_name;
 
-    $description = get_field('product_short_description', $product_id) ?: get_field('product_description', $product_id) ?: get_the_excerpt($product_id);
-    $description_clean = glenmark_prepare_schema_text_value($description ?: get_post_field('post_content', $product_id));
+    $description = get_field('product_short_description', $product_id) ?: get_post_field('post_content', $product_id) ?: get_the_excerpt($product_id);
+    $description_clean = glenmark_prepare_schema_text_value($description);
 
     $image_id = get_post_thumbnail_id($product_id) ?: get_field('product_packshot', $product_id) ?: 0;
     $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'large') : '';

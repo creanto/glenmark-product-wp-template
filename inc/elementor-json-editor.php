@@ -56,11 +56,8 @@ if (!class_exists('Glenmark_Elementor_Json_Editor')) {
                 wp_enqueue_script('wp-codemirror');
             }
 
-            $theme_dir = get_stylesheet_directory();
-            $theme_uri = get_stylesheet_directory_uri();
-
-            $js_path = trailingslashit($theme_dir) . 'assets/js/elementor-json-editor.js';
-            $js_uri = trailingslashit($theme_uri) . 'assets/js/elementor-json-editor.js';
+            $js_path = get_theme_file_path('assets/js/elementor-json-editor.js');
+            $js_uri = get_theme_file_uri('assets/js/elementor-json-editor.js');
             if (file_exists($js_path)) {
                 wp_enqueue_script(
                     'glenmark-elementor-json-editor',
@@ -71,8 +68,8 @@ if (!class_exists('Glenmark_Elementor_Json_Editor')) {
                 );
             }
 
-            $css_path = trailingslashit($theme_dir) . 'assets/css/elementor-json-editor.css';
-            $css_uri = trailingslashit($theme_uri) . 'assets/css/elementor-json-editor.css';
+            $css_path = get_theme_file_path('assets/css/elementor-json-editor.css');
+            $css_uri = get_theme_file_uri('assets/css/elementor-json-editor.css');
             if (file_exists($css_path)) {
                 wp_enqueue_style(
                     'glenmark-elementor-json-editor',
@@ -166,7 +163,8 @@ if (!class_exists('Glenmark_Elementor_Json_Editor')) {
                         <label
                             for="glenmark-elementor-post-search"><?php echo esc_html__('Vybrat stránku', 'gln-pharma-product'); ?></label>
                         <input id="glenmark-elementor-post-search" type="search"
-                            placeholder="<?php echo esc_attr__('Hledat podle názvu...', 'gln-pharma-product'); ?>" autocomplete="off" />
+                            placeholder="<?php echo esc_attr__('Hledat podle názvu...', 'gln-pharma-product'); ?>"
+                            autocomplete="off" />
                         <select id="glenmark-elementor-post-select" size="1">
                             <option value=""><?php echo esc_html__('Vyberte příspěvek', 'gln-pharma-product'); ?></option>
                         </select>

@@ -29,7 +29,7 @@ function glenmark_register_gln_product_post_type()
         'has_archive' => false,
         'rewrite' => ['slug' => 'produkty'],
         'menu_icon' => 'dashicons-cart',
-        'supports' => ['title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'custom-fields', 'page-attributes'],
+        'supports' => ['title', 'editor', 'thumbnail', 'revisions', 'custom-fields', 'page-attributes'],
         'show_in_rest' => true,
         'menu_position' => 20,
         'taxonomies' => ['gln_product_category'],
@@ -173,3 +173,27 @@ function glenmark_register_gln_product_taxonomy()
     ]);
 }
 add_action('init', 'glenmark_register_gln_product_taxonomy', 0);
+
+function glenmark_create_default_product_categories()
+{
+    if (!taxonomy_exists('gln_product_category')) {
+        glenmark_register_gln_product_taxonomy();
+    }
+
+    $categories = [
+        'kosmetika' => 'Kosmetika',
+        'doplnky-stravy' => 'Doplňky stravy',
+        'leky-na-predpis' => 'Léky na předpis',
+        'volne-prodejne-leky' => 'Volně prodejné léky',
+        'zdravotnicke-prostredky' => 'Zdravotnické prostředky',
+    ];
+
+    foreach ($categories as $slug => $name) {
+        if (term_exists($slug, 'gln_product_category') || term_exists($name, 'gln_product_category')) {
+            continue;
+        }
+
+        wp_insert_term($name, 'gln_product_category', ['slug' => $slug]);
+    }
+}
+add_action('after_switch_theme', 'glenmark_create_default_product_categories');

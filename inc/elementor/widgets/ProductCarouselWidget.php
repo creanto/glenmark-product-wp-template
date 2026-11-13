@@ -136,6 +136,7 @@ class Glenmark_ProductCarousel_Widget extends \Elementor\Widget_Base
             $product_short_description = get_field('product_short_description', $product_id) ?: '';
             $detail_url = get_permalink($product_id);
             $pharmacy_links = [];
+            $main_variant_pharmacies = glenmark_get_product_primary_variant_pharmacies($product_id);
 
             $info_chip_groups = array_filter([
                 ['label' => 'Indikace', 'value' => get_field('product_indication', $product_id)],
@@ -146,7 +147,7 @@ class Glenmark_ProductCarousel_Widget extends \Elementor\Widget_Base
             });
 
             foreach ($pharmacy_sources as $source) {
-                $url = (string) (get_field($source['field'], $product_id) ?: '');
+                $url = (string) ($main_variant_pharmacies[$source['variant_field']] ?? '');
 
                 if (filter_var($url, FILTER_VALIDATE_URL)) {
                     $pharmacy_links[] = [

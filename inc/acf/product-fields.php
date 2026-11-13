@@ -20,18 +20,9 @@ function glenmark_register_gln_product_acf_fields()
         ],
     ];
 
-    $pharmacy_fields = [];
     $variant_pharmacy_fields = [];
 
     foreach (glenmark_get_pharmacy_sources() as $source) {
-        $pharmacy_fields[] = [
-            'key' => 'field_' . $source['field'],
-            'label' => $source['label'],
-            'name' => $source['field'],
-            'type' => 'url',
-            'placeholder' => 'https://',
-            'wrapper' => ['width' => '50'],
-        ];
         $variant_pharmacy_fields[] = [
             'key' => 'field_product_package_variant_pharmacy_' . $source['key'],
             'label' => $source['label'],
@@ -51,14 +42,24 @@ function glenmark_register_gln_product_acf_fields()
                 'label' => 'Celý název',
                 'name' => 'product_full_name',
                 'type' => 'text',
-                'wrapper' => ['width' => '50'],
+                'wrapper' => ['width' => '33.33'],
             ],
             [
                 'key' => 'field_product_name',
-                'label' => 'Název',
+                'label' => 'Zkrácený název',
                 'name' => 'product_name',
                 'type' => 'text',
-                'wrapper' => ['width' => '25'],
+                'wrapper' => ['width' => '33.33'],
+            ],
+            [
+                'key' => 'field_product_main_product',
+                'label' => 'Hlavní produkt',
+                'name' => 'product_main_product',
+                'type' => 'true_false',
+                'message' => 'Označit produkt jako hlavní pro výběry a výpisy na webu.',
+                'default_value' => 0,
+                'ui' => 1,
+                'wrapper' => ['width' => '33.33'],
             ],
             [
                 'key' => 'field_product_subtitle',
@@ -68,9 +69,16 @@ function glenmark_register_gln_product_acf_fields()
                 'wrapper' => ['width' => '25'],
             ],
             [
-                'key' => 'field_product_subtitle_more',
-                'label' => 'Dodatečný podtitul',
-                'name' => 'product_subtitle_more',
+                'key' => 'field_product_claim',
+                'label' => 'Claim',
+                'name' => 'product_claim',
+                'type' => 'text',
+                'wrapper' => ['width' => '25'],
+            ],
+            [
+                'key' => 'field_product_indication',
+                'label' => 'Indikace',
+                'name' => 'product_indication',
                 'type' => 'text',
                 'wrapper' => ['width' => '25'],
             ],
@@ -85,45 +93,7 @@ function glenmark_register_gln_product_acf_fields()
                 'save_terms' => 1,
                 'load_terms' => 1,
                 'return_format' => 'object',
-                'wrapper' => ['width' => '50'],
-            ],
-            [
-                'key' => 'field_product_indication',
-                'label' => 'Indikace',
-                'name' => 'product_indication',
-                'type' => 'text',
-                'wrapper' => ['width' => '50'],
-            ],
-            [
-                'key' => 'field_product_claim',
-                'label' => 'Claim',
-                'name' => 'product_claim',
-                'type' => 'text',
-                'wrapper' => ['width' => '50'],
-            ],
-            [
-                'key' => 'field_product_main_benefits',
-                'label' => 'Hlavní benefity',
-                'name' => 'product_main_benefits',
-                'type' => 'wysiwyg',
-                'media_upload' => 0,
-                'wrapper' => ['width' => '50'],
-            ],
-            [
-                'key' => 'field_product_short_description',
-                'label' => 'Krátký popis',
-                'name' => 'product_short_description',
-                'type' => 'wysiwyg',
-                'rows' => 3,
-                'wrapper' => ['width' => '50'],
-            ],
-            [
-                'key' => 'field_product_description',
-                'label' => 'Popis',
-                'name' => 'product_description',
-                'type' => 'wysiwyg',
-                'media_upload' => 1,
-                'wrapper' => ['width' => '100'],
+                'wrapper' => ['width' => '25'],
             ],
             [
                 'key' => 'field_product_active_ingredients',
@@ -142,77 +112,36 @@ function glenmark_register_gln_product_acf_fields()
                 'wrapper' => ['width' => '50'],
             ],
             [
+                'key' => 'field_product_short_description',
+                'label' => 'Krátký popis',
+                'name' => 'product_short_description',
+                'type' => 'wysiwyg',
+                'rows' => 3,
+                'wrapper' => ['width' => '50'],
+            ],
+            [
+                'key' => 'field_product_main_benefits',
+                'label' => 'Hlavní benefity',
+                'name' => 'product_main_benefits',
+                'type' => 'wysiwyg',
+                'media_upload' => 0,
+                'wrapper' => ['width' => '50'],
+            ],
+            [
                 'key' => 'field_product_composition',
-                'label' => 'Složení',
+                'label' => 'Kompletní složení',
                 'name' => 'product_composition',
                 'type' => 'wysiwyg',
                 'rows' => 4,
                 'wrapper' => ['width' => '50'],
             ],
             [
-                'key' => 'field_product_packaging',
-                'label' => 'Balení',
-                'name' => 'product_packaging',
-                'type' => 'text',
-                'wrapper' => ['width' => '50'],
-            ],
-            [
                 'key' => 'field_product_dosage',
                 'label' => 'Dávkování',
                 'name' => 'product_dosage',
-                'type' => 'textarea',
-                'rows' => 3,
+                'type' => 'wysiwyg',
+                'media_upload' => 0,
                 'wrapper' => ['width' => '50'],
-            ],
-            [
-                'key' => 'field_product_website_url',
-                'label' => 'Domovská stránka',
-                'name' => 'product_website_url',
-                'type' => 'url',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'key' => 'field_product_vpois',
-                'label' => 'VPOIS',
-                'name' => 'product_vpois',
-                'type' => 'true_false',
-                'default_value' => 1,
-                'ui' => 1,
-                'wrapper' => [
-                    'width' => '25',
-                ],
-            ],
-            [
-                'key' => 'field_product_for_sale',
-                'label' => 'V prodeji',
-                'name' => 'product_for_sale',
-                'type' => 'true_false',
-                'default_value' => 1,
-                'ui' => 1,
-                'wrapper' => [
-                    'width' => '25',
-                ],
-            ],
-            [
-                'key' => 'field_product_sale_end',
-                'label' => 'Ukončení prodeje',
-                'name' => 'product_sale_end',
-                'type' => 'text',
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'key' => 'field_product_spc',
-                'label' => 'SPC (příbalová informace)',
-                'name' => 'product_spc',
-                'type' => 'url',
-                'placeholder' => 'https://',
-                'wrapper' => [
-                    'width' => '50',
-                ],
             ],
             [
                 'key' => 'field_product_legal_notice',
@@ -221,9 +150,9 @@ function glenmark_register_gln_product_acf_fields()
                 'type' => 'wysiwyg',
                 'media_upload' => 0,
                 'wrapper' => [
-                    'width' => '100',
+                    'width' => '50',
                 ],
-            ],
+            ]
         ],
         'location' => $location,
         'menu_order' => 0,
@@ -232,7 +161,6 @@ function glenmark_register_gln_product_acf_fields()
         'label_placement' => 'top',
         'instruction_placement' => 'label',
         'hide_on_screen' => [
-            /* 'the_content', */
             'discussion',
             'comments',
             'format',
@@ -243,16 +171,6 @@ function glenmark_register_gln_product_acf_fields()
         'key' => 'group_gln_product_schema',
         'title' => 'Produkt - Product schema',
         'fields' => [
-            [
-                'key' => 'field_product_main_product',
-                'label' => 'Hlavní produkt',
-                'name' => 'product_main_product',
-                'type' => 'true_false',
-                'message' => 'Použít tento produkt jako hlavní produkt pro Schema.org na homepage.',
-                'default_value' => 0,
-                'ui' => 1,
-                'wrapper' => ['width' => '50'],
-            ],
             [
                 'key' => 'field_product_schema_brand',
                 'label' => 'Značka / brand',
@@ -301,15 +219,21 @@ function glenmark_register_gln_product_acf_fields()
                 'placeholder' => 'tableta',
                 'wrapper' => ['width' => '50'],
             ],
+            [
+                'key' => 'field_product_schema_sources',
+                'label' => 'Kde údaje získat',
+                'type' => 'message',
+                'message' => '<p>Údaje o produktu (značka, výrobce, SKU a GTIN-13) lze dohledat v následujících databázích a katalozích:</p><ul><li><a href="https://prehledy.sukl.cz/prehled_leciv.html#/" target="_blank" rel="noopener noreferrer">SÚKL – Databáze léčivých přípravků</a><br>Oficiální informace o léčivých přípravcích, výrobcích, registracích a kódech SÚKL.</li><li><a href="https://www.gs1.org/services/verified-by-gs1" target="_blank" rel="noopener noreferrer">GS1 – Verified by GS1</a><br>Mezinárodní databáze pro ověřování GTIN (EAN).</li></ul>',
+                'new_lines' => '',
+            ],
         ],
         'location' => $location,
-        'menu_order' => 1,
+        'menu_order' => 2,
         'position' => 'normal',
         'style' => 'default',
         'label_placement' => 'top',
         'instruction_placement' => 'label',
         'hide_on_screen' => [
-            'the_content',
             'discussion',
             'comments',
             'format',
@@ -345,13 +269,12 @@ function glenmark_register_gln_product_acf_fields()
 
         ],
         'location' => $location,
-        'menu_order' => 1,
+        'menu_order' => 3,
         'position' => 'normal',
         'style' => 'default',
         'label_placement' => 'top',
         'instruction_placement' => 'label',
         'hide_on_screen' => [
-            'the_content',
             'discussion',
             'comments',
             'format',
@@ -402,31 +325,12 @@ function glenmark_register_gln_product_acf_fields()
             ],
         ],
         'location' => $location,
-        'menu_order' => 2,
-        'position' => 'normal',
-        'style' => 'default',
-        'label_placement' => 'top',
-        'instruction_placement' => 'label',
-        'hide_on_screen' => [
-            'the_content',
-            'discussion',
-            'comments',
-            'format',
-        ],
-    ]);
-
-    acf_add_local_field_group([
-        'key' => 'group_gln_product_pharmacies',
-        'title' => 'Produkt - Lékárny',
-        'fields' => $pharmacy_fields,
-        'location' => $location,
         'menu_order' => 4,
         'position' => 'normal',
         'style' => 'default',
         'label_placement' => 'top',
         'instruction_placement' => 'label',
         'hide_on_screen' => [
-            'the_content',
             'discussion',
             'comments',
             'format',
@@ -451,7 +355,16 @@ function glenmark_register_gln_product_acf_fields()
                         'name' => 'variant_name',
                         'type' => 'text',
                         'wrapper' => [
-                            'width' => '33.33',
+                            'width' => '25',
+                        ],
+                    ],
+                    [
+                        'key' => 'field_product_registered_package_strength',
+                        'label' => 'Síla',
+                        'name' => 'strength',
+                        'type' => 'text',
+                        'wrapper' => [
+                            'width' => '25',
                         ],
                     ],
                     [
@@ -459,6 +372,44 @@ function glenmark_register_gln_product_acf_fields()
                         'label' => 'Počet',
                         'name' => 'variant_count',
                         'type' => 'text',
+                        'wrapper' => [
+                            'width' => '25',
+                        ],
+                    ],
+                    [
+                        'key' => 'field_product_package_variant_is_primary',
+                        'label' => 'Hlavní varianta',
+                        'name' => 'variant_is_primary',
+                        'type' => 'true_false',
+                        'instructions' => 'Zobrazit jako první.',
+                        'ui' => 1,
+                        'wrapper' => [
+                            'width' => '25',
+                        ],
+                    ],
+                    [
+                        'key' => 'field_product_registered_package_sukl_code',
+                        'label' => 'Kód SÚKL',
+                        'name' => 'sukl_code',
+                        'type' => 'text',
+                        'wrapper' => [
+                            'width' => '33.33',
+                        ],
+                    ],
+                    [
+                        'key' => 'field_product_registered_package_spc',
+                        'label' => 'SPC',
+                        'name' => 'spc',
+                        'type' => 'url',
+                        'wrapper' => [
+                            'width' => '33.33',
+                        ],
+                    ],
+                    [
+                        'key' => 'field_product_registered_package_pil',
+                        'label' => 'PIL',
+                        'name' => 'pil',
+                        'type' => 'url',
                         'wrapper' => [
                             'width' => '33.33',
                         ],
@@ -471,7 +422,7 @@ function glenmark_register_gln_product_acf_fields()
                         'return_format' => 'id',
                         'preview_size' => 'medium',
                         'wrapper' => [
-                            'width' => '33.33',
+                            'width' => '100',
                         ],
                     ],
                     [
@@ -480,82 +431,24 @@ function glenmark_register_gln_product_acf_fields()
                         'name' => 'variant_pharmacies',
                         'type' => 'group',
                         'sub_fields' => $variant_pharmacy_fields,
+                        'wrapper' => [
+                            'width' => '100',
+                        ],
                     ],
                 ],
             ],
         ],
         'location' => $location,
-        'menu_order' => 5,
+        'menu_order' => 1,
         'position' => 'normal',
         'style' => 'default',
         'label_placement' => 'top',
         'instruction_placement' => 'label',
         'hide_on_screen' => [
-            'the_content',
             'discussion',
             'comments',
             'format',
         ],
-    ]);
-
-    acf_add_local_field_group([
-        'key' => 'group_gln_product_registered_packages',
-        'title' => 'Produkt - Registrovaná balení',
-        'fields' => [
-            [
-                'key' => 'field_product_registered_packages',
-                'label' => 'Balení',
-                'name' => 'product_registered_packages',
-                'type' => 'repeater',
-                'instructions' => 'Pokud je vyplněn kód SÚKL, odkazy na SPC a PIL lze vytvořit podle něj. Jinak vyplňte přímo odkazy.',
-                'layout' => 'table',
-                'button_label' => 'Přidat balení',
-                'sub_fields' => [
-                    [
-                        'key' => 'field_product_registered_package_strength',
-                        'label' => 'Síla',
-                        'name' => 'strength',
-                        'type' => 'text',
-                    ],
-                    [
-                        'key' => 'field_product_registered_package_quantity',
-                        'label' => 'Množství',
-                        'name' => 'quantity',
-                        'type' => 'text',
-                    ],
-                    [
-                        'key' => 'field_product_registered_package_sukl_code',
-                        'label' => 'Kód SÚKL',
-                        'name' => 'sukl_code',
-                        'type' => 'text',
-                    ],
-                    [
-                        'key' => 'field_product_registered_package_spc',
-                        'label' => 'SPC',
-                        'name' => 'spc',
-                        'type' => 'url',
-                    ],
-                    [
-                        'key' => 'field_product_registered_package_pil',
-                        'label' => 'PIL',
-                        'name' => 'pil',
-                        'type' => 'url',
-                    ],
-                ],
-            ],
-            [
-                'key' => 'field_product_registered_packages_url',
-                'label' => 'Odkaz na seznam registrovaných balení',
-                'name' => 'product_registered_packages_url',
-                'type' => 'url',
-            ],
-        ],
-        'location' => $location,
-        'menu_order' => 6,
-        'position' => 'normal',
-        'style' => 'default',
-        'label_placement' => 'top',
-        'instruction_placement' => 'label',
     ]);
 }
 add_action('init', 'glenmark_register_gln_product_acf_fields', 20);

@@ -20,7 +20,7 @@ function glenmark_shared_content_register_customizer_settings($wp_customize)
         'glenmark_shared_content_api_url' => [
             'label' => __('REST API URL', 'gln-pharma-product'),
             'type' => 'url',
-            'default' => '',
+            'default' => 'https://hub.glenmarkpharma.cz/wp-json/glenmark-content/v1',
             'sanitize_callback' => 'glenmark_shared_content_sanitize_api_url',
             'description' => __('Základní URL API včetně /wp-json/glenmark-content/v1, bez koncového /items.', 'gln-pharma-product'),
         ],
@@ -35,18 +35,6 @@ function glenmark_shared_content_register_customizer_settings($wp_customize)
             'type' => 'url',
             'default' => home_url('/'),
             'sanitize_callback' => 'esc_url_raw',
-        ],
-        'glenmark_shared_content_controller_name' => [
-            'label' => __('Správce osobních údajů', 'gln-pharma-product'),
-            'type' => 'text',
-            'default' => '',
-            'sanitize_callback' => 'sanitize_text_field',
-        ],
-        'glenmark_shared_content_controller_address' => [
-            'label' => __('Adresa správce osobních údajů', 'gln-pharma-product'),
-            'type' => 'textarea',
-            'default' => '',
-            'sanitize_callback' => 'sanitize_textarea_field',
         ],
     ];
 
@@ -184,8 +172,6 @@ function glenmark_shared_content_get_site_tokens()
     $tokens = [
         'site_name' => (string) get_theme_mod('glenmark_shared_content_site_name', get_bloginfo('name')),
         'site_url' => (string) get_theme_mod('glenmark_shared_content_site_url', home_url('/')),
-        'data_controller_name' => (string) get_theme_mod('glenmark_shared_content_controller_name', ''),
-        'data_controller_address' => (string) get_theme_mod('glenmark_shared_content_controller_address', ''),
     ];
 
     return apply_filters('glenmark/shared_content/site_tokens', $tokens);
@@ -202,5 +188,17 @@ function glenmark_shared_content_replace_tokens($html)
             : esc_html((string) $value);
     }
 
-    return strtr((string) $html, $replacements);
+    $html = strtr((string) $html, $replacements);
+
+    // HTML tokeny vykreslené lokálně pluginem WPConsent; neescapují se
+    // a vykreslují se jen tehdy, když je šablona skutečně používá.
+    if (false !== strpos($html, '{{cookies_list}}')) {
+        $html = str_replace('{{cookies_list}}', glenmark_shared_content_render_cookies_list(), $html);
+    }
+
+    if (false !== strpos($html, '{{cookies_preferences_button}}')) {
+        $html = str_replace('{{cookies_preferences_button}}', glenmark_shared_content_render_cookies_preferences_button(), $html);
+    }
+
+    return $html;
 }

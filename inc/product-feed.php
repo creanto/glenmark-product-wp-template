@@ -64,41 +64,16 @@ function glenmark_get_product_feed_product($product_id)
 
     $properties = isset($product['additionalProperty']) ? $product['additionalProperty'] : [];
     $field_properties = [
-        'product_subtitle_more' => 'Dodatečný podtitul',
         'product_indication' => 'Indikace',
         'product_claim' => 'Claim',
         'product_main_benefits' => 'Hlavní benefity',
-        'product_description' => 'Popis',
         'product_composition' => 'Složení',
-        'product_packaging' => 'Balení',
         'product_dosage' => 'Dávkování',
         'product_legal_notice' => 'Upozornění',
-        'product_sale_end' => 'Ukončení prodeje',
     ];
 
     foreach ($field_properties as $field_name => $label) {
         glenmark_product_feed_add_property($properties, $label, get_field($field_name, $product_id));
-    }
-
-    glenmark_product_feed_add_property(
-        $properties,
-        'V prodeji',
-        get_field('product_for_sale', $product_id) ? 'Ano' : 'Ne'
-    );
-    glenmark_product_feed_add_property(
-        $properties,
-        'VPOIS',
-        get_field('product_vpois', $product_id) ? 'Ano' : 'Ne'
-    );
-
-    $spc_url = esc_url_raw((string) get_field('product_spc', $product_id));
-    if ('' !== $spc_url) {
-        glenmark_product_feed_add_property($properties, 'SPC / příbalová informace', $spc_url);
-    }
-
-    $product_website_url = esc_url_raw((string) get_field('product_website_url', $product_id));
-    if ('' !== $product_website_url) {
-        $product['sameAs'] = [$product_website_url];
     }
 
     $image_urls = glenmark_get_product_feed_image_urls($product_id);
@@ -111,7 +86,25 @@ function glenmark_get_product_feed_product($product_id)
         glenmark_product_feed_add_property($properties, 'Koupit u ' . $pharmacy_name, $url);
     }
 
-    $registered_packages = get_field('product_registered_packages', $product_id);
+    $package_variants = get_field('product_package_variants', $product_id);
+    $registered_packages = [];
+    if (is_array($package_variants)) {
+        foreach ($package_variants as $package_variant) {
+            if (
+                !empty($package_variant['strength'])
+                || !empty($package_variant['variant_count'])
+                || !empty($package_variant['sukl_code'])
+                || !empty($package_variant['spc'])
+                || !empty($package_variant['pil'])
+            ) {
+                $package_variant['quantity'] = $package_variant['variant_count'] ?? '';
+                $registered_packages[] = $package_variant;
+            }
+        }
+    }
+    if (empty($registered_packages)) {
+        $registered_packages = get_field('product_registered_packages', $product_id);
+    }
     if (is_array($registered_packages)) {
         foreach ($registered_packages as $package) {
             $package_parts = [];
@@ -137,11 +130,6 @@ function glenmark_get_product_feed_product($product_id)
                 }
             }
         }
-    }
-
-    $registered_packages_url = esc_url_raw((string) get_field('product_registered_packages_url', $product_id));
-    if ('' !== $registered_packages_url) {
-        glenmark_product_feed_add_property($properties, 'Registrovaná balení', $registered_packages_url);
     }
 
     $icon_rows = get_field('product_icons', $product_id);
@@ -221,8 +209,12 @@ function glenmark_get_product_feed_image_url($image)
 function glenmark_get_product_feed_pharmacies($product_id)
 {
     $pharmacies = [];
+    $main_variant_pharmacies = glenmark_get_product_primary_variant_pharmacies($product_id);
+
     foreach (glenmark_get_pharmacy_sources() as $source) {
-        $url = esc_url_raw((string) get_field($source['field'], $product_id));
+        $url = isset($main_variant_pharmacies[$source['variant_field']])
+            ? esc_url_raw((string) $main_variant_pharmacies[$source['variant_field']])
+            : '';
         if ('' !== $url) {
             $pharmacies[$source['label']] = $url;
         }
@@ -233,10 +225,8 @@ function glenmark_get_product_feed_pharmacies($product_id)
 
 function glenmark_get_product_feed_variants($product_id)
 {
-    $rows = get_field('product_package_variants', $product_id);
-    if (!is_array($rows)) {
-        return [];
-    }
+    $rows = glenmark_get_product_package_variants($product_id);
+    $main_variant_pharmacies = glenmark_get_product_primary_variant_pharmacies($product_id);
 
     $variants = [];
     $pharmacy_sources = glenmark_get_pharmacy_sources();
@@ -274,6 +264,9 @@ function glenmark_get_product_feed_variants($product_id)
             $url = isset($variant_pharmacies[$field_name])
                 ? esc_url_raw((string) $variant_pharmacies[$field_name])
                 : '';
+            if ('' === $url && isset($main_variant_pharmacies[$field_name])) {
+                $url = esc_url_raw((string) $main_variant_pharmacies[$field_name]);
+            }
             if ('' !== $url) {
                 glenmark_product_feed_add_property($variant_properties, 'Koupit u ' . $source['label'], $url);
             }

@@ -46,7 +46,7 @@
         var pending = document.querySelectorAll(PENDING_SELECTOR);
 
         Array.prototype.forEach.call(pending, function (placeholder) {
-            if (hasConsent(placeholder.getAttribute('data-category') || 'advertisement')) {
+            if (hasConsent(placeholder.getAttribute('data-category') || 'marketing')) {
                 loadVideo(placeholder);
             }
         });
@@ -88,7 +88,7 @@
 
         var placeholder = button.closest('.gln-video-consent');
 
-        if (hasConsent(placeholder.getAttribute('data-category') || 'advertisement')) {
+        if (hasConsent(placeholder.getAttribute('data-category') || 'marketing')) {
             loadVideo(placeholder);
 
             return;
